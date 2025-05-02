@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="quiz.css" />
+  <title>Quiz Bíblico</title>
+
+  <style>
+    /* Título principal fixo */
+    .titulo-menu {
+      border: 1px solid blue;
+      background: blue;
+      color: rgb(250, 153, 9);
+      font-size: 32px;
+      text-align: center;
+      width: 100%;
+      position: fixed;
+      top: 0;
+      z-index: 1000;
+      height: 50px;
+    }
+
+    /* Menu principal horizontal */
+    .menu-principal {
+      width: 100%;
+      position: fixed;
+      top: 60px;
+      border: 1px solid black;
+      background: blue;
+      color: white;
+      display: flex;
+      justify-content: center;
+      font-size: 25px;
+      z-index: 1000;
+    }
+
+    .menu-principal td a {
+      color: white;
+      margin: 5px;
+      text-decoration: none;
+    }
+
+    .menu-tabela {
+      background: rgb(46, 7, 241);
+      width: 100%;
+    }
+
+    /* Quiz Título */
+    .titulo-quiz {
+      margin-top: 120px;
+      text-align: center;
+    }
+
+    
+
+    
+
+    /* Quiz layout */
+    .container {
+      margin-top: 200px;
+      text-align: center;
+    }
+
+    .answers-container {
+      margin-top: 20px;
+    }
+
+    .answer {
+      margin: 5px;
+      padding: 10px 20px;
+    }
+
+    /* Responsividade */
+    @media (max-width: 670px) {
+      .titulo-menu {
+        font-size: 20px;
+      }
+
+      .menu-principal {
+        font-size: 12px;
+        flex-wrap: wrap;
+      }
+
+      .menu-principal-quiz {
+        font-size: 12px;
+        top: 100px;
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Título principal -->
+  <h1 class="titulo-menu">Shekinah Kadosh Hinos da Harpa Cristã</h1>
+
+  <!-- Menu principal horizontal -->
+  <table class="menu-principal">
+    <tr class="menu-tabela">
+        <td><a href="../index.html">Menu</a></td>
+      <td><a href="../videos-youtube/videosyoutube.html">Videos</a></td>
+      <td><a href="../louvores/index.html">Louvores</a></td>
+      <td><a href="../genesis/index.html">Bíblia Sagrada</a></td>
+      <td><a href="teclado.html">Teclado Virtual</a></td>
+      <td><a href="../hinos-da-harpa/index.html">Hinos</a></td>
+      <td><a href="../quiz-Biblico/quiz.html" target="_blank">Quiz</a></td>
+      <td><a href="../corinhos/corinhos.html">Corinhos</a></td>
+    </tr>
+  </table>
+
+  <!-- Área do quiz -->
+  <div class="container">
+    <div class="questions-container hide">
+      <span class="question">Pergunta aqui</span>
+      <div class="answers-container">
+        <button class="answer button">Resposta 1</button>
+        <button class="answer button">Resposta 2</button>
+        <button class="answer button">Resposta 3</button>
+        <button class="answer button">Resposta 4</button>
+      </div>
+    </div>
+    <div class="controls-container">
+      <button class="start-quiz button">Começar Quiz!</button>
+      <button class="next-question button hide">Próxima Pergunta</button>
+    </div>
+  </div>
+
+  
+
+  <script src="quiz.js" async></script>
+</body>
+</html>
