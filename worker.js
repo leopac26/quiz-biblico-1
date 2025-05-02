@@ -1,6 +1,6 @@
 const CACHE_NAME = "quiz-biblico-cache-v1";
 const urlsToCache = [
-  "quiz.html",
+  "index.html",
   "quiz.css",
   "quiz.js",
   "manifest.json",
