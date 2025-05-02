@@ -1,22 +1,27 @@
-self.addEventListener('install', (event) => {
-    event.waitUntil(
-      caches.open('quiz-biblico-v1').then((cache) => {
-        return cache.addAll([
-          './',
-          './index.html',
-          './manifest.json',
-          './icon-192.png',
-          './icon-512.png'
-        ]);
-      })
-    );
-    self.skipWaiting();
-  });
-  
-  self.addEventListener('fetch', (event) => {
-    event.respondWith(
-      caches.match(event.request).then((response) => {
-        return response || fetch(event.request);
-      })
-    );
-  });
+const CACHE_NAME = "quiz-biblico-cache-v1";
+const urlsToCache = [
+  "quiz.html",
+  "quiz.css",
+  "quiz.js",
+  "manifest.json",
+  "icon-192.png",
+  "icon-512.png"
+];
+
+// Instala o cache
+self.addEventListener("install", (event) => {
+  event.waitUntil(
+    caches.open(CACHE_NAME).then((cache) => {
+      return cache.addAll(urlsToCache);
+    })
+  );
+});
+
+// Intercepta requisições
+self.addEventListener("fetch", (event) => {
+  event.respondWith(
+    caches.match(event.request).then((response) => {
+      return response || fetch(event.request);
+    })
+  );
+});

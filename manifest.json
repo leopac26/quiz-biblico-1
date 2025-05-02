@@ -1,10 +1,11 @@
 {
-    "name": "quiz biblico",
-    "short_name": "Quiz",
-    "start_url": "./index.html",
+    "name": "Quiz Bíblico - Shekinah Kadosh",
+    "short_name": "Quiz Bíblico",
+    "start_url": "quiz.html",
     "display": "standalone",
-    "background_color": "#8a11cf",
-    "theme_color": "#000000",
+    "background_color": "#0000ff",
+    "theme_color": "#0000ff",
+    "orientation": "portrait",
     "icons": [
       {
         "src": "icon-192.png",
@@ -18,3 +19,4 @@
       }
     ]
   }
+  
