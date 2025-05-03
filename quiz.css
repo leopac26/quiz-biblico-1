@@ -20,13 +20,11 @@ body{
 .container{
     background-color: #121214;
     width: 90%;
-    max-width: 800px;
-
+    max-width: 1400px;
     border: 2px solid #e1e1e6;
     border-radius: 6px;
     padding: 16px;
     box-sizing: 0 0 2px 2px;
-
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -66,8 +64,8 @@ body{
     font-weight: bold;
     border: 0;
     border-radius: 6px;
-    height: 48px;
-    padding: 0 32px;
+    height: 100px;
+    padding: 0 24px;
     transition: filter 0.2s;
 }
 .button:not(:disabled):hover{

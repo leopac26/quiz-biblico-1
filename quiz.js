@@ -411,7 +411,7 @@ const questions = [
                { text:'sim', correct: true},
                {text:'não', correct: false},
                {text:'Ambos tem a mesma quantidade', correct: false},
-               {text:"",correct: false}
+              
             
             ]},
             {
@@ -489,10 +489,10 @@ const questions = [
             {
             question:'(34) O Livro de Atos dos Apóstolos é conhecido como...',
             answers:[
-               { text:'a) 1º dia', correct: false},
-               {text:'b) 3º dia', correct: false},
-               {text:'c) 4º dia', correct: true},
-               {text:"d) 6º dia",correct: false}
+               { text:'a) um livro histórico', correct: true},
+               {text:'b) um livro profético', correct: false},
+               {text:'c) um livro poético', correct: false},
+               {text:"d) um livro teologico",correct: false}
             
             ]},
             {
