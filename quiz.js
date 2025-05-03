@@ -22,12 +22,30 @@ function shuffleArray(array) {
    }
 }
 
-
 function startGame(){
    shuffleArray(questions) // <- Embaralha as perguntas
     $startGameButton.classList.add("hide")
     $questionsContainer.classList.remove("hide")
     displayNextQuestion()
+
+    // Enviar dados ao backend quando o jogo começar
+    fetch('http://Localhost:3000/api/registrar-acesso', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        timestamp: new Date().toISOString(),
+        userAgent: navigator.userAgent
+      })
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Acesso registrado com sucesso:', data);
+    })
+    .catch(error => {
+      console.error('Erro ao registrar acesso:', error);
+    });
 }
 
 function displayNextQuestion(){
@@ -132,7 +150,7 @@ function startTimer(){
     $timerBar.style.width = '100%'
 
     setTimeout(() => {
-        $timerBar.style.transition = 'width 60s linear'//muda os segundos que aparece na barra
+        $timerBar.style.transition = 'width 60s linear' // muda os segundos que aparece na barra
         $timerBar.style.width = '0%'
     }, 50)
 
@@ -149,7 +167,7 @@ function startTimer(){
         document.body.classList.add("incorrect")
         $nextQuestionButton.classList.remove("hide")
         currentQuestionIndex++
-    }, 60000)//muda o tempo de resposta 
+    }, 60000) // muda o tempo de resposta
 }
 
 function disableAnswers(){
@@ -163,43 +181,17 @@ function disableAnswers(){
     })
 }
 
-
-function finishGame(){
-    const totalQuestion = questions.length
-    const performance = Math.floor(totalCorrect * 100 / totalQuestion)
-
-    let message = ""
-
-    switch (true) {
-        case (performance >= 90):
-            message = "Excelente :)"
-            break
-        case (performance >= 70):
-            message = "Muito bom :)"
-            break
-        default:
-            message = "Pode melhorar :("
-    }
-
-    $questionsContainer.innerHTML = `
-        <p class="final-message">Você acertou ${totalCorrect} de ${totalQuestion} questões! 
-        <span>Resultado: ${message}</span></p>
-        <button onclick="window.location.reload()" class="button">Refazer teste</button>
-    `}
-
-
+// Suas perguntas de quiz
 const questions = [
-    
-   {
-    question: "(1) A quem Paulo chamou de 'meu companheiro de lutas (Referencia biblica filemon 1:2.)",
-    
-    answers:[
-        {text:"Apolo", correct: false },
-        {text: "Afia", correct: false },
-        {text: "Arquipo ", correct: true},
-        {text: "Adonias", correct: false}
-    ]
-},
+    {
+        question: "(1) A quem Paulo chamou de 'meu companheiro de lutas' (Referência bíblica: Filemon 1:2)?",
+        answers:[
+            {text: "Apolo", correct: false },
+            {text: "Afia", correct: false },
+            {text: "Arquipo", correct: true},
+            {text: "Adonias", correct: false}
+        ]
+    },
 {
     question: "(2) Quais discipulos perguntaram a jesus se podiam fazer descer fogo do céu? (Referencia biblica: Lucas 9:54.)",
     answers: [
