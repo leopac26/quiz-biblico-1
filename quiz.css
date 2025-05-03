@@ -19,11 +19,11 @@ body{
 
 .container{
     background-color: #121214;
-    width: 90%;
-    max-width: 1400px;
+    width: 97%;
+    max-width: 800px;
     border: 2px solid #e1e1e6;
     border-radius: 6px;
-    padding: 16px;
+    padding: 10px;
     box-sizing: 0 0 2px 2px;
     display: flex;
     flex-direction: column;
@@ -37,7 +37,7 @@ body{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 24px;
+    gap: 10px;
 }
 
 .question{
@@ -65,7 +65,7 @@ body{
     border: 0;
     border-radius: 6px;
     height: 100px;
-    padding: 0 24px;
+    padding: 0 10px;
     transition: filter 0.2s;
 }
 .button:not(:disabled):hover{
