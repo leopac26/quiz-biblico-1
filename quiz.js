@@ -15,7 +15,16 @@ let countdownInterval
 $startGameButton.addEventListener("click", startGame)
 $nextQuestionButton.addEventListener("click", displayNextQuestion)
 
+function shuffleArray(array) {
+   for (let i = array.length - 1; i > 0; i--) {
+       const j = Math.floor(Math.random() * (i + 1))
+       ;[array[i], array[j]] = [array[j], array[i]]
+   }
+}
+
+
 function startGame(){
+   shuffleArray(questions) // <- Embaralha as perguntas
     $startGameButton.classList.add("hide")
     $questionsContainer.classList.remove("hide")
     displayNextQuestion()
@@ -116,14 +125,14 @@ function startTimer(){
     clearTimeout(timer)
     clearInterval(countdownInterval)
 
-    let timeLeft = 20
+    let timeLeft = 60 // muda os segundos que aparece na tela
     $timeText.textContent = `Tempo restante: ${timeLeft}s`
 
     $timerBar.style.transition = 'none'
     $timerBar.style.width = '100%'
 
     setTimeout(() => {
-        $timerBar.style.transition = 'width 15s linear'
+        $timerBar.style.transition = 'width 60s linear'//muda os segundos que aparece na barra
         $timerBar.style.width = '0%'
     }, 50)
 
@@ -140,7 +149,7 @@ function startTimer(){
         document.body.classList.add("incorrect")
         $nextQuestionButton.classList.remove("hide")
         currentQuestionIndex++
-    }, 15000)
+    }, 60000)//muda o tempo de resposta 
 }
 
 function disableAnswers(){
@@ -176,42 +185,11 @@ function finishGame(){
         <p class="final-message">Você acertou ${totalCorrect} de ${totalQuestion} questões! 
         <span>Resultado: ${message}</span></p>
         <button onclick="window.location.reload()" class="button">Refazer teste</button>
-    `
-}
+    `}
+
 
 const questions = [
-    {
-        question: "(1) A quem Paulo chamou de 'meu companheiro de lutas'? (Referência bíblica: Filemom 1:2)",
-        answers: [
-            { text: "Apolo", correct: false },
-            { text: "Afia", correct: false },
-            { text: "Arquipo", correct: true },
-            { text: "Adonias", correct: false }
-        ]
-    },
-    {
-        question: "(2) Quais discípulos perguntaram a Jesus se podiam fazer descer fogo do céu? (Referência bíblica: Lucas 9:54)",
-        answers: [
-            { text: "João e Tiago", correct: true },
-            { text: "Pedro e João", correct: false },
-            { text: "Tiago e Pedro", correct: false },
-            { text: "Tiago e Mateus", correct: false }
-        ]
-    },
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    
    {
     question: "(1) A quem Paulo chamou de 'meu companheiro de lutas (Referencia biblica filemon 1:2.)",
     
@@ -482,301 +460,709 @@ const questions = [
             
             ]},
             {
-            question:'(31) Na visão profética de João, qual era o número de cavaleiros do Apocalpse?',
+            question:'(31) Adão viveu ao todo quantos anos?',
             answers:[
-               { text:'7', correct: false},
-               {text:'6', correct: false},
-               {text:'5', correct: false},
-               {text:"4",correct: true}
+               { text:'a) 930 anos', correct: true},
+               {text:'b) 1000 anos', correct: false},
+               {text:'c) 500 anos', correct: false},
+               {text:"d) 850 anos",correct: false}
             
             ]},
             {
-            question:'(32) Na visão profética de João, qual era o número de cavaleiros do Apocalpse?',
+            question:'(32) Jesus enviou quantos discípulos para a missão de pregar o Evangelho?',
             answers:[
-               { text:'7', correct: false},
-               {text:'6', correct: false},
-               {text:'5', correct: false},
-               {text:"4",correct: true}
+               { text:'a) 7 discípuloss', correct: false},
+               {text:'b) 70 discípulos', correct: true},
+               {text:'c) 12 discípulos', correct: false},
+               {text:"d) 6 discípulos",correct: false}
             
             ]},
             {
-            question:'(33) Na visão profética de João, qual era o número de cavaleiros do Apocalpse?',
+            question:'(33)  Em qual dia da criação foi feito o sol, a lua e as estrelas?',
             answers:[
-               { text:'7', correct: false},
-               {text:'6', correct: false},
-               {text:'5', correct: false},
-               {text:"4",correct: true}
+               { text:'a) 1º dia', correct: false},
+               {text:'b) 3º dia', correct: false},
+               {text:'c) 4º dia', correct: true},
+               {text:"d) 6º dia",correct: false}
             
             ]},
             {
-            question:'(34) Na visão profética de João, qual era o número de cavaleiros do Apocalpse?',
+            question:'(34) O Livro de Atos dos Apóstolos é conhecido como...',
             answers:[
-               { text:'7', correct: false},
-               {text:'6', correct: false},
-               {text:'5', correct: false},
-               {text:"4",correct: true}
+               { text:'a) 1º dia', correct: false},
+               {text:'b) 3º dia', correct: false},
+               {text:'c) 4º dia', correct: true},
+               {text:"d) 6º dia",correct: false}
             
             ]},
             {
-            question:'(35) Na visão profética de João, qual era o número de cavaleiros do Apocalpse?',
+            question:'(35) Depois do Dilúvio, Noé viveu por mais quantos anos?',
             answers:[
-               { text:'7', correct: false},
-               {text:'6', correct: false},
-               {text:'5', correct: false},
-               {text:"4",correct: true}
+               { text:'a) 350 anos', correct: true},
+               {text:'b) 100 anos', correct: false},
+               {text:'c) 200 anos', correct: false},
+               {text:"d) 50 anos",correct: false}
             
             ]},
             {
-            question:'(36) Na visão profética de João, qual era o número de cavaleiros do Apocalpse?',
+            question:'(36) Qual é o quinto livro do Novo Testamento?',
             answers:[
-               { text:'7', correct: false},
-               {text:'6', correct: false},
-               {text:'5', correct: false},
-               {text:"4",correct: true}
+               { text:'a)Evangelho de Marcos', correct: false},
+               {text:'b) Carta aos Romanos', correct: false},
+               {text:'c) Atos dos Apóstolos', correct: true},
+               {text:"d) Evangelho de lucas",correct: false}
             
             ]},
             {
-            question:'(37) Na visão profética de João, qual era o número de cavaleiros do Apocalpse?',
+            question:'(37) Qual era o nome da mulher de Jó?',
             answers:[
-               { text:'7', correct: false},
-               {text:'6', correct: false},
-               {text:'5', correct: false},
-               {text:"4",correct: true}
+               { text:'a)Abgail', correct: false},
+               {text:'b) Dâmares', correct: false},
+               {text:'c) A BIBLIA NÃO DIZ', correct: true},
+               {text:"d) Sophia",correct: false}
             
             ]},
             {
-            question:'(38) Na visão profética de João, qual era o número de cavaleiros do Apocalpse?',
+            question:'(38)  Quem Noé amaldiçoou após saber que foi visto em nudez?',
             answers:[
-               { text:'7', correct: false},
-               {text:'6', correct: false},
-               {text:'5', correct: false},
-               {text:"4",correct: true}
+               { text:'a) Canaã', correct: true},
+               {text:'b) Cam', correct: false},
+               {text:'c) Jafé', correct: false},
+               {text:"d) Ezau",correct: false}
             
             ]},
             {
-            question:'(39) Na visão profética de João, qual era o número de cavaleiros do Apocalpse?',
+            question:'(39) Qual das alternativas não é um livro apócrifo?',
             answers:[
-               { text:'7', correct: false},
-               {text:'6', correct: false},
-               {text:'5', correct: false},
-               {text:"4",correct: true}
+               { text:'a) Livro Enoque', correct: false},
+               {text:'b) Livro de Ageu', correct: true},
+               {text:'c) Livro de Tobias', correct: false},
+               {text:"d) Livro de Thomas",correct: false}
             
             ]},
             {
-            question:'(40) Na visão profética de João, qual era o número de cavaleiros do Apocalpse?',
+            question:'(40) Qual destes livros contém mais de um capítulo?',
             answers:[
-               { text:'7', correct: false},
-               {text:'6', correct: false},
-               {text:'5', correct: false},
-               {text:"4",correct: true}
+               { text:'a) Judas', correct: false},
+               {text:'b) Obadias', correct: false},
+               {text:'c) Joel', correct: true},
+               
             
             ]},
             {
-            question:'(41) Na visão profética de João, qual era o número de cavaleiros do Apocalpse?',
+            question:'(41) Qual é o versículo mais extenso da Bíblia?',
             answers:[
-               { text:'7', correct: false},
-               {text:'6', correct: false},
-               {text:'5', correct: false},
-               {text:"4",correct: true}
+               { text:'a)Ester 8:9', correct: true},
+               {text:'b) Salmos 119:43', correct: false},
+               {text:'c) Isaías 24:2', correct: false},
+               {text:"d) jeremias 3:5",correct: false}
             
             ]},
             {
-            question:'(42) Na visão profética de João, qual era o número de cavaleiros do Apocalpse?',
-            answers:[
-               { text:'7', correct: false},
-               {text:'6', correct: false},
-               {text:'5', correct: false},
-               {text:"4",correct: true}
-            
-            ]},
+               question: "(42) Quantos versículos tem Salmos 119?",
+               answers: [
+                   { text: "a) 176 versículos", correct: true },
+                   { text: "b) 200 versículos.", correct: false },
+                   { text: "c) 100 versículos.", correct: false },
+                   { text: "d) 150 versículos.", correct: false }
+               ]},
+           {
+               question: "(43) Qual a mulher que acolheu o seu inimigo e depois o matou? (Juízes 4:18-21)",
+               answers: [
+                   { text: "a) Raquel", correct: false },
+                   { text: "b) Débora", correct: false },
+                   { text: "c) Jael", correct: true },
+                   { text: "d) Rebeca", correct: false }
+               ]
+           },
+           {
+               question: "(44) Que homem depois de morto, matou mais pessoas do que em vida? (Juízes 16:30)",
+               answers: [
+                   { text: "a) Elias", correct: false },
+                   { text: "b) Sansão", correct: true },
+                   { text: "c) Judas", correct: false },
+                   { text: "d) Davi", correct: false }
+               ]
+           },
+           {
+               question: "(45) Quem se tornou rei enquanto procurava as jumentas do seu pai? (1 Samuel 9:3)",
+               answers: [
+                   { text: "a) Davi", correct: false },
+                   { text: "b) Saul", correct: true },
+                   { text: "c) Acabe", correct: false },
+                   { text: "d) Salomão", correct: false }
+               ]
+           },
+           {
+               question: "(46) Quem tinha um cabelo que pesava mais de dois quilos e era necessário cortar todo ano? (2 Samuel 14:26)",
+               answers: [
+                   { text: "a) Absalão", correct: true },
+                   { text: "b) Davi", correct: false },
+                   { text: "c) Sansão", correct: false },
+                   { text: "d) Eliabe", correct: false }
+               ]
+           },
+           {
+               question: "(47) Quem teve a vida prolongada por mais 15 anos após orar? (Isaías 38:5)",
+               answers: [
+                   { text: "a) Enoque", correct: false },
+                   { text: "b) Matusalém", correct: false },
+                   { text: "c) Ezequias", correct: true },
+                   { text: "d) Elias", correct: false }
+               ]
+           },
+           {
+               question: "(48) Quem foram apelidados pela multidão em Listra de Zeus e Hermes? (Atos 14:12)",
+               answers: [
+                   { text: "a) Pedro e João", correct: false },
+                   { text: "b) Barnabé e Paulo", correct: true },
+                   { text: "c) Jesus e Paulo", correct: false },
+                   { text: "d) João e Marcos", correct: false }
+               ]
+           },
+           {
+               question: "(49) Quais os 2 homens que o Apóstolo Paulo disse que naufragaram na fé? (1 Timóteo 1:19-20)",
+               answers: [
+                   { text: "a) Himeneu e Alexandre", correct: true },
+                   { text: "b) Janes e Jambres", correct: false },
+                   { text: "c) Silas e Barnabé", correct: false },
+                   { text: "d) Dimas e Tito", correct: false }
+               ]
+           },
+           {
+               question: "(50) Qual foi o profeta que surgiu depois de Malaquias? (Mateus 3:1)",
+               answers: [
+                   { text: "a) Zacarias", correct: false },
+                   { text: "b) Joel", correct: false },
+                   { text: "c) João Batista", correct: true },
+                   { text: "d) Elias", correct: false }
+               ]
+           },
+           {
+               question: "(51) Quantos carros de ferro Jabim possuía? (Juízes 4:2)",
+               answers: [
+                   { text: "a) 900 carros de ferro.", correct: true },
+                   { text: "b) 300 carros de ferro.", correct: false },
+                   { text: "c) 100 carros de ferro.", correct: false },
+                   { text: "d) 1.000 carros de ferro.", correct: false }
+               ]
+           },
+           {
+               question: "(52) Qual o nome do pai de Saul? (1 Samuel 9:1)",
+               answers: [
+                   { text: "a) Abiel", correct: false },
+                   { text: "b) Quis", correct: true },
+                   { text: "c) Zeror", correct: false },
+                   { text: "d) Cis", correct: false }
+               ]
+           },
+           {
+               question: "(53) Sísera foi morto em que situação? (Juízes 4:21)",
+               answers: [
+                   { text: "a) Enquanto dormia.", correct: true },
+                   { text: "b) Enquanto lutava.", correct: false },
+                   { text: "c) Enquanto orava.", correct: false },
+                   { text: "d) Enquanto fugia.", correct: false }
+               ]
+           },
+           {
+               question: "(54) Balaão foi chamado por quem para amaldiçoar o povo de Israel? (Números 22:4)",
+               answers: [
+                   { text: "a) Moabe", correct: false },
+                   { text: "b) Balaque", correct: true },
+                   { text: "c) Zipor", correct: false },
+                   { text: "d) Zadoque", correct: false }
+               ]
+           },
+           {
+               question: "(55) Oseias profetizou durante o reinado de quais reis? (Oséias 1:1)",
+               answers: [
+                   { text: "a) Saul, Davi e Salomão.", correct: false },
+                   { text: "b) Jozias, Joacaz, Ocazias e Jorão.", correct: false },
+                   { text: "c) Uzias, Jotão, Acaz, Ezequias e Jeroboão.", correct: true },
+                   { text: "d) Ezequiel, Isaías, Jeremias e Daniel.", correct: false }
+               ]
+           },
+           {
+               question: "(56) Oséias se casou com... (Oséias 1:2-3)",
+               answers: [
+                   { text: "a) Uma rainha.", correct: false },
+                   { text: "b) Uma mulher adúltera.", correct: true },
+                   { text: "c) Uma mulher estrangeira.", correct: false },
+                   { text: "d) Uma levita.", correct: false }
+               ]
+           },
+           {
+               question: "(57) Sofonias foi profeta durante qual reinado? (Sofonias 1:1)",
+               answers: [
+                   { text: "a) Reinado de Josias.", correct: true },
+                   { text: "b) Reinado de Acabe.", correct: false },
+                   { text: "c) Reinado de Acaz.", correct: false },
+                   { text: "d) Reinado de Salomão.", correct: false }
+               ]
+           },
+           {
+               question: "(58) Que povo recebeu Paulo com grande interesse, e examinou as Escrituras, para ver se tudo era verdade? (Atos 17:11)",
+               answers: [
+                   { text: "a) Os tessalônios.", correct: false },
+                   { text: "b) Os bereanos.", correct: true },
+                   { text: "c) Os atenienses.", correct: false },
+                   { text: "d) Os coríntios.", correct: false }
+               ]
+           },
+           {
+               question: "(59) O que deixou Paulo indignado em Atenas? (Atos 17:16-17)",
+               answers: [
+                   { text: "a) A promiscuidade do povo grego.", correct: false },
+                   { text: "b) A quantidade de ídolos na cidade.", correct: true },
+                   { text: "c) A falta de sinagogas na cidade.", correct: false },
+                   { text: "d) A frieza espiritual.", correct: false }
+               ]
+           },
+           {
+               question: "(60) Em Atenas, onde Paulo foi levado para falar sobre Jesus Cristo? (Atos 17:19)",
+               answers: [
+                   { text: "a) Coliseu.", correct: false },
+                   { text: "b) Santuário.", correct: false },
+                   { text: "c) Areópago", correct: true },
+                   { text: "d) Sinagoga", correct: false }
+               ]
+           },
+           {
+               question: "(61) No discurso de Paulo em Atenas, quem creu e se juntou a ele? (Atos 17:34)",
+               answers: [
+                   { text: "a) Nicodemos", correct: false },
+                   { text: "b) Dionísio", correct: true },
+                   { text: "c) Arquimedes", correct: false },
+                   { text: "d) Barnabé", correct: false }
+               ]
+           },
+           {
+               question: "(62) Qual foi o destino de Paulo depois de Atenas? (Atos 18:1)",
+               answers: [
+                   { text: "a) Tessalônica", correct: false },
+                   { text: "b) Roma", correct: false },
+                   { text: "c) Corinto", correct: true },
+                   { text: "d) Éfeso", correct: false }
+               ]
+           },
+           {
+               question: "(63) Quem jurou não comer nem beber enquanto não matassem Paulo? (Atos 23:12-14)",
+               answers: [
+                   { text: "a) Os judeus.", correct: true },
+                   { text: "b) Os gregos.", correct: false },
+                   { text: "c) Os romanos.", correct: false },
+                   { text: "d) Os coríntios.", correct: false }
+               ]
+           },
+           {
+               question: "(64) Quais são as 7 igrejas que receberam as cartas em Apocalipse? (Apocalipse 1:11)",
+               answers: [
+                   { text: "a) Éfeso, Filipo, Pérgamo, Tiatira, Creta, Filadélfia e Laodiceia.", correct: false },
+                   { text: "b) Éfeso, Esmirna, Pérgamo, Tiatira, Sardes, Filadélfia e Laodiceia.", correct: true },
+                   { text: "c) Éfeso, Macedônia, Pérgamo, Filipo, Tessalônica, Filadélfia e Laodiceia.", correct: false },
+                   { text: "d) Antioquia, Esmirna, Tiatira, Sardes, Tessalônica, Filadélfia e Laodiceia.", correct: false }
+               ]
+           },
+           {
+               question: "(65) O que houve quando o Cordeiro quebrou o último selo? (Apocalipse 8:1)",
+               answers: [
+                   { text: "a) O Diabo foi aprisionado durante 2000 anos.", correct: false },
+                   { text: "b) Houve um sinal que arrebatou os crentes em Cristo.", correct: false },
+                   { text: "c) Houve silêncio nos céus cerca de meia hora.", correct: true },
+                   { text: "d) Os anjos tocaram as trombetas.", correct: false }
+               ]
+           },
+           {
+               question: "(66) Qual era a característica da besta que saiu da terra? (Apocalipse 13:11)",
+               answers: [
+                   { text: "a) Dois chifres como cordeiro, mas que falava como dragão.", correct: true },
+                   { text: "b) Dez chifres e sete cabeças, com dez coroas, uma sobre cada chifre.", correct: false },
+                   { text: "c) Sete chifres, sete cabeças e da sua língua saía fogo.", correct: false },
+                   { text: "d) Um corpo de leopardo, pés de urso e boca de leão.", correct: false }
+               ]
+           },
+           {
+               question: "(67) Quantas taças da ira de Deus foram derramadas em Apocalipse? (Apocalipse 16:1)",
+               answers: [
+                   { text: "a) 6 taças.", correct: false },
+                   { text: "b) 12 taças.", correct: false },
+                   { text: "c) 7 taças.", correct: true },
+                   { text: "d) 10 taças.", correct: false }
+               ]
+           },
+           {
+               question: "(68) De que material era o muro da Nova Jerusalém? (Apocalipse 21:18)",
+               answers: [
+                   { text: "a) Ouro", correct: false },
+                   { text: "b) Jaspe", correct: true },
+                   { text: "c) Vidro", correct: false },
+                   { text: "d) Bronze", correct: false }
+               ]
+           },
+           
             {
-            question:'(43) Na visão profética de João, qual era o número de cavaleiros do Apocalpse?',
-            answers:[
-               { text:'7', correct: false},
-               {text:'6', correct: false},
-               {text:'5', correct: false},
-               {text:"4",correct: true}
-            
-            ]},
+              question: "(1) Quem foi o primogênito de Jacó? (Gênesis 29:32)",
+              answers: [
+                { text: "a) Júda", correct: false },
+                { text: "b) José", correct: false },
+                { text: "c) Rúben", correct: true },
+                { text: "d) Simeão", correct: false }
+              ]
+            },
             {
-            question:'(44) Na visão profética de João, qual era o número de cavaleiros do Apocalpse?',
-            answers:[
-               { text:'7', correct: false},
-               {text:'6', correct: false},
-               {text:'5', correct: false},
-               {text:"4",correct: true}
-            
-            ]},
+              question: "(2) Quem viu um arbusto em chamas que não se consumia? (Êxodo 3:2-3)",
+              answers: [
+                { text: "a) Abraão", correct: false },
+                { text: "b) Isaque", correct: false },
+                { text: "c) Moisés", correct: true },
+                { text: "d) Noé", correct: false }
+              ]
+            },
             {
-            question:'(45) Na visão profética de João, qual era o número de cavaleiros do Apocalpse?',
-            answers:[
-               { text:'7', correct: false},
-               {text:'6', correct: false},
-               {text:'5', correct: false},
-               {text:"4",correct: true}
-            
-            ]},
+              question: "(3) Quem foi jogado na cova dos leões? (Daniel 6:16)",
+              answers: [
+                { text: "a) Daniel", correct: true },
+                { text: "b) Davi", correct: false },
+                { text: "c) Elias", correct: false },
+                { text: "d) Moisés", correct: false }
+              ]
+            },
             {
-            question:'(46) Na visão profética de João, qual era o número de cavaleiros do Apocalpse?',
-            answers:[
-               { text:'7', correct: false},
-               {text:'6', correct: false},
-               {text:'5', correct: false},
-               {text:"4",correct: true}
-            
-            ]},
+              question: "(4) Qual era a profissão de Mateus antes de seguir Jesus? (Mateus 9:9)",
+              answers: [
+                { text: "a) Pescador", correct: false },
+                { text: "b) Médico", correct: false },
+                { text: "c) Publicano", correct: true },
+                { text: "d) Carpinteiro", correct: false }
+              ]
+            },
             {
-            question:'(47) Na visão profética de João, qual era o número de cavaleiros do Apocalpse?',
-            answers:[
-               { text:'7', correct: false},
-               {text:'6', correct: false},
-               {text:'5', correct: false},
-               {text:"4",correct: true}
-            
-            ]},
+              question: "(5) Quem interpretou o sonho de Nabucodonosor de uma estátua com pés de ferro e barro? (Daniel 2:31-45)",
+              answers: [
+                { text: "a) Isaías", correct: false },
+                { text: "b) José", correct: false },
+                { text: "c) Daniel", correct: true },
+                { text: "d) Jeremias", correct: false }
+              ]
+            },
             {
-            question:'(48) Na visão profética de João, qual era o número de cavaleiros do Apocalpse?',
-            answers:[
-               { text:'7', correct: false},
-               {text:'6', correct: false},
-               {text:'5', correct: false},
-               {text:"4",correct: true}
-            
-            ]},
+              question: "(6) Quem conduziu os israelitas para fora do Egito? (Êxodo 3:10)",
+              answers: [
+                { text: "a) Arão", correct: false },
+                { text: "b) Josué", correct: false },
+                { text: "c) Moisés", correct: true },
+                { text: "d) Miriã", correct: false }
+              ]
+            },
             {
-            question:'(49) Na visão profética de João, qual era o número de cavaleiros do Apocalpse?',
-            answers:[
-               { text:'7', correct: false},
-               {text:'6', correct: false},
-               {text:'5', correct: false},
-               {text:"4",correct: true}
-            
-            ]},
+              question: "(7) Quem foi o rei da Babilônia que enlouqueceu e viveu como um animal? (Daniel 4:33)",
+              answers: [
+                { text: "a) Belsazar", correct: false },
+                { text: "b) Dario", correct: false },
+                { text: "c) Nabucodonosor", correct: true },
+                { text: "d) Ciro", correct: false }
+              ]
+            },
             {
-            question:'(50) Na visão profética de João, qual era o número de cavaleiros do Apocalpse?',
-            answers:[
-               { text:'7', correct: false},
-               {text:'6', correct: false},
-               {text:'5', correct: false},
-               {text:"4",correct: true}
-            
-            ]},
+              question: "(8) Onde Jesus realizou seu primeiro milagre? (João 2:1-11)",
+              answers: [
+                { text: "a) Jerusalém", correct: false },
+                { text: "b) Nazaré", correct: false },
+                { text: "c) Caná da Galiléia", correct: true },
+                { text: "d) Jericó", correct: false }
+              ]
+            },
             {
-            question:'(51) Na visão profética de João, qual era o número de cavaleiros do Apocalpse?',
-            answers:[
-               { text:'7', correct: false},
-               {text:'6', correct: false},
-               {text:'5', correct: false},
-               {text:"4",correct: true}
-            
-            ]},
+              question: "(9) Quem subiu numa figueira para ver Jesus? (Lucas 19:1-10)",
+              answers: [
+                { text: "a) Pedro", correct: false },
+                { text: "b) Tomé", correct: false },
+                { text: "c) Zaqueu", correct: true },
+                { text: "d) Bartolomeu", correct: false }
+              ]
+            },
             {
-            question:'(52) Na visão profética de João, qual era o número de cavaleiros do Apocalpse?',
-            answers:[
-               { text:'7', correct: false},
-               {text:'6', correct: false},
-               {text:'5', correct: false},
-               {text:"4",correct: true}
-            
-            ]},
+              question: "(10) Quem escreveu a maioria das cartas do Novo Testamento?",
+              answers: [
+                { text: "a) Pedro", correct: false },
+                { text: "b) João", correct: false },
+                { text: "c) Paulo", correct: true },
+                { text: "d) Tiago", correct: false }
+              ]
+            },
             {
-            question:'(53) Na visão profética de João, qual era o número de cavaleiros do Apocalpse?',
-            answers:[
-               { text:'7', correct: false},
-               {text:'6', correct: false},
-               {text:'5', correct: false},
-               {text:"4",correct: true}
+               question: "(11) Quem foi a mão do rei Davi? (1 Samuel 18:20-27)",
+               answers: [
+                 { text: "a) Jonatas", correct: false },
+                 { text: "b) Saul", correct: false },
+                 { text: "c) Jonathan", correct: false },
+                 { text: "d) Mical", correct: true }
+               ]
+             },
+             {
+               question: "(12) Qual discípulo andou sobre as águas com Jesus? (Mateus 14:29)",
+               answers: [
+                 { text: "a) João", correct: false },
+                 { text: "b) Tiago", correct: false },
+                 { text: "c) Pedro", correct: true },
+                 { text: "d) Tomé", correct: false }
+               ]
+             },
+             {
+               question: "(13) Onde Moisés recebeu os Dez Mandamentos? (Êxodo 19:20)",
+               answers: [
+                 { text: "a) Monte Carmelo", correct: false },
+                 { text: "b) Monte Sinai", correct: true },
+                 { text: "c) Monte Horebe", correct: false },
+                 { text: "d) Monte Nebo", correct: false }
+               ]
+             },
+             {
+               question: "(14) Quem foi o rei mais sábio de Israel? (1 Reis 3:12)",
+               answers: [
+                 { text: "a) Davi", correct: false },
+                 { text: "b) Salomão", correct: true },
+                 { text: "c) Saul", correct: false },
+                 { text: "d) Josias", correct: false }
+               ]
+             },
+             {
+               question: "(15) Qual o primeiro livro do Novo Testamento?",
+               answers: [
+                 { text: "a) Marcos", correct: false },
+                 { text: "b) João", correct: false },
+                 { text: "c) Lucas", correct: false },
+                 { text: "d) Mateus", correct: true }
+               ]
+             },
+             {
+               question: "(16) Quem foi lançado na fornalha ardente? (Daniel 3:19-23)",
+               answers: [
+                 { text: "a) Sadraque, Mesaque e Abednego", correct: true },
+                 { text: "b) Daniel", correct: false },
+                 { text: "c) Jonas", correct: false },
+                 { text: "d) Elias", correct: false }
+               ]
+             },
+             {
+               question: "(17) Quantos foram os dias de criação no Gênesis? (Gênesis 1)",
+               answers: [
+                 { text: "a) 5 dias", correct: false },
+                 { text: "b) 6 dias", correct: true },
+                 { text: "c) 7 dias", correct: false },
+                 { text: "d) 8 dias", correct: false }
+               ]
+             },
+             {
+               question: "(18) Quem foi a esposa de Isaque? (Gênesis 24:67)",
+               answers: [
+                 { text: "a) Sara", correct: false },
+                 { text: "b) Rebeca", correct: true },
+                 { text: "c) Raquel", correct: false },
+                 { text: "d) Lia", correct: false }
+               ]
+             },
+             {
+               question: "(19) Quem subiu ao céu em um redemoinho? (2 Reis 2:11)",
+               answers: [
+                 { text: "a) Moisés", correct: false },
+                 { text: "b) Elias", correct: true },
+                 { text: "c) Ezequiel", correct: false },
+                 { text: "d) Eliseu", correct: false }
+               ]
+             },
+             {
+               question: "(20) Quem foi o primeiro rei de Israel? (1 Samuel 10:1)",
+               answers: [
+                 { text: "a) Saul", correct: true },
+                 { text: "b) Davi", correct: false },
+                 { text: "c) Salomão", correct: false },
+                 { text: "d) Josué", correct: false }
+               ]
+             },
+             {
+               question: "(21) Quem foi o mais forte homem da Bíblia? (Juízes 13:24-25)",
+               answers: [
+                 { text: "a) Gideão", correct: false },
+                 { text: "b) Sansão", correct: true },
+                 { text: "c) Davi", correct: false },
+                 { text: "d) Absalão", correct: false }
+               ]
+             },
+             {
+               question: "(22) Quem matou Golias? (1 Samuel 17:49)",
+               answers: [
+                 { text: "a) Saul", correct: false },
+                 { text: "b) Samuel", correct: false },
+                 { text: "c) Davi", correct: true },
+                 { text: "d) Jonatã", correct: false }
+               ]
+             },
+             {
+               question: "(23) Quem foi o pai de João Batista? (Lucas 1:57-60)",
+               answers: [
+                 { text: "a) José", correct: false },
+                 { text: "b) Zacarias", correct: true },
+                 { text: "c) Simeão", correct: false },
+                 { text: "d) Elcana", correct: false }
+               ]
+             },
+             {
+               question: "(24) Quem foi jogado ao mar e depois engolido por um grande peixe? (Jonas 1:17)",
+               answers: [
+                 { text: "a) Ezequiel", correct: false },
+                 { text: "b) Elias", correct: false },
+                 { text: "c) Jonas", correct: true },
+                 { text: "d) Moisés", correct: false }
+               ]
+             },
+             {
+               question: "(25) Quem foi a primeira pessoa a morrer por causa do evangelho? (Atos 7:54-60)",
+               answers: [
+                 { text: "a) Pedro", correct: false },
+                 { text: "b) Estevão", correct: true },
+                 { text: "c) Tiago", correct: false },
+                 { text: "d) João", correct: false }
+               ]
+             },
+             {
+               question: "(26) Quem batizou Jesus? (Mateus 3:13-17)",
+               answers: [
+                 { text: "a) João Batista", correct: true },
+                 { text: "b) Paulo", correct: false },
+                 { text: "c) Pedro", correct: false },
+                 { text: "d) Tiago", correct: false }
+               ]
+             },
+             {
+               question: "(27) Quem servia vinho ao rei e levou o susto de sua vida? (Neemias 1:11)",
+               answers: [
+                 { text: "a) José", correct: false },
+                 { text: "b) Esdras", correct: false },
+                 { text: "c) Neemias", correct: true },
+                 { text: "d) Daniel", correct: false }
+               ]
+             },
+             {
+               question: "(28) Quem era o irmão traidor que vendia os irmãos por moedas de prata? (Mateus 26:14-16)",
+               answers: [
+                 { text: "a) José", correct: false },
+                 { text: "b) Simão", correct: false },
+                 { text: "c) Levi", correct: false },
+                 { text: "d) Judas Iscariotes", correct: true }
+               ]
+             },
+             {
+               question: "(29) Quem foi a primeira mulher? (Gênesis 2:21-23)",
+               answers: [
+                 { text: "a) Eva", correct: true },
+                 { text: "b) Sara", correct: false },
+                 { text: "c) Rebeca", correct: false },
+                 { text: "d) Ismália", correct: false }
+               ]
+             },
+             {
+               question: "(30) Qual Profeta foi chamado para falar com o faraó do Egito? (Êxodo 3:10)",
+               answers: [
+                 { text: "a) José", correct: false },
+                 { text: "b) Moisés", correct: true },
+                 { text: "c) Elias", correct: false },
+                 { text: "d) Jeremias", correct: false }
+               ]
+             },
+             {
+               question: "(31) Quem profetizou sobre o Vale dos Ossos Secos? (Ezequiel 37:1-14)",
+               answers: [
+                 { text: "a) Isaías", correct: false },
+                 { text: "b) Jeremias", correct: false },
+                 { text: "c) Ezequiel", correct: true },
+                 { text: "d) Daniel", correct: false }
+               ]
+             },
+             {
+               question: "(32) Quem foi o filho que Jacó amava mais? (Gênesis 37:3)",
+               answers: [
+                 { text: "a) Levi", correct: false },
+                 { text: "b) Judá", correct: false },
+                 { text: "c) José", correct: true },
+                 { text: "d) Benjamim", correct: false }
+               ]
+             },
+             {
+               question: "(33) Quem sobreviveu a um naufrágio em Malta? (Atos 28:1-2)",
+               answers: [
+                 { text: "a) Pedro", correct: false },
+                 { text: "b) Paulo", correct: true },
+                 { text: "c) João", correct: false },
+                 { text: "d) Barnabé", correct: false }
+               ]
+             },
+             {
+               question: "(34) Quem era considerado amigo de Deus? (Tiago 2:23)",
+               answers: [
+                 { text: "a) Moisés", correct: false },
+                 { text: "b) Davi", correct: false },
+                 { text: "c) Abraão", correct: true },
+                 { text: "d) Ló", correct: false }
+               ]
+             },
+             {
+               question: "(35) Quem interpretou o sonho do Faraó? (Gênesis 41:25)",
+               answers: [
+                 { text: "a) Daniel", correct: false },
+                 { text: "b) José", correct: true },
+                 { text: "c) Moisés", correct: false },
+                 { text: "d) Eli", correct: false }
+               ]
+             },
+             {
+               question: "(36) Qual foi a última praga do Egito? (Êxodo 12:29-30)",
+               answers: [
+                 { text: "a) Rãs", correct: false },
+                 { text: "b) Gafanhotos", correct: false },
+                 { text: "c) Água em sangue", correct: false },
+                 { text: "d) Morte dos primogênitos", correct: true }
+               ]
+             },
+             {
+               question: "(37) Quem foi o líder dos israelitas após a morte de Moisés? (Josué 1:1-2)",
+               answers: [
+                 { text: "a) Josué", correct: true },
+                 { text: "b) Calebe", correct: false },
+                 { text: "c) Arão", correct: false },
+                 { text: "d) Elias", correct: false }
+               ]
+             },
+             {
+               question: "(38) Quem foi o homem mais velho na Bíblia? (Gênesis 5:27)",
+               answers: [
+                 { text: "a) Adão", correct: false },
+                 { text: "b) Noé", correct: false },
+                 { text: "c) Matusalém", correct: true },
+                 { text: "d) Abraão", correct: false }
+               ]
+             },
+             {
+               question: "(39) Quantas vezes Pedro negou Jesus? (Mateus 26:75)",
+               answers: [
+                 { text: "a) Uma vez", correct: false },
+                 { text: "b) Duas vezes", correct: false },
+                 { text: "c) Três vezes", correct: true },
+                 { text: "d) Quatro vezes", correct: false }
+               ]
+             },
+             {
+               question: "(40) Qual foi o primeiro milagre de Jesus? (João 2:1-11)",
+               answers: [
+                 { text: "a) Curar um cego", correct: false },
+                 { text: "b) Multiplicar pães", correct: false },
+                 { text: "c) Ressuscitar Lázaro", correct: false },
+                 { text: "d) Transformar água em vinho", correct: true }
+               ]}
             
-            ]},
-            {
-            question:'(54) Na visão profética de João, qual era o número de cavaleiros do Apocalpse?',
-            answers:[
-               { text:'7', correct: false},
-               {text:'6', correct: false},
-               {text:'5', correct: false},
-               {text:"4",correct: true}
-            
-            ]},
-            {
-            question:'(55) Na visão profética de João, qual era o número de cavaleiros do Apocalpse?',
-            answers:[
-               { text:'7', correct: false},
-               {text:'6', correct: false},
-               {text:'5', correct: false},
-               {text:"4",correct: true}
-            
-            ]},
-            {
-            question:'(56) Na visão profética de João, qual era o número de cavaleiros do Apocalpse?',
-            answers:[
-               { text:'7', correct: false},
-               {text:'6', correct: false},
-               {text:'5', correct: false},
-               {text:"4",correct: true}
-            
-            ]},
-            {
-            question:'(57) Na visão profética de João, qual era o número de cavaleiros do Apocalpse?',
-            answers:[
-               { text:'7', correct: false},
-               {text:'6', correct: false},
-               {text:'5', correct: false},
-               {text:"4",correct: true}
-            
-            ]},
-            {
-            question:'(58) Na visão profética de João, qual era o número de cavaleiros do Apocalpse?',
-            answers:[
-               { text:'7', correct: false},
-               {text:'6', correct: false},
-               {text:'5', correct: false},
-               {text:"4",correct: true}
-            
-            ]},
-            {
-            question:'(59) Na visão profética de João, qual era o número de cavaleiros do Apocalpse?',
-            answers:[
-               { text:'7', correct: false},
-               {text:'6', correct: false},
-               {text:'5', correct: false},
-               {text:"4",correct: true}
-            
-            ]},
-            {
-            question:'(60) Na visão profética de João, qual era o número de cavaleiros do Apocalpse?',
-            answers:[
-               { text:'7', correct: false},
-               {text:'6', correct: false},
-               {text:'5', correct: false},
-               {text:"4",correct: true}
-            
-            ]},
-            {
-            question:'(61) Na visão profética de João, qual era o número de cavaleiros do Apocalpse?',
-            answers:[
-               { text:'7', correct: false},
-               {text:'6', correct: false},
-               {text:'5', correct: false},
-               {text:"4",correct: true}
-            
-            ]},
-            {
-            question:'(62) Na visão profética de João, qual era o número de cavaleiros do Apocalpse?',
-            answers:[
-               { text:'7', correct: false},
-               {text:'6', correct: false},
-               {text:'5', correct: false},
-               {text:"4",correct: true}
-            
-            ]},
-            {
-            question:'(63) Na visão profética de João, qual era o número de cavaleiros do Apocalpse?',
-            answers:[
-               { text:'7', correct: false},
-               {text:'6', correct: false},
-               {text:'5', correct: false},
-               {text:"4",correct: true}
-            
-            ]},
-            
-]
+          ]
+          
+           
+       
+           
