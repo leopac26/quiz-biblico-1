@@ -1,15 +1,19 @@
+
 const $startGameButton = document.querySelector('.start-quiz')
 const $questionsContainer = document.querySelector('.questions-container')
 const $answersContainer = document.querySelector(".answers-container")
 const $questionText = document.querySelector(".question")
 const $nextQuestionButton = document.querySelector(".next-question")
-
-$startGameButton.addEventListener("click", startGame)
-$nextQuestionButton.addEventListener("click", displayNextQuestion)
-
+const $timerBar = document.getElementById("timerBar")
+const $timeText = document.getElementById("timeText")
 
 let currentQuestionIndex = 0
 let totalCorrect = 0
+let timer
+let countdownInterval
+
+$startGameButton.addEventListener("click", startGame)
+$nextQuestionButton.addEventListener("click", displayNextQuestion)
 
 function startGame(){
     $startGameButton.classList.add("hide")
@@ -20,26 +24,36 @@ function startGame(){
 function displayNextQuestion(){
     resetState()
 
-    if(questions.length == currentQuestionIndex){
+    if (questions.length === currentQuestionIndex) {
         return finishGame()
     }
 
-    $questionText.textContent = questions[currentQuestionIndex].question
-    questions[currentQuestionIndex].answers.forEach(answer =>{
+    const currentQuestion = questions[currentQuestionIndex]
+    $questionText.textContent = currentQuestion.question
+
+    currentQuestion.answers.forEach(answer => {
         const newAnswer = document.createElement("button")
         newAnswer.classList.add("button", "answer")
         newAnswer.textContent = answer.text
-        if(answer.correct){
+        if (answer.correct) {
             newAnswer.dataset.correct = answer.correct
         }
-        $answersContainer.appendChild(newAnswer)
-
         newAnswer.addEventListener("click", selectAnswer)
+        $answersContainer.appendChild(newAnswer)
     })
+
+    startTimer()
 }
 
 function resetState(){
-    while($answersContainer.firstChild){
+    clearTimeout(timer)
+    clearInterval(countdownInterval)
+
+    $timeText.textContent = ""
+    $timerBar.style.transition = "none"
+    $timerBar.style.width = "0%"
+
+    while ($answersContainer.firstChild) {
         $answersContainer.removeChild($answersContainer.firstChild)
     }
 
@@ -48,55 +62,142 @@ function resetState(){
 }
 
 function selectAnswer(event){
+    clearTimeout(timer)
+    clearInterval(countdownInterval)
+
     const answerClicked = event.target
 
-    if(answerClicked.dataset.correct){
+    if (answerClicked.dataset.correct) {
         document.body.classList.add("correct")
         totalCorrect++
-    }else{
+    } else {
         document.body.classList.add("incorrect")
     }
 
     document.querySelectorAll(".answer").forEach(button => {
-        if(button.dataset.correct){
+        if (button.dataset.correct) {
             button.classList.add("correct")
-        }else{
+        } else {
             button.classList.add("incorrect")
         }
-
         button.disabled = true
     })
+
     $nextQuestionButton.classList.remove("hide")
     currentQuestionIndex++
 }
 
 function finishGame(){
-const totalQuestion = questions.length
-const performance = Math.floor (totalCorrect * 100 / totalQuestion)
+    const totalQuestion = questions.length
+    const performance = Math.floor(totalCorrect * 100 / totalQuestion)
 
-let message = ""
-
-switch (true) {
-    case (performance >= 90):
-        message = "Excelente :)"
-        break
-        case(performance >= 70):
-        message = "Muito bom :)"
-        break
+    let message = ""
+    switch (true) {
+        case (performance >= 90):
+            message = "Excelente :)"
+            break
+        case (performance >= 70):
+            message = "Muito bom :)"
+            break
         default:
             message = "Pode melhorar :("
-            
+    }
+
+    $questionsContainer.innerHTML = `
+        <p class="final-message">
+            Você acertou ${totalCorrect} de ${totalQuestion} questões!<br>
+            <span>Resultado: ${message}</span>
+        </p>
+        <button onclick="window.location.reload()" class="button">Refazer teste</button>
+    `
 }
-$questionsContainer.innerHTML = `<p class="final-message"> Você acertou ${totalCorrect} de ${totalQuestion} questões! 
-<span> Resultado: ${message}</span>
-</p>
-<button onclick=window.location.reload() class= "button">
-Refazer teste
-</button>`
 
+function startTimer(){
+    clearTimeout(timer)
+    clearInterval(countdownInterval)
+
+    let timeLeft = 20
+    $timeText.textContent = `Tempo restante: ${timeLeft}s`
+
+    $timerBar.style.transition = 'none'
+    $timerBar.style.width = '100%'
+
+    setTimeout(() => {
+        $timerBar.style.transition = 'width 15s linear'
+        $timerBar.style.width = '0%'
+    }, 50)
+
+    countdownInterval = setInterval(() => {
+        timeLeft--
+        $timeText.textContent = `Tempo restante: ${timeLeft}s`
+        if (timeLeft <= 0) {
+            clearInterval(countdownInterval)
+        }
+    }, 1000)
+
+    timer = setTimeout(() => {
+        disableAnswers()
+        document.body.classList.add("incorrect")
+        $nextQuestionButton.classList.remove("hide")
+        currentQuestionIndex++
+    }, 15000)
+}
+
+function disableAnswers(){
+    document.querySelectorAll(".answer").forEach(button => {
+        if (button.dataset.correct) {
+            button.classList.add("correct")
+        } else {
+            button.classList.add("incorrect")
+        }
+        button.disabled = true
+    })
 }
 
 
+function finishGame(){
+    const totalQuestion = questions.length
+    const performance = Math.floor(totalCorrect * 100 / totalQuestion)
+
+    let message = ""
+
+    switch (true) {
+        case (performance >= 90):
+            message = "Excelente :)"
+            break
+        case (performance >= 70):
+            message = "Muito bom :)"
+            break
+        default:
+            message = "Pode melhorar :("
+    }
+
+    $questionsContainer.innerHTML = `
+        <p class="final-message">Você acertou ${totalCorrect} de ${totalQuestion} questões! 
+        <span>Resultado: ${message}</span></p>
+        <button onclick="window.location.reload()" class="button">Refazer teste</button>
+    `
+}
+
+const questions = [
+    {
+        question: "(1) A quem Paulo chamou de 'meu companheiro de lutas'? (Referência bíblica: Filemom 1:2)",
+        answers: [
+            { text: "Apolo", correct: false },
+            { text: "Afia", correct: false },
+            { text: "Arquipo", correct: true },
+            { text: "Adonias", correct: false }
+        ]
+    },
+    {
+        question: "(2) Quais discípulos perguntaram a Jesus se podiam fazer descer fogo do céu? (Referência bíblica: Lucas 9:54)",
+        answers: [
+            { text: "João e Tiago", correct: true },
+            { text: "Pedro e João", correct: false },
+            { text: "Tiago e Pedro", correct: false },
+            { text: "Tiago e Mateus", correct: false }
+        ]
+    },
 
 
 
@@ -107,7 +208,11 @@ Refazer teste
 
 
 
-const questions = [{
+
+
+
+
+   {
     question: "(1) A quem Paulo chamou de 'meu companheiro de lutas (Referencia biblica filemon 1:2.)",
     
     answers:[
