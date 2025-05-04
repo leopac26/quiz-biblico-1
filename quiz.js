@@ -183,7 +183,7 @@ function disableAnswers(){
 
 // Suas perguntas de quiz
 const questions = [
-   /*{
+   {
         question: "(1) A quem Paulo chamou de 'meu companheiro de lutas' (Referência bíblica: Filemon 1:2)?",
         answers:[
             {text: "Apolo", correct: false },
@@ -793,7 +793,7 @@ const questions = [
                ]
            },
            
-           */ {
+            {
               question: "(69) Quem foi o primogênito de Jacó? (Gênesis 29:32)",
               answers: [
                 { text: "a) Júda", correct: false },
@@ -810,9 +810,9 @@ const questions = [
                 { text: "c) Moisés", correct: true },
                 { text: "d) Noé", correct: false }
               ]
-            }
+            }];
 
-            {
+           /* {
               question: "(71) Quem foi jogado na cova dos leões? (Daniel 6:16)",
               answers: [
                 { text: "a) Daniel", correct: true },
@@ -1525,7 +1525,7 @@ const questions = [
                 { text: "C) O centurião se converteu, um dos ladrões crucificados ressuscitou, o véu do templo se rasgou", correct: false },
                 { text: "D) O tempo parou por 3 horas, pessoas foram curadas, mortos ressuscitaram nos sepulcros", correct: false }
               ]
-            }];
+            }
           
                   
           
