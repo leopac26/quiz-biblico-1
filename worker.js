@@ -1,4 +1,4 @@
-const CACHE_NAME = "quiz-biblico-cache-v1";
+const CACHE_NAME = "quiz-biblico-cache-v2";
 const urlsToCache = [
   "index.html",
   "quiz.css",
@@ -10,10 +10,27 @@ const urlsToCache = [
 
 // Instala o cache
 self.addEventListener("install", (event) => {
+  self.skipWaiting();
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
       return cache.addAll(urlsToCache);
     })
+  );
+});
+
+// Ativa e remove caches antigos
+self.addEventListener("activate", (event) => {
+  const cacheAllowlist = [CACHE_NAME];
+  event.waitUntil(
+    caches.keys().then((cacheNames) =>
+      Promise.all(
+        cacheNames.map((cacheName) => {
+          if (!cacheAllowlist.includes(cacheName)) {
+            return caches.delete(cacheName);
+          }
+        })
+      )
+    )
   );
 });
 
