@@ -143,14 +143,14 @@ function startTimer(){
     clearTimeout(timer)
     clearInterval(countdownInterval)
 
-    let timeLeft = 60 // muda os segundos que aparece na tela
+    let timeLeft = 30 // muda os segundos que aparece na tela
     $timeText.textContent = `Tempo restante: ${timeLeft}s`
 
     $timerBar.style.transition = 'none'
     $timerBar.style.width = '100%'
 
     setTimeout(() => {
-        $timerBar.style.transition = 'width 60s linear' // muda os segundos que aparece na barra
+        $timerBar.style.transition = 'width 30s linear' // muda os segundos que aparece na barra
         $timerBar.style.width = '0%'
     }, 50)
 
@@ -167,7 +167,7 @@ function startTimer(){
         document.body.classList.add("incorrect")
         $nextQuestionButton.classList.remove("hide")
         currentQuestionIndex++
-    }, 60000) // muda o tempo de resposta
+    }, 30000) // muda o tempo de resposta
 }
 
 function disableAnswers(){
