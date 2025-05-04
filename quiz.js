@@ -1152,8 +1152,346 @@ const questions = [
                  { text: "c) Ressuscitar Lázaro", correct: false },
                  { text: "d) Transformar água em vinho", correct: true }
                ]}
+
+                {
+                  number: 1,
+                  question: "Qual o nome e a idade da pessoa mais velha mencionada na Bíblia?",
+                  answers: [
+                    { text: "Enos, viveu 905 anos", correct: false },
+                    { text: "Noé, viveu 990 anos", correct: false },
+                    { text: "Matusalém, viveu 969 anos", correct: true },
+                    { text: "Rainha Ester, viveu 859 anos", correct: false }
+                  ],
+                  reference: "Gênesis 5:27"
+                },
+                {
+                  number: 2,
+                  question: "Qual desses não teve o seu nome mudado na Bíblia?",
+                  answers: [
+                    { text: "Sara", correct: false },
+                    { text: "Abraão", correct: false },
+                    { text: "Jacó", correct: false },
+                    { text: "Davi", correct: true },
+                    { text: "Pedro", correct: false }
+                  ],
+                  reference: "Gênesis 17:5, 17:15; Gênesis 32:28; João 1:42"
+                },
+                {
+                  number: 3,
+                  question: "Qual dos nomes de Deus Moisés deveria dar aos israelitas, quando falasse de quem tinha lhe enviado?",
+                  answers: [
+                    { text: "Elohim", correct: false },
+                    { text: "El Shadday", correct: false },
+                    { text: "Eu sou o que sou", correct: true },
+                    { text: "Eu sou o Senhor", correct: false }
+                  ],
+                  reference: "Êxodo 3:13-14"
+                },
+                {
+                  number: 4,
+                  question: "Sobre Samuel, o que não é verdade?",
+                  answers: [
+                    { text: "Sua mãe se chamava Ana", correct: false },
+                    { text: "Ungiu 3 reis de Israel: José, Saul e Davi", correct: true },
+                    { text: "Sucedeu o profeta Eli", correct: false },
+                    { text: "Teve uma visão enquanto ainda era muito novo", correct: false }
+                  ],
+                  reference: "1 Samuel 1–3"
+                },
+                {
+                  number: 5,
+                  question: "Que animal falou com Balaão?",
+                  answers: [
+                    { text: "jumenta", correct: true },
+                    { text: "camelo", correct: false },
+                    { text: "cordeiro", correct: false },
+                    { text: "pomba", correct: false }
+                  ],
+                  reference: "Números 22:28"
+                },
+                {
+                  number: 6,
+                  question: "Enquanto pastor de ovelhas, Davi protegeu seu rebanho de dois animais perigosos. Quais?",
+                  answers: [
+                    { text: "serpente e dromedário", correct: false },
+                    { text: "urso e leão", correct: true },
+                    { text: "cobra e lobo", correct: false },
+                    { text: "urso e escorpião", correct: false }
+                  ],
+                  reference: "1 Samuel 17:34-37"
+                },
+                {
+                  number: 7,
+                  question: "Quando bebê, como Moisés foi salvo do decreto infanticida do Faraó?",
+                  answers: [
+                    { text: "Foi levado às pressas para fora do Egito", correct: false },
+                    { text: "Foi escondido dentro de uma caverna", correct: false },
+                    { text: "Foi colocado num cesto e lançado no rio", correct: true },
+                    { text: "Foi levado ao templo para servir a Deus", correct: false }
+                  ],
+                  reference: "Êxodo 2:1-10"
+                },
+                {
+                  number: 8,
+                  question: "Quantos eram os discípulos mais próximos de Jesus?",
+                  answers: [
+                    { text: "10", correct: false },
+                    { text: "7", correct: false },
+                    { text: "5", correct: false },
+                    { text: "12", correct: true }
+                  ],
+                  reference: "Lucas 6:12-16"
+                },
+                {
+                  number: 9,
+                  question: "Complete o versículo: \"Porque Deus tanto amou o mundo...\"",
+                  answers: [
+                    { text: "que deu o seu Filho Unigênito, para que todo o que nele crer não pereça, mas tenha a vida eterna. João 3:16", correct: true },
+                    { text: "que enviou seu filho ao mundo, para que o mundo fosse salvo por ele. Jo. 6:16", correct: false },
+                    { text: "ao ponto de sermos chamados filhos seus, e de fato somos. 1 Jo. 3:1", correct: false },
+                    { text: "que veio para o que era seu, mas os seus não o receberam. Jo. 1:11", correct: false }
+                  ],
+                  reference: "João 3:16"
+                },
+                {
+                  number: 10,
+                  question: "Qual o nome da ilha onde João escreveu o livro de Apocalipse?",
+                  answers: [
+                    { text: "Ilha de Creta", correct: false },
+                    { text: "Ilha de Malta", correct: false },
+                    { text: "Ilha de Patmos", correct: true },
+                    { text: "Ilha de Pérgamo", correct: false }
+                  ],
+                  reference: "Apocalipse 1:9"
+                }
+              
+              
             
-          ]
+                {
+                  number: 11,
+                  question: "Qual o nome do jardim plantado por Deus para o 1º casal criado?",
+                  answers: [
+                    { text: "Jardim do Getsêmani", correct: false },
+                    { text: "Rosa de Sarom", correct: false },
+                    { text: "Jardim do Éden", correct: true },
+                    { text: "Paraíso", correct: false }
+                  ],
+                  reference: "Gênesis 2:8"
+                },
+                {
+                  number: 12,
+                  question: "Em quais livros da Bíblia é narrada a história do nascimento de Jesus?",
+                  answers: [
+                    { text: "Gênesis e Salmos", correct: false },
+                    { text: "Mateus e Marcos", correct: false },
+                    { text: "Hebreus e Apocalipse", correct: false },
+                    { text: "Mateus e Lucas", correct: true }
+                  ],
+                  reference: "Mateus 1-2; Lucas 2"
+                },
+                {
+                  number: 13,
+                  question: "Quantos casais humanos entraram na arca de Noé?",
+                  answers: [
+                    { text: "4 casais", correct: true },
+                    { text: "1 casal", correct: false },
+                    { text: "6 casais", correct: false },
+                    { text: "3 casais", correct: false }
+                  ],
+                  reference: "Gênesis 7:13"
+                },
+                {
+                  number: 14,
+                  question: "Qual dos discípulos negou a Jesus?",
+                  answers: [
+                    { text: "Judas Iscariotes", correct: false },
+                    { text: "João", correct: false },
+                    { text: "Pedro", correct: true },
+                    { text: "Bartolomeu", correct: false }
+                  ],
+                  reference: "Marcos 14:66-72"
+                },
+                {
+                  number: 15,
+                  question: "Qual o nome da cidade fundada por Caim, depois que saiu da presença de Deus?",
+                  answers: [
+                    { text: "Sodoma", correct: false },
+                    { text: "Gomorra", correct: false },
+                    { text: "Enoque", correct: true },
+                    { text: "Canaã", correct: false }
+                  ],
+                  reference: "Gênesis 4:16-17"
+                },
+                {
+                  number: 16,
+                  question: "Deus mandou que Abraão olhasse para o quê, quando lhe fez uma promessa?",
+                  answers: [
+                    { text: "Para o arco-íris no céu, símbolo da aliança com Abraão", correct: false },
+                    { text: "Para a areia do mar, para que contasse os grãos de areia, se pudesse", correct: false },
+                    { text: "Para as estrelas do céu, para que as contasse, se pudesse", correct: true },
+                    { text: "Para a floresta da terra prometida, para contar as árvores frutíferas", correct: false }
+                  ],
+                  reference: "Gênesis 15:5"
+                },
+                {
+                  number: 17,
+                  question: "Judas traiu a Jesus por qual valor?",
+                  answers: [
+                    { text: "30 moedas de prata", correct: true },
+                    { text: "100 moedas de ouro", correct: false },
+                    { text: "50 moedas de prata", correct: false },
+                    { text: "30 moedas de ouro", correct: false }
+                  ],
+                  reference: "Mateus 26:14-16"
+                },
+                {
+                  number: 18,
+                  question: "Quem eram os dois irmãos de Moisés?",
+                  answers: [
+                    { text: "Esaú e Jacó", correct: false },
+                    { text: "Miriã e Arão", correct: true },
+                    { text: "Josué e Calebe", correct: false },
+                    { text: "Priscila e Áquila", correct: false }
+                  ],
+                  reference: "Êxodo 15:20-21; Êxodo 6:16-20"
+                },
+                {
+                  number: 19,
+                  question: "Quem foi o juiz hebreu que Dalila seduziu para entregar ao exército filisteu?",
+                  answers: [
+                    { text: "Sansão", correct: true },
+                    { text: "Salomão", correct: false },
+                    { text: "Samuel", correct: false },
+                    { text: "Saul", correct: false }
+                  ],
+                  reference: "Juízes 16:18-20"
+                },
+                {
+                  number: 20,
+                  question: "Como e onde aconteceu a conversão de Paulo?",
+                  answers: [
+                    { text: "Foi chamado enquanto pescava junto de outros pescadores, no mar da Galiléia", correct: false },
+                    { text: "Teve um sonho à noite, enquanto dormia na cidade de Tarso", correct: false },
+                    { text: "Durante a pregação das Escrituras, na Sinagoga em Jerusalém", correct: false },
+                    { text: "Teve uma visão depois de cair por terra, perto de Damasco", correct: true }
+                  ],
+                  reference: "Atos 9:3-6"
+                }
+              
+              
+              
+                {
+                  number: 21,
+                  question: "A Bíblia é composta por quantos livros?",
+                  answers: [
+                    { text: "88 livros", correct: false },
+                    { text: "37 livros", correct: false },
+                    { text: "66 livros", correct: true },
+                    { text: "100 livros", correct: false }
+                  ],
+                  reference: "Gênesis a Apocalipse"
+                },
+                {
+                  number: 22,
+                  question: "Qual o significado original da palavra 'Bíblia'?",
+                  answers: [
+                    { text: "Bíblia é o plural de 'biblos' do grego e significa livros", correct: true },
+                    { text: "Bíblia significa 'palavra escrita' no hebraico", correct: false },
+                    { text: "Bíblia era o nome hebraico das pedras dos 10 Mandamentos, por isso foi adotada no conjunto dos livros", correct: false },
+                    { text: "Bíblia é uma homenagem aos primeiros tradutores, que eram chamados 'Biblianos'", correct: false }
+                  ],
+                  reference: "Grego - 'biblos' significa livros"
+                },
+                {
+                  number: 23,
+                  question: "De acordo com 2 Timóteo 3:16, toda a Escritura é:",
+                  answers: [
+                    { text: "ditada por Deus, letra por letra", correct: false },
+                    { text: "baseada nos sonhos dos profetas e apóstolos", correct: false },
+                    { text: "inspirada por Deus e útil para seus propósitos", correct: true },
+                    { text: "transcrita por anjos para ensinar aos homens", correct: false }
+                  ],
+                  reference: "2 Timóteo 3:16"
+                },
+                {
+                  number: 24,
+                  question: "A Bíblia é dividida em:",
+                  answers: [
+                    { text: "3 partes: Pentateuco, livros históricos e Evangelhos", correct: false },
+                    { text: "2 partes: Antigo Testamento e Novo Testamento", correct: true },
+                    { text: "3 partes: Velho Testamento, Salmos e Novo Testamento", correct: false },
+                    { text: "2 partes: Livros da Lei e Apocalipse", correct: false }
+                  ],
+                  reference: "Antigo e Novo Testamento"
+                },
+                {
+                  number: 25,
+                  question: "Como a Bíblia foi escrita?",
+                  answers: [
+                    { text: "Ao longo do ministério de Jesus, os discípulos foram escrevendo todos os livros", correct: false },
+                    { text: "Durante aproximadamente 100 anos, um grupo de 70 profetas escreveram a Bíblia", correct: false },
+                    { text: "Durante 5 séculos a Bíblia foi escrita por 70 escribas e 12 apóstolos", correct: false },
+                    { text: "Ao longo de 1600 anos, 40 autores diferentes escreveram toda a Bíblia", correct: true }
+                  ],
+                  reference: "Mais ou menos 1600 anos, de 1500 a.C. a 100 d.C."
+                },
+                {
+                  number: 26,
+                  question: "Qual é o tema central da Bíblia?",
+                  answers: [
+                    { text: "Os heróis da fé e seus milagres sobrenaturais", correct: false },
+                    { text: "Jesus Cristo", correct: true },
+                    { text: "A importância de buscar a Deus para ter uma vida longa e próspera", correct: false },
+                    { text: "As vitórias e a glória de personagens importantes, como o rei Davi, Moisés e outros", correct: false }
+                  ],
+                  reference: "Lucas 24:27, 44-45; Atos 10:43"
+                },
+                {
+                  number: 27,
+                  question: "Qual é o menor versículo da Bíblia?",
+                  answers: [
+                    { text: "João 11:35", correct: true },
+                    { text: "Ester 8:9", correct: false },
+                    { text: "Êxodo 20:13", correct: false },
+                    { text: "Jó 3:2", correct: false }
+                  ],
+                  reference: "João 11:35 - 'Jesus chorou.'"
+                },
+                {
+                  number: 28,
+                  question: "Qual é o maior e o menor capítulos da Bíblia?",
+                  answers: [
+                    { text: "O maior capítulo é de Isaías 66 e o menor capítulo é Salmo 2", correct: false },
+                    { text: "O maior é o Salmo 119 e o menor é o Salmo 117", correct: true },
+                    { text: "O maior capítulo é Lamentações de Jeremias 3 e o menor é 2ª carta de João", correct: false },
+                    { text: "O maior é o Salmo 150 e o menor é Judas 1", correct: false }
+                  ],
+                  reference: "Salmo 119 (176 versículos); Salmo 117 (2 versículos)"
+                },
+                {
+                  number: 29,
+                  question: "Das seguintes afirmações qual não é a correta?",
+                  answers: [
+                    { text: "A Bíblia foi o 1º livro impresso no mundo, sendo a partir daí o mais traduzido e vendido", correct: true },
+                    { text: "O Antigo Testamento possui 39 livros e o Novo Testamento é composto por 27", correct: false },
+                    { text: "A Bíblia também é conhecida como 'Palavra de Deus', 'Verdade' e 'Sagradas Escrituras'", correct: false },
+                    { text: "Moisés foi o autor com menos livros escritos em toda a Bíblia", correct: false }
+                  ],
+                  reference: "Moisés escreveu o Pentateuco (Gênesis a Deuteronômio)"
+                },
+                {
+                  number: 30,
+                  question: "A Bíblia foi escrita em quais línguas originais?",
+                  answers: [
+                    { text: "siríaco, hebraico e latim", correct: false },
+                    { text: "hebraico, aramaico e grego", correct: true },
+                    { text: "aramaico, persa e grego", correct: false },
+                    { text: "hebraico, macedônio e aramaico", correct: false }
+                  ],
+                  reference: "Hebraico, Aramaico e Grego"
+                }
+              ];
+              
           
            
        
