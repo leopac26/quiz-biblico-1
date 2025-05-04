@@ -1,4 +1,5 @@
-const CACHE_NAME = "quiz-biblico-cache-v3";
+/*
+const CACHE_NAME = "quiz-biblico-cache-v2";
 const urlsToCache = [
   "index.html",
   "quiz.css",
@@ -50,14 +51,14 @@ self.addEventListener("message", (event) => {
     self.skipWaiting();
   }
 });
+*/
 
 
 
 
 
 
-
-/*const CACHE_NAME = "quiz-biblico-cache-v2";
+const CACHE_NAME = "quiz-biblico-cache-v2";
 const urlsToCache = [
   "index.html",
   "quiz.css",
@@ -91,6 +92,7 @@ self.addEventListener("activate", (event) => {
       )
     )
   );
+  
 });
 
 // Intercepta requisições
@@ -100,4 +102,4 @@ self.addEventListener("fetch", (event) => {
       return response || fetch(event.request);
     })
   );
-});*/
+});

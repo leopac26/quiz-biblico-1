@@ -29,7 +29,7 @@ function startGame(){
     displayNextQuestion()
 
     // Enviar dados ao backend quando o jogo começar
-    fetch('http://Localhost:3000/api/registrar-acesso', {
+    fetch('http://localhost:3000/api/registrar-acesso', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -183,7 +183,7 @@ function disableAnswers(){
 
 // Suas perguntas de quiz
 const questions = [
-    {
+   /*{
         question: "(1) A quem Paulo chamou de 'meu companheiro de lutas' (Referência bíblica: Filemon 1:2)?",
         answers:[
             {text: "Apolo", correct: false },
@@ -756,7 +756,7 @@ const questions = [
                    { text: "d) Antioquia, Esmirna, Tiatira, Sardes, Tessalônica, Filadélfia e Laodiceia.", correct: false }
                ]
            },
-           {
+          {
                question: "(65) O que houve quando o Cordeiro quebrou o último selo? (Apocalipse 8:1)",
                answers: [
                    { text: "a) O Diabo foi aprisionado durante 2000 anos.", correct: false },
@@ -793,8 +793,8 @@ const questions = [
                ]
            },
            
-            {
-              question: "(1) Quem foi o primogênito de Jacó? (Gênesis 29:32)",
+           */ {
+              question: "(69) Quem foi o primogênito de Jacó? (Gênesis 29:32)",
               answers: [
                 { text: "a) Júda", correct: false },
                 { text: "b) José", correct: false },
@@ -803,16 +803,17 @@ const questions = [
               ]
             },
             {
-              question: "(2) Quem viu um arbusto em chamas que não se consumia? (Êxodo 3:2-3)",
+              question: "(70) Quem viu um arbusto em chamas que não se consumia? (Êxodo 3:2-3)",
               answers: [
                 { text: "a) Abraão", correct: false },
                 { text: "b) Isaque", correct: false },
                 { text: "c) Moisés", correct: true },
                 { text: "d) Noé", correct: false }
               ]
-            },
+            }
+
             {
-              question: "(3) Quem foi jogado na cova dos leões? (Daniel 6:16)",
+              question: "(71) Quem foi jogado na cova dos leões? (Daniel 6:16)",
               answers: [
                 { text: "a) Daniel", correct: true },
                 { text: "b) Davi", correct: false },
@@ -821,7 +822,7 @@ const questions = [
               ]
             },
             {
-              question: "(4) Qual era a profissão de Mateus antes de seguir Jesus? (Mateus 9:9)",
+              question: "(72) Qual era a profissão de Mateus antes de seguir Jesus? (Mateus 9:9)",
               answers: [
                 { text: "a) Pescador", correct: false },
                 { text: "b) Médico", correct: false },
@@ -830,7 +831,7 @@ const questions = [
               ]
             },
             {
-              question: "(5) Quem interpretou o sonho de Nabucodonosor de uma estátua com pés de ferro e barro? (Daniel 2:31-45)",
+              question: "(73) Quem interpretou o sonho de Nabucodonosor de uma estátua com pés de ferro e barro? (Daniel 2:31-45)",
               answers: [
                 { text: "a) Isaías", correct: false },
                 { text: "b) José", correct: false },
@@ -839,7 +840,7 @@ const questions = [
               ]
             },
             {
-              question: "(6) Quem conduziu os israelitas para fora do Egito? (Êxodo 3:10)",
+              question: "(74) Quem conduziu os israelitas para fora do Egito? (Êxodo 3:10)",
               answers: [
                 { text: "a) Arão", correct: false },
                 { text: "b) Josué", correct: false },
@@ -848,7 +849,7 @@ const questions = [
               ]
             },
             {
-              question: "(7) Quem foi o rei da Babilônia que enlouqueceu e viveu como um animal? (Daniel 4:33)",
+              question: "(75) Quem foi o rei da Babilônia que enlouqueceu e viveu como um animal? (Daniel 4:33)",
               answers: [
                 { text: "a) Belsazar", correct: false },
                 { text: "b) Dario", correct: false },
@@ -857,7 +858,7 @@ const questions = [
               ]
             },
             {
-              question: "(8) Onde Jesus realizou seu primeiro milagre? (João 2:1-11)",
+              question: "(76) Onde Jesus realizou seu primeiro milagre? (João 2:1-11)",
               answers: [
                 { text: "a) Jerusalém", correct: false },
                 { text: "b) Nazaré", correct: false },
@@ -866,7 +867,7 @@ const questions = [
               ]
             },
             {
-              question: "(9) Quem subiu numa figueira para ver Jesus? (Lucas 19:1-10)",
+              question: "(77) Quem subiu numa figueira para ver Jesus? (Lucas 19:1-10)",
               answers: [
                 { text: "a) Pedro", correct: false },
                 { text: "b) Tomé", correct: false },
@@ -875,7 +876,7 @@ const questions = [
               ]
             },
             {
-              question: "(10) Quem escreveu a maioria das cartas do Novo Testamento?",
+              question: "(78) Quem escreveu a maioria das cartas do Novo Testamento?",
               answers: [
                 { text: "a) Pedro", correct: false },
                 { text: "b) João", correct: false },
@@ -884,7 +885,7 @@ const questions = [
               ]
             },
             {
-               question: "(11) Quem foi a mão do rei Davi? (1 Samuel 18:20-27)",
+               question: "(79) Quem foi a mão do rei Davi? (1 Samuel 18:20-27)",
                answers: [
                  { text: "a) Jonatas", correct: false },
                  { text: "b) Saul", correct: false },
@@ -893,7 +894,7 @@ const questions = [
                ]
              },
              {
-               question: "(12) Qual discípulo andou sobre as águas com Jesus? (Mateus 14:29)",
+               question: "(80) Qual discípulo andou sobre as águas com Jesus? (Mateus 14:29)",
                answers: [
                  { text: "a) João", correct: false },
                  { text: "b) Tiago", correct: false },
@@ -902,7 +903,7 @@ const questions = [
                ]
              },
              {
-               question: "(13) Onde Moisés recebeu os Dez Mandamentos? (Êxodo 19:20)",
+               question: "(81) Onde Moisés recebeu os Dez Mandamentos? (Êxodo 19:20)",
                answers: [
                  { text: "a) Monte Carmelo", correct: false },
                  { text: "b) Monte Sinai", correct: true },
@@ -911,7 +912,7 @@ const questions = [
                ]
              },
              {
-               question: "(14) Quem foi o rei mais sábio de Israel? (1 Reis 3:12)",
+               question: "(82) Quem foi o rei mais sábio de Israel? (1 Reis 3:12)",
                answers: [
                  { text: "a) Davi", correct: false },
                  { text: "b) Salomão", correct: true },
@@ -920,7 +921,7 @@ const questions = [
                ]
              },
              {
-               question: "(15) Qual o primeiro livro do Novo Testamento?",
+               question: "(83) Qual o primeiro livro do Novo Testamento?",
                answers: [
                  { text: "a) Marcos", correct: false },
                  { text: "b) João", correct: false },
@@ -929,7 +930,7 @@ const questions = [
                ]
              },
              {
-               question: "(16) Quem foi lançado na fornalha ardente? (Daniel 3:19-23)",
+               question: "(84) Quem foi lançado na fornalha ardente? (Daniel 3:19-23)",
                answers: [
                  { text: "a) Sadraque, Mesaque e Abednego", correct: true },
                  { text: "b) Daniel", correct: false },
@@ -938,7 +939,7 @@ const questions = [
                ]
              },
              {
-               question: "(17) Quantos foram os dias de criação no Gênesis? (Gênesis 1)",
+               question: "(85) Quantos foram os dias de criação no Gênesis? (Gênesis 1)",
                answers: [
                  { text: "a) 5 dias", correct: false },
                  { text: "b) 6 dias", correct: true },
@@ -947,7 +948,7 @@ const questions = [
                ]
              },
              {
-               question: "(18) Quem foi a esposa de Isaque? (Gênesis 24:67)",
+               question: "(86) Quem foi a esposa de Isaque? (Gênesis 24:67)",
                answers: [
                  { text: "a) Sara", correct: false },
                  { text: "b) Rebeca", correct: true },
@@ -956,7 +957,7 @@ const questions = [
                ]
              },
              {
-               question: "(19) Quem subiu ao céu em um redemoinho? (2 Reis 2:11)",
+               question: "(87) Quem subiu ao céu em um redemoinho? (2 Reis 2:11)",
                answers: [
                  { text: "a) Moisés", correct: false },
                  { text: "b) Elias", correct: true },
@@ -965,7 +966,7 @@ const questions = [
                ]
              },
              {
-               question: "(20) Quem foi o primeiro rei de Israel? (1 Samuel 10:1)",
+               question: "(88) Quem foi o primeiro rei de Israel? (1 Samuel 10:1)",
                answers: [
                  { text: "a) Saul", correct: true },
                  { text: "b) Davi", correct: false },
@@ -974,7 +975,7 @@ const questions = [
                ]
              },
              {
-               question: "(21) Quem foi o mais forte homem da Bíblia? (Juízes 13:24-25)",
+               question: "(89) Quem foi o mais forte homem da Bíblia? (Juízes 13:24-25)",
                answers: [
                  { text: "a) Gideão", correct: false },
                  { text: "b) Sansão", correct: true },
@@ -983,7 +984,7 @@ const questions = [
                ]
              },
              {
-               question: "(22) Quem matou Golias? (1 Samuel 17:49)",
+               question: "(90) Quem matou Golias? (1 Samuel 17:49)",
                answers: [
                  { text: "a) Saul", correct: false },
                  { text: "b) Samuel", correct: false },
@@ -992,7 +993,7 @@ const questions = [
                ]
              },
              {
-               question: "(23) Quem foi o pai de João Batista? (Lucas 1:57-60)",
+               question: "(91) Quem foi o pai de João Batista? (Lucas 1:57-60)",
                answers: [
                  { text: "a) José", correct: false },
                  { text: "b) Zacarias", correct: true },
@@ -1001,7 +1002,7 @@ const questions = [
                ]
              },
              {
-               question: "(24) Quem foi jogado ao mar e depois engolido por um grande peixe? (Jonas 1:17)",
+               question: "(92) Quem foi jogado ao mar e depois engolido por um grande peixe? (Jonas 1:17)",
                answers: [
                  { text: "a) Ezequiel", correct: false },
                  { text: "b) Elias", correct: false },
@@ -1010,7 +1011,7 @@ const questions = [
                ]
              },
              {
-               question: "(25) Quem foi a primeira pessoa a morrer por causa do evangelho? (Atos 7:54-60)",
+               question: "(93) Quem foi a primeira pessoa a morrer por causa do evangelho? (Atos 7:54-60)",
                answers: [
                  { text: "a) Pedro", correct: false },
                  { text: "b) Estevão", correct: true },
@@ -1019,7 +1020,7 @@ const questions = [
                ]
              },
              {
-               question: "(26) Quem batizou Jesus? (Mateus 3:13-17)",
+               question: "(94) Quem batizou Jesus? (Mateus 3:13-17)",
                answers: [
                  { text: "a) João Batista", correct: true },
                  { text: "b) Paulo", correct: false },
@@ -1028,7 +1029,7 @@ const questions = [
                ]
              },
              {
-               question: "(27) Quem servia vinho ao rei e levou o susto de sua vida? (Neemias 1:11)",
+               question: "(95) Quem servia vinho ao rei e levou o susto de sua vida? (Neemias 1:11)",
                answers: [
                  { text: "a) José", correct: false },
                  { text: "b) Esdras", correct: false },
@@ -1037,7 +1038,7 @@ const questions = [
                ]
              },
              {
-               question: "(28) Quem era o irmão traidor que vendia os irmãos por moedas de prata? (Mateus 26:14-16)",
+               question: "(96) Quem era o irmão traidor que vendia os irmãos por moedas de prata? (Mateus 26:14-16)",
                answers: [
                  { text: "a) José", correct: false },
                  { text: "b) Simão", correct: false },
@@ -1046,7 +1047,7 @@ const questions = [
                ]
              },
              {
-               question: "(29) Quem foi a primeira mulher? (Gênesis 2:21-23)",
+               question: "(97) Quem foi a primeira mulher? (Gênesis 2:21-23)",
                answers: [
                  { text: "a) Eva", correct: true },
                  { text: "b) Sara", correct: false },
@@ -1055,7 +1056,7 @@ const questions = [
                ]
              },
              {
-               question: "(30) Qual Profeta foi chamado para falar com o faraó do Egito? (Êxodo 3:10)",
+               question: "(98) Qual Profeta foi chamado para falar com o faraó do Egito? (Êxodo 3:10)",
                answers: [
                  { text: "a) José", correct: false },
                  { text: "b) Moisés", correct: true },
@@ -1064,7 +1065,7 @@ const questions = [
                ]
              },
              {
-               question: "(31) Quem profetizou sobre o Vale dos Ossos Secos? (Ezequiel 37:1-14)",
+               question: "(99) Quem profetizou sobre o Vale dos Ossos Secos? (Ezequiel 37:1-14)",
                answers: [
                  { text: "a) Isaías", correct: false },
                  { text: "b) Jeremias", correct: false },
@@ -1073,7 +1074,7 @@ const questions = [
                ]
              },
              {
-               question: "(32) Quem foi o filho que Jacó amava mais? (Gênesis 37:3)",
+               question: "(100) Quem foi o filho que Jacó amava mais? (Gênesis 37:3)",
                answers: [
                  { text: "a) Levi", correct: false },
                  { text: "b) Judá", correct: false },
@@ -1082,7 +1083,7 @@ const questions = [
                ]
              },
              {
-               question: "(33) Quem sobreviveu a um naufrágio em Malta? (Atos 28:1-2)",
+               question: "(101) Quem sobreviveu a um naufrágio em Malta? (Atos 28:1-2)",
                answers: [
                  { text: "a) Pedro", correct: false },
                  { text: "b) Paulo", correct: true },
@@ -1091,7 +1092,7 @@ const questions = [
                ]
              },
              {
-               question: "(34) Quem era considerado amigo de Deus? (Tiago 2:23)",
+               question: "(102) Quem era considerado amigo de Deus? (Tiago 2:23)",
                answers: [
                  { text: "a) Moisés", correct: false },
                  { text: "b) Davi", correct: false },
@@ -1100,7 +1101,7 @@ const questions = [
                ]
              },
              {
-               question: "(35) Quem interpretou o sonho do Faraó? (Gênesis 41:25)",
+               question: "(103) Quem interpretou o sonho do Faraó? (Gênesis 41:25)",
                answers: [
                  { text: "a) Daniel", correct: false },
                  { text: "b) José", correct: true },
@@ -1109,7 +1110,7 @@ const questions = [
                ]
              },
              {
-               question: "(36) Qual foi a última praga do Egito? (Êxodo 12:29-30)",
+               question: "(104) Qual foi a última praga do Egito? (Êxodo 12:29-30)",
                answers: [
                  { text: "a) Rãs", correct: false },
                  { text: "b) Gafanhotos", correct: false },
@@ -1118,7 +1119,7 @@ const questions = [
                ]
              },
              {
-               question: "(37) Quem foi o líder dos israelitas após a morte de Moisés? (Josué 1:1-2)",
+               question: "(105) Quem foi o líder dos israelitas após a morte de Moisés? (Josué 1:1-2)",
                answers: [
                  { text: "a) Josué", correct: true },
                  { text: "b) Calebe", correct: false },
@@ -1127,7 +1128,7 @@ const questions = [
                ]
              },
              {
-               question: "(38) Quem foi o homem mais velho na Bíblia? (Gênesis 5:27)",
+               question: "(106) Quem foi o homem mais velho na Bíblia? (Gênesis 5:27)",
                answers: [
                  { text: "a) Adão", correct: false },
                  { text: "b) Noé", correct: false },
@@ -1136,7 +1137,7 @@ const questions = [
                ]
              },
              {
-               question: "(39) Quantas vezes Pedro negou Jesus? (Mateus 26:75)",
+               question: "(107) Quantas vezes Pedro negou Jesus? (Mateus 26:75)",
                answers: [
                  { text: "a) Uma vez", correct: false },
                  { text: "b) Duas vezes", correct: false },
@@ -1145,353 +1146,389 @@ const questions = [
                ]
              },
              {
-               question: "(40) Qual foi o primeiro milagre de Jesus? (João 2:1-11)",
+               question: "(108) Qual foi o primeiro milagre de Jesus? (João 2:1-11)",
                answers: [
                  { text: "a) Curar um cego", correct: false },
                  { text: "b) Multiplicar pães", correct: false },
                  { text: "c) Ressuscitar Lázaro", correct: false },
                  { text: "d) Transformar água em vinho", correct: true }
-               ]}
-
-                {
-                  number: 1,
-                  question: "Qual o nome e a idade da pessoa mais velha mencionada na Bíblia?",
-                  answers: [
+               ]},
+               {
+                question: "(109) Qual o nome e a idade da pessoa mais velha mencionada na Bíblia?",
+                answers: [
                     { text: "Enos, viveu 905 anos", correct: false },
                     { text: "Noé, viveu 990 anos", correct: false },
                     { text: "Matusalém, viveu 969 anos", correct: true },
                     { text: "Rainha Ester, viveu 859 anos", correct: false }
-                  ],
-                  reference: "Gênesis 5:27"
-                },
-                {
-                  number: 2,
-                  question: "Qual desses não teve o seu nome mudado na Bíblia?",
-                  answers: [
+                ]
+            },
+            {
+                question: "(110) Qual desses não teve o seu nome mudado na Bíblia?",
+                answers: [
                     { text: "Sara", correct: false },
                     { text: "Abraão", correct: false },
                     { text: "Jacó", correct: false },
                     { text: "Davi", correct: true },
                     { text: "Pedro", correct: false }
-                  ],
-                  reference: "Gênesis 17:5, 17:15; Gênesis 32:28; João 1:42"
-                },
-                {
-                  number: 3,
-                  question: "Qual dos nomes de Deus Moisés deveria dar aos israelitas, quando falasse de quem tinha lhe enviado?",
-                  answers: [
+                ]
+            },
+            {
+                question: "(111) Qual dos nomes de Deus Moisés deveria dar aos israelitas, quando falasse de quem tinha lhe enviado?",
+                answers: [
                     { text: "Elohim", correct: false },
                     { text: "El Shadday", correct: false },
                     { text: "Eu sou o que sou", correct: true },
                     { text: "Eu sou o Senhor", correct: false }
-                  ],
-                  reference: "Êxodo 3:13-14"
-                },
-                {
-                  number: 4,
-                  question: "Sobre Samuel, o que não é verdade?",
-                  answers: [
+                ]
+            },
+            {
+                question: "(112) Sobre Samuel, o que não é verdade?",
+                answers: [
                     { text: "Sua mãe se chamava Ana", correct: false },
                     { text: "Ungiu 3 reis de Israel: José, Saul e Davi", correct: true },
                     { text: "Sucedeu o profeta Eli", correct: false },
                     { text: "Teve uma visão enquanto ainda era muito novo", correct: false }
-                  ],
-                  reference: "1 Samuel 1–3"
-                },
-                {
-                  number: 5,
-                  question: "Que animal falou com Balaão?",
-                  answers: [
+                ]
+            },
+            {
+                question: "(113) Que animal falou com Balaão?",
+                answers: [
                     { text: "jumenta", correct: true },
                     { text: "camelo", correct: false },
                     { text: "cordeiro", correct: false },
                     { text: "pomba", correct: false }
-                  ],
-                  reference: "Números 22:28"
-                },
-                {
-                  number: 6,
-                  question: "Enquanto pastor de ovelhas, Davi protegeu seu rebanho de dois animais perigosos. Quais?",
-                  answers: [
+                ]
+            },
+            {
+                question: "(114) Enquanto pastor de ovelhas, Davi protegeu seu rebanho de dois animais perigosos. Quais?",
+                answers: [
                     { text: "serpente e dromedário", correct: false },
                     { text: "urso e leão", correct: true },
                     { text: "cobra e lobo", correct: false },
                     { text: "urso e escorpião", correct: false }
-                  ],
-                  reference: "1 Samuel 17:34-37"
-                },
-                {
-                  number: 7,
-                  question: "Quando bebê, como Moisés foi salvo do decreto infanticida do Faraó?",
-                  answers: [
+                ]
+            },
+            {
+                question: "(115) Quando bebê, como Moisés foi salvo do decreto infanticida do Faraó?",
+                answers: [
                     { text: "Foi levado às pressas para fora do Egito", correct: false },
                     { text: "Foi escondido dentro de uma caverna", correct: false },
                     { text: "Foi colocado num cesto e lançado no rio", correct: true },
                     { text: "Foi levado ao templo para servir a Deus", correct: false }
-                  ],
-                  reference: "Êxodo 2:1-10"
-                },
-                {
-                  number: 8,
-                  question: "Quantos eram os discípulos mais próximos de Jesus?",
-                  answers: [
+                ]
+            },
+            {
+                question: "(116) Quantos eram os discípulos mais próximos de Jesus?",
+                answers: [
                     { text: "10", correct: false },
                     { text: "7", correct: false },
                     { text: "5", correct: false },
                     { text: "12", correct: true }
-                  ],
-                  reference: "Lucas 6:12-16"
-                },
-                {
-                  number: 9,
-                  question: "Complete o versículo: \"Porque Deus tanto amou o mundo...\"",
-                  answers: [
-                    { text: "que deu o seu Filho Unigênito, para que todo o que nele crer não pereça, mas tenha a vida eterna. João 3:16", correct: true },
-                    { text: "que enviou seu filho ao mundo, para que o mundo fosse salvo por ele. Jo. 6:16", correct: false },
-                    { text: "ao ponto de sermos chamados filhos seus, e de fato somos. 1 Jo. 3:1", correct: false },
-                    { text: "que veio para o que era seu, mas os seus não o receberam. Jo. 1:11", correct: false }
-                  ],
-                  reference: "João 3:16"
-                },
-                {
-                  number: 10,
-                  question: "Qual o nome da ilha onde João escreveu o livro de Apocalipse?",
-                  answers: [
+                ]
+            },
+            {
+                question: "(117) Complete o versículo: 'Porque Deus tanto amou o mundo...'",
+                answers: [
+                    { text: "que deu o seu Filho Unigênito, para que todo o que nele crer não pereça, mas tenha a vida eterna.", correct: true },
+                    { text: "que enviou seu filho ao mundo, para que o mundo fosse salvo por ele.", correct: false },
+                    { text: "ao ponto de sermos chamados filhos seus, e de fato somos.", correct: false },
+                    { text: "que veio para o que era seu, mas o seus não o receberam.", correct: false }
+                ]
+            },
+            {
+                question: "(118) Qual o nome da ilha onde João escreveu o livro de Apocalipse?",
+                answers: [
                     { text: "Ilha de Creta", correct: false },
                     { text: "Ilha de Malta", correct: false },
                     { text: "Ilha de Patmos", correct: true },
                     { text: "Ilha de Pérgamo", correct: false }
-                  ],
-                  reference: "Apocalipse 1:9"
-                }
+                ]
+            }
+            {
+              question: "(119) Qual o nome do jardim plantado por Deus para o 1º casal criado?",
+              answers: [
+                  { text: "Jardim do Getsêmani", correct: false },
+                  { text: "Rosa de Sarom", correct: false },
+                  { text: "Jardim do Éden", correct: true },
+                  { text: "Paraíso", correct: false }
+              ]
+          },
+          {
+              question: "(120) Em quais livros da Bíblia é narrada a história do nascimento de Jesus?",
+              answers: [
+                  { text: "Gênesis e Salmos", correct: false },
+                  { text: "Mateus e Marcos", correct: false },
+                  { text: "Hebreus e Apocalipse", correct: false },
+                  { text: "Mateus e Lucas", correct: true }
+              ]
+          },
+          {
+              question: "(121) Quantos casais humanos entraram na arca de Noé?",
+              answers: [
+                  { text: "4 casais", correct: true },
+                  { text: "1 casal", correct: false },
+                  { text: "6 casais", correct: false },
+                  { text: "3 casais", correct: false }
+              ]
+          },
+          {
+              question: "(122) Qual dos discípulos negou a Jesus?",
+              answers: [
+                  { text: "Judas Iscariotes", correct: false },
+                  { text: "João", correct: false },
+                  { text: "Pedro", correct: true },
+                  { text: "Bartolomeu", correct: false }
+              ]
+          },
+          {
+              question: "(123) Qual o nome da cidade fundada por Caim, depois que saiu da presença de Deus?",
+              answers: [
+                  { text: "Sodoma", correct: false },
+                  { text: "Gomorra", correct: false },
+                  { text: "Enoque", correct: true },
+                  { text: "Canaã", correct: false }
+              ]
+          },
+          {
+              question: "(124) Deus mandou que Abraão olhasse para o quê, quando lhe fez uma promessa?",
+              answers: [
+                  { text: "Para o arco-íris no céu, símbolo da aliança com Abraão", correct: false },
+                  { text: "Para a areia do mar, para que contasse os grãos de areia, se pudesse", correct: false },
+                  { text: "Para as estrelas do céu, para que as contasse, se pudesse", correct: true },
+                  { text: "Para a floresta da terra prometida, para contar as árvores frutíferas", correct: false }
+              ]
+          },
+          {
+              question: "(125) Judas traiu a Jesus por qual valor?",
+              answers: [
+                  { text: "30 moedas de prata", correct: true },
+                  { text: "100 moedas de ouro", correct: false },
+                  { text: "50 moedas de prata", correct: false },
+                  { text: "30 moedas de ouro", correct: false }
+              ]
+          },
+          {
+              question: "(126) Quem eram os dois irmãos de Moisés?",
+              answers: [
+                  { text: "Esaú e Jacó", correct: false },
+                  { text: "Miriã e Arão", correct: true },
+                  { text: "Josué e Calebe", correct: false },
+                  { text: "Priscila e Áquila", correct: false }
+              ]
+          },
+          {
+              question: "(127) Quem foi o juiz hebreu que Dalila seduziu para entregar ao exército filisteu?",
+              answers: [
+                  { text: "Sansão", correct: true },
+                  { text: "Salomão", correct: false },
+                  { text: "Samuel", correct: false },
+                  { text: "Saul", correct: false }
+              ]
+          },
+          {
+              question: "(128) Como e onde aconteceu a conversão de Paulo?",
+              answers: [
+                  { text: "Foi chamado enquanto pescava junto de outros pescadores, no mar da Galiléia", correct: false },
+                  { text: "Teve um sonho à noite, enquanto dormia na cidade de Tarso", correct: false },
+                  { text: "Durante a pregação das Escrituras, na Sinagoga em Jerusalém", correct: false },
+                  { text: "Teve uma visão depois de cair por terra, perto de Damasco", correct: true }
+              ]
+          },
+            {
+              question: "129. A Bíblia é composta por quantos livros?",
+              answers: [
+                { text: "A) 88 livros", correct: false },
+                { text: "B) 37 livros", correct: false },
+                { text: "C) 66 livros", correct: true },
+                { text: "D) 100 livros", correct: false }
+              ]
               
+            },
+            {
+              question: "130. Qual o significado original da palavra 'Bíblia'?",
+              answers: [
+                { text: "A) Bíblia é o plural de 'biblos' do grego e significa livros", correct: true },
+                { text: "B) Bíblia significa 'palavra escrita' no hebraico", correct: false },
+                { text: "C) Bíblia era o nome hebraico das pedras dos 10 Mandamentos", correct: false },
+                { text: "D) Bíblia é uma homenagem aos primeiros tradutores", correct: false }
+              ]
               
-            
-                {
-                  number: 11,
-                  question: "Qual o nome do jardim plantado por Deus para o 1º casal criado?",
-                  answers: [
-                    { text: "Jardim do Getsêmani", correct: false },
-                    { text: "Rosa de Sarom", correct: false },
-                    { text: "Jardim do Éden", correct: true },
-                    { text: "Paraíso", correct: false }
-                  ],
-                  reference: "Gênesis 2:8"
-                },
-                {
-                  number: 12,
-                  question: "Em quais livros da Bíblia é narrada a história do nascimento de Jesus?",
-                  answers: [
-                    { text: "Gênesis e Salmos", correct: false },
-                    { text: "Mateus e Marcos", correct: false },
-                    { text: "Hebreus e Apocalipse", correct: false },
-                    { text: "Mateus e Lucas", correct: true }
-                  ],
-                  reference: "Mateus 1-2; Lucas 2"
-                },
-                {
-                  number: 13,
-                  question: "Quantos casais humanos entraram na arca de Noé?",
-                  answers: [
-                    { text: "4 casais", correct: true },
-                    { text: "1 casal", correct: false },
-                    { text: "6 casais", correct: false },
-                    { text: "3 casais", correct: false }
-                  ],
-                  reference: "Gênesis 7:13"
-                },
-                {
-                  number: 14,
-                  question: "Qual dos discípulos negou a Jesus?",
-                  answers: [
-                    { text: "Judas Iscariotes", correct: false },
-                    { text: "João", correct: false },
-                    { text: "Pedro", correct: true },
-                    { text: "Bartolomeu", correct: false }
-                  ],
-                  reference: "Marcos 14:66-72"
-                },
-                {
-                  number: 15,
-                  question: "Qual o nome da cidade fundada por Caim, depois que saiu da presença de Deus?",
-                  answers: [
-                    { text: "Sodoma", correct: false },
-                    { text: "Gomorra", correct: false },
-                    { text: "Enoque", correct: true },
-                    { text: "Canaã", correct: false }
-                  ],
-                  reference: "Gênesis 4:16-17"
-                },
-                {
-                  number: 16,
-                  question: "Deus mandou que Abraão olhasse para o quê, quando lhe fez uma promessa?",
-                  answers: [
-                    { text: "Para o arco-íris no céu, símbolo da aliança com Abraão", correct: false },
-                    { text: "Para a areia do mar, para que contasse os grãos de areia, se pudesse", correct: false },
-                    { text: "Para as estrelas do céu, para que as contasse, se pudesse", correct: true },
-                    { text: "Para a floresta da terra prometida, para contar as árvores frutíferas", correct: false }
-                  ],
-                  reference: "Gênesis 15:5"
-                },
-                {
-                  number: 17,
-                  question: "Judas traiu a Jesus por qual valor?",
-                  answers: [
-                    { text: "30 moedas de prata", correct: true },
-                    { text: "100 moedas de ouro", correct: false },
-                    { text: "50 moedas de prata", correct: false },
-                    { text: "30 moedas de ouro", correct: false }
-                  ],
-                  reference: "Mateus 26:14-16"
-                },
-                {
-                  number: 18,
-                  question: "Quem eram os dois irmãos de Moisés?",
-                  answers: [
-                    { text: "Esaú e Jacó", correct: false },
-                    { text: "Miriã e Arão", correct: true },
-                    { text: "Josué e Calebe", correct: false },
-                    { text: "Priscila e Áquila", correct: false }
-                  ],
-                  reference: "Êxodo 15:20-21; Êxodo 6:16-20"
-                },
-                {
-                  number: 19,
-                  question: "Quem foi o juiz hebreu que Dalila seduziu para entregar ao exército filisteu?",
-                  answers: [
-                    { text: "Sansão", correct: true },
-                    { text: "Salomão", correct: false },
-                    { text: "Samuel", correct: false },
-                    { text: "Saul", correct: false }
-                  ],
-                  reference: "Juízes 16:18-20"
-                },
-                {
-                  number: 20,
-                  question: "Como e onde aconteceu a conversão de Paulo?",
-                  answers: [
-                    { text: "Foi chamado enquanto pescava junto de outros pescadores, no mar da Galiléia", correct: false },
-                    { text: "Teve um sonho à noite, enquanto dormia na cidade de Tarso", correct: false },
-                    { text: "Durante a pregação das Escrituras, na Sinagoga em Jerusalém", correct: false },
-                    { text: "Teve uma visão depois de cair por terra, perto de Damasco", correct: true }
-                  ],
-                  reference: "Atos 9:3-6"
-                }
+            },
+            {
+              question: "131. De acordo com 2 Timóteo 3:16, toda a Escritura é:",
+              answers: [
+                { text: "A) ditada por Deus, letra por letra", correct: false },
+                { text: "B) baseada nos sonhos dos profetas e apóstolos", correct: false },
+                { text: "C) inspirada por Deus e útil para seus propósitos", correct: true },
+                { text: "D) transcrita por anjos para ensinar aos homens", correct: false }
+              ]
               
+            },
+            {
+              question: "132. A Bíblia é dividida em:",
+              answers: [
+                { text: "A) 3 partes: Pentateuco, livros históricos e Evangelhos", correct: false },
+                { text: "B) 2 partes: Antigo Testamento e Novo Testamento", correct: true },
+                { text: "C) 3 partes: Velho Testamento, Salmos e Novo Testamento", correct: false },
+                { text: "D) 2 partes: Livros da Lei e Apocalipse", correct: false }
+              ]
               
+            },
+            {
+              question: "133. Como a Bíblia foi escrita?",
+              answers: [
+                { text: "A) Ao longo do ministério de Jesus, os discípulos foram escrevendo", correct: false },
+                { text: "B) Durante aproximadamente 100 anos, um grupo de 70 profetas escreveram", correct: false },
+                { text: "C) Durante 5 séculos a Bíblia foi escrita por 70 escribas", correct: false },
+                { text: "D) Ao longo de 1600 anos, 40 autores diferentes escreveram toda a Bíblia", correct: true }
+              ]
               
-                {
-                  number: 21,
-                  question: "A Bíblia é composta por quantos livros?",
-                  answers: [
-                    { text: "88 livros", correct: false },
-                    { text: "37 livros", correct: false },
-                    { text: "66 livros", correct: true },
-                    { text: "100 livros", correct: false }
-                  ],
-                  reference: "Gênesis a Apocalipse"
-                },
-                {
-                  number: 22,
-                  question: "Qual o significado original da palavra 'Bíblia'?",
-                  answers: [
-                    { text: "Bíblia é o plural de 'biblos' do grego e significa livros", correct: true },
-                    { text: "Bíblia significa 'palavra escrita' no hebraico", correct: false },
-                    { text: "Bíblia era o nome hebraico das pedras dos 10 Mandamentos, por isso foi adotada no conjunto dos livros", correct: false },
-                    { text: "Bíblia é uma homenagem aos primeiros tradutores, que eram chamados 'Biblianos'", correct: false }
-                  ],
-                  reference: "Grego - 'biblos' significa livros"
-                },
-                {
-                  number: 23,
-                  question: "De acordo com 2 Timóteo 3:16, toda a Escritura é:",
-                  answers: [
-                    { text: "ditada por Deus, letra por letra", correct: false },
-                    { text: "baseada nos sonhos dos profetas e apóstolos", correct: false },
-                    { text: "inspirada por Deus e útil para seus propósitos", correct: true },
-                    { text: "transcrita por anjos para ensinar aos homens", correct: false }
-                  ],
-                  reference: "2 Timóteo 3:16"
-                },
-                {
-                  number: 24,
-                  question: "A Bíblia é dividida em:",
-                  answers: [
-                    { text: "3 partes: Pentateuco, livros históricos e Evangelhos", correct: false },
-                    { text: "2 partes: Antigo Testamento e Novo Testamento", correct: true },
-                    { text: "3 partes: Velho Testamento, Salmos e Novo Testamento", correct: false },
-                    { text: "2 partes: Livros da Lei e Apocalipse", correct: false }
-                  ],
-                  reference: "Antigo e Novo Testamento"
-                },
-                {
-                  number: 25,
-                  question: "Como a Bíblia foi escrita?",
-                  answers: [
-                    { text: "Ao longo do ministério de Jesus, os discípulos foram escrevendo todos os livros", correct: false },
-                    { text: "Durante aproximadamente 100 anos, um grupo de 70 profetas escreveram a Bíblia", correct: false },
-                    { text: "Durante 5 séculos a Bíblia foi escrita por 70 escribas e 12 apóstolos", correct: false },
-                    { text: "Ao longo de 1600 anos, 40 autores diferentes escreveram toda a Bíblia", correct: true }
-                  ],
-                  reference: "Mais ou menos 1600 anos, de 1500 a.C. a 100 d.C."
-                },
-                {
-                  number: 26,
-                  question: "Qual é o tema central da Bíblia?",
-                  answers: [
-                    { text: "Os heróis da fé e seus milagres sobrenaturais", correct: false },
-                    { text: "Jesus Cristo", correct: true },
-                    { text: "A importância de buscar a Deus para ter uma vida longa e próspera", correct: false },
-                    { text: "As vitórias e a glória de personagens importantes, como o rei Davi, Moisés e outros", correct: false }
-                  ],
-                  reference: "Lucas 24:27, 44-45; Atos 10:43"
-                },
-                {
-                  number: 27,
-                  question: "Qual é o menor versículo da Bíblia?",
-                  answers: [
-                    { text: "João 11:35", correct: true },
-                    { text: "Ester 8:9", correct: false },
-                    { text: "Êxodo 20:13", correct: false },
-                    { text: "Jó 3:2", correct: false }
-                  ],
-                  reference: "João 11:35 - 'Jesus chorou.'"
-                },
-                {
-                  number: 28,
-                  question: "Qual é o maior e o menor capítulos da Bíblia?",
-                  answers: [
-                    { text: "O maior capítulo é de Isaías 66 e o menor capítulo é Salmo 2", correct: false },
-                    { text: "O maior é o Salmo 119 e o menor é o Salmo 117", correct: true },
-                    { text: "O maior capítulo é Lamentações de Jeremias 3 e o menor é 2ª carta de João", correct: false },
-                    { text: "O maior é o Salmo 150 e o menor é Judas 1", correct: false }
-                  ],
-                  reference: "Salmo 119 (176 versículos); Salmo 117 (2 versículos)"
-                },
-                {
-                  number: 29,
-                  question: "Das seguintes afirmações qual não é a correta?",
-                  answers: [
-                    { text: "A Bíblia foi o 1º livro impresso no mundo, sendo a partir daí o mais traduzido e vendido", correct: true },
-                    { text: "O Antigo Testamento possui 39 livros e o Novo Testamento é composto por 27", correct: false },
-                    { text: "A Bíblia também é conhecida como 'Palavra de Deus', 'Verdade' e 'Sagradas Escrituras'", correct: false },
-                    { text: "Moisés foi o autor com menos livros escritos em toda a Bíblia", correct: false }
-                  ],
-                  reference: "Moisés escreveu o Pentateuco (Gênesis a Deuteronômio)"
-                },
-                {
-                  number: 30,
-                  question: "A Bíblia foi escrita em quais línguas originais?",
-                  answers: [
-                    { text: "siríaco, hebraico e latim", correct: false },
-                    { text: "hebraico, aramaico e grego", correct: true },
-                    { text: "aramaico, persa e grego", correct: false },
-                    { text: "hebraico, macedônio e aramaico", correct: false }
-                  ],
-                  reference: "Hebraico, Aramaico e Grego"
-                }
-              ];
+            },
+            {
+              question: "134. Qual é o tema central da Bíblia?",
+              answers: [
+                { text: "A) Os heróis da fé e seus milagres", correct: false },
+                { text: "B) Jesus Cristo", correct: true },
+                { text: "C) A importância de buscar a Deus para prosperidade", correct: false },
+                { text: "D) As vitórias de personagens bíblicos", correct: false }
+              ]
               
+            },
+            {
+              question: "135. Qual é o menor versículo da Bíblia?",
+              answers: [
+                { text: "A) João 11:35", correct: false },
+                { text: "B) Ester 8:9", correct: false },
+                { text: "C) Êxodo 20:13", correct: false },
+                { text: "D) Jó 3:2", correct: true }
+              ]
+            },
+            {
+              question: "138. Qual é o maior e o menor capítulos da Bíblia?",
+              answers: [
+                { text: "A) Isaías 66 e Salmo 2", correct: false },
+                { text: "B) Salmo 119 e Salmo 117", correct: true },
+                { text: "C) Lamentações 3 e 2ª João", correct: false },
+                { text: "D) Salmo 150 e Judas 1", correct: false }
+              ]
+              
+            },
+            {
+              question: "137. Das seguintes afirmações qual não é correta?",
+              answers: [
+                { text: "A) A Bíblia foi o 1º livro impresso", correct: false },
+                { text: "B) O Antigo Testamento possui 39 livros e o Novo 27", correct: false },
+                { text: "C) A Bíblia é chamada de 'Palavra de Deus'", correct: false },
+                { text: "D) Moisés foi o autor com menos livros escritos", correct: true }
+              ]
+             
+            },
+            {
+              question: "138. A Bíblia foi escrita em quais línguas originais?",
+              answers: [
+                { text: "A) siríaco, hebraico e latim", correct: false },
+                { text: "B) hebraico, aramaico e grego", correct: true },
+                { text: "C) aramaico, persa e grego", correct: false },
+                { text: "D) hebraico, macedônio e aramaico", correct: false }
+              ]
+             
+            },
+          
+          
+            {
+              question: "139. Quem é Jesus Cristo?",
+              answers: [
+                { text: "A) Um dos profetas judeus, muito importante", correct: false },
+                { text: "B) Um Mestre sábio que ensinou tudo sobre o amor", correct: false },
+                { text: "C) Jesus é o Filho do Deus Vivo, o prometido Salvador do mundo", correct: true },
+                { text: "D) Um guru curandeiro que ajudou muita gente no passado", correct: false }
+              ]
+            },
+            {
+              question: "140. Qual o nome da cidade onde Jesus nasceu?",
+              answers: [
+                { text: "A) Nazaré", correct: false },
+                { text: "B) Belém", correct: true },
+                { text: "C) Jerusalém", correct: false },
+                { text: "D) Galiléia", correct: false }
+              ]
+            },
+            {
+              question: "141. Com que idade Jesus começou seu ministério?",
+              answers: [
+                { text: "A) Com aproximadamente 30 anos", correct: true },
+                { text: "B) Com 18 anos", correct: false },
+                { text: "C) Com 12 anos", correct: false },
+                { text: "D) Com aproximadamente 7 anos", correct: false }
+              ]
+            },
+            {
+              question: "142. Quais devem ser as 3 atitudes dos seguidores de Jesus?",
+              answers: [
+                { text: "A) Mude de vida, ajude aos necessitados e aprenda a perdoar", correct: false },
+                { text: "B) Arrependa-se, consagre-se, e leia toda a bíblia", correct: false },
+                { text: "C) Siga-lhe, oferte todos seus recursos e pregue a multidões", correct: false },
+                { text: "D) Negue-se a si mesmo, tome a sua cruz diariamente e siga-lhe", correct: true }
+              ]
+            },
+            {
+              question: "143. Sobre Jesus é ERRADO dizer:",
+              answers: [
+                { text: "A) Jesus pecou em poucas situações.", correct: false },
+                { text: "B) Jesus Cristo é Deus.", correct: true },
+                { text: "C) Jesus foi 100% humano.", correct: true },
+                { text: "D) Jesus ressuscitou ao 3º dia.", correct: true }
+              ]
+            },
+            {
+              question: "144. Qual foi o primeiro milagre de Jesus?",
+              answers: [
+                { text: "A) Curou o cego Bartimeu à beira de um caminho", correct: false },
+                { text: "B) Andou sobre as águas e também fez Pedro andar", correct: false },
+                { text: "C) Multiplicou pães e peixes para uma multidão", correct: false },
+                { text: "D) Transformou a água em vinho numa festa de casamento", correct: true }
+              ]
+            },
+            {
+              question: "145. Segundo Jesus, quais são os mandamentos mais importantes da Bíblia?",
+              answers: [
+                { text: "A) Não matar e guardar o sábado.", correct: false },
+                { text: "B) Amar a Deus sobre todas as coisas e amar ao próximo como a si mesmo.", correct: true },
+                { text: "C) Obedecer a Deus cumprindo os 10 mandamentos e batizar", correct: false },
+                { text: "D) Buscar o Reino de Deus e fazer justiça", correct: false }
+              ]
+            },
+            {
+              question: "146. O nome de Jesus é o nome acima de todos os nomes. Cristo significa:",
+              answers: [
+                { text: "A) O sobrenome que Jesus recebeu da família de José", correct: false },
+                { text: "B) 'Ungido', 'consagrado' do grego, equivalente a 'Messias' no hebraico", correct: true },
+                { text: "C) Um nome da família de Maria", correct: false },
+                { text: "D) Um título hebraico que significa: Rei dos judeus", correct: false }
+              ]
+            },
+            {
+              question: "147. Qual parábola ensinada por Jesus fala sobre o perdão de Deus?",
+              answers: [
+                { text: "A) Parábola do Joio e do trigo", correct: false },
+                { text: "B) Parábola das Dez virgens", correct: false },
+                { text: "C) Parábola do Filho Pródigo", correct: true },
+                { text: "D) Parábola do Bom Samaritano", correct: false },
+                
+              ]
+            },
+            {
+              question: "148. Que sinais aconteceram enquanto Jesus estava na cruz?",
+              answers: [
+                { text: "A) Pessoas foram curadas; terremoto dividiu a terra; eclipse lunar", correct: false },
+                { text: "B) O sol escureceu; o véu do templo se rasgou; houve terremoto e rochas se partiram", correct: true },
+                { text: "C) O centurião se converteu, um dos ladrões crucificados ressuscitou, o véu do templo se rasgou", correct: false },
+                { text: "D) O tempo parou por 3 horas, pessoas foram curadas, mortos ressuscitaram nos sepulcros", correct: false }
+              ]
+            }];
+          
+                  
+          
           
            
        
