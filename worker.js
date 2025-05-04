@@ -51,14 +51,10 @@ self.addEventListener("message", (event) => {
     self.skipWaiting();
   }
 });
+
 */
 
-
-
-
-
-
-const CACHE_NAME = "quiz-biblico-cache-v2";
+const CACHE_NAME = "quiz-biblico-cache-v3";
 const urlsToCache = [
   "index.html",
   "quiz.css",
