@@ -22,11 +22,33 @@ function shuffleArray(array) {
    }
 }
 
+/*
+voltar se der erro 
 function startGame(){
    shuffleArray(questions) // <- Embaralha as perguntas
     $startGameButton.classList.add("hide")
     $questionsContainer.classList.remove("hide")
-    displayNextQuestion()
+    displayNextQuestion()*/
+
+    function startGame() {
+        const playerName = document.getElementById("playerName").value.trim()
+        if (!playerName) {
+          alert("Por favor, digite seu nome antes de começar.")
+          return
+        }
+      
+        // Salvar nome no localStorage
+        localStorage.setItem("quizPlayerName", playerName)
+        localStorage.setItem("quizProgress", "0") // zerar progresso
+      
+        shuffleArray(questions)
+        $startGameButton.classList.add("hide")
+        $questionsContainer.classList.remove("hide")
+        displayNextQuestion()
+      
+        // (opcional) Enviar para backend se estiver online
+      
+      
 
     // Enviar dados ao backend quando o jogo começar
     fetch('http://localhost:3000/api/registrar-acesso', {
@@ -87,7 +109,7 @@ function resetState(){
     document.body.removeAttribute("class")
     $nextQuestionButton.classList.add("hide")
 }
-
+/*
 function selectAnswer(event){
     clearTimeout(timer)
     clearInterval(countdownInterval)
@@ -112,11 +134,40 @@ function selectAnswer(event){
 
     $nextQuestionButton.classList.remove("hide")
     currentQuestionIndex++
-}
+}*/
+
+function selectAnswer(event) {
+    clearTimeout(timer)
+    clearInterval(countdownInterval)
+  
+    const answerClicked = event.target
+    const playerName = localStorage.getItem("quizPlayerName") || "Desconhecido"
+  
+    if (answerClicked.dataset.correct) {
+      document.body.classList.add("correct")
+      totalCorrect++
+  
+      // Atualizar progresso salvo
+      localStorage.setItem("quizProgress", totalCorrect.toString())
+    } else {
+      document.body.classList.add("incorrect")
+    }
+  
+    document.querySelectorAll(".answer").forEach(button => {
+      if (button.dataset.correct) button.classList.add("correct")
+      else button.classList.add("incorrect")
+      button.disabled = true
+    })
+  
+    $nextQuestionButton.classList.remove("hide")
+    currentQuestionIndex++
+  }
+  
 
 function finishGame(){
     const totalQuestion = questions.length
     const performance = Math.floor(totalCorrect * 100 / totalQuestion)
+    const playerName = localStorage.getItem("quizPlayerName") || "Jogador"
 
     let message = ""
     switch (true) {
@@ -179,6 +230,14 @@ function disableAnswers(){
         }
         button.disabled = true
     })
+
+    window.addEventListener("DOMContentLoaded", () => {
+        const savedName = localStorage.getItem("quizPlayerName")
+        if (savedName) {
+          document.getElementById("playerName").value = savedName
+        }
+      })
+      
 }
 
 // Suas perguntas de quiz
