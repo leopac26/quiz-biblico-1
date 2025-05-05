@@ -4,7 +4,8 @@ const fs = require('fs');
 const cors = require('cors');
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
+
 const DATA_FILE = './installs.json';
 
 app.use(cors());
@@ -46,3 +47,5 @@ app.get('/api/instalacoes', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Servidor rodando em http://localhost:${PORT}`);
 });
+
+
