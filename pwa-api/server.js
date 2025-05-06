@@ -171,7 +171,7 @@ app.post('/api/registrar-acesso', (req, res) => {
 });
 
 // Página HTML para visualizar os acessos
-app.get('/quiz-Biblico/acessos.html', (req, res) => {
+app.get('/quiz-biblico/acessos.html', (req, res) => {
   let acessos = [];
 
   if (fs.existsSync(ACCESSES_FILE)) {
