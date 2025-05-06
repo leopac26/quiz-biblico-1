@@ -117,7 +117,6 @@ const ACCESSES_FILE = '/tmp/acessos.json';
 
 app.use(cors());
 app.use(express.json());
-app.use(express.static('public')); // Serve arquivos estáticos da pasta 'public'
 
 // Rota POST para registrar instalação do app
 app.post('/api/registrar-instalacao', (req, res) => {
@@ -169,6 +168,8 @@ app.post('/api/registrar-acesso', (req, res) => {
   console.log('Acesso registrado:', acesso);
   res.json({ sucesso: true });
 });
+
+app.use(express.static('public'));
 
 // Página HTML para visualizar os acessos
 app.get('/quiz-biblico/acessos.html', (req, res) => {
