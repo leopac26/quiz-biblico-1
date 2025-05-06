@@ -177,7 +177,56 @@
     });
   </script>
   
-  
+  <!-- Adicione logo antes do fechamento do </body> -->
+<div id="logContainer" style="margin: 50px auto; max-width: 90%; text-align: center;">
+  <h2>Registros de Acesso</h2>
+  <table id="tabelaLogs" style="margin: 0 auto; border-collapse: collapse; width: 100%; max-width: 800px;">
+    <thead>
+      <tr style="background-color: #f0f0f0;">
+        <th style="border: 1px solid #ccc; padding: 8px;">Data e Hora</th>
+        <th style="border: 1px solid #ccc; padding: 8px;">Evento</th>
+        <th style="border: 1px solid #ccc; padding: 8px;">Nome</th>
+        <th style="border: 1px solid #ccc; padding: 8px;">Dispositivo</th>
+      </tr>
+    </thead>
+    <tbody id="corpoTabela"></tbody>
+  </table>
+</div>
+
+<script>
+  function formatarData(timestamp) {
+    const data = new Date(timestamp);
+    return `${data.toLocaleDateString()} ${data.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+  }
+
+  function detectarDispositivo(ua) {
+    if (ua.includes("Android")) return "Android / Chrome";
+    if (ua.includes("Windows")) return "Windows / Edge";
+    return "Outro";
+  }
+
+  fetch('https://pwa-api-production-503d.up.railway.app/api/logs')
+    .then(res => res.json())
+    .then(dados => {
+      const corpoTabela = document.getElementById("corpoTabela");
+      dados.forEach(item => {
+        const linha = `
+          <tr>
+            <td style="border: 1px solid #ccc; padding: 6px;">${formatarData(item.timestamp)}</td>
+            <td style="border: 1px solid #ccc; padding: 6px;">${item.evento}</td>
+            <td style="border: 1px solid #ccc; padding: 6px;">${item.nome}</td>
+            <td style="border: 1px solid #ccc; padding: 6px;">${detectarDispositivo(item.userAgent)}</td>
+          </tr>
+        `;
+        corpoTabela.innerHTML += linha;
+      });
+    })
+    .catch(error => {
+      console.error("Erro ao carregar logs:", error);
+      document.getElementById("logContainer").innerHTML += "<p>Erro ao carregar registros.</p>";
+    });
+</script>
+
    
 </body>
 </html>
