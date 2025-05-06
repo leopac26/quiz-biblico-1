@@ -62,6 +62,7 @@ app.post('/api/registrar-acesso', (req, res) => {
   console.log('Acesso registrado:', acesso);
   res.json({ sucesso: true });
 });
+app.use(express.static('public'));
 
 // Página HTML para visualizar os acessos
 app.get('/quiz-Biblico/acessos.html', (req, res) => {
