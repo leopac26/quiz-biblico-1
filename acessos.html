@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Acessos ao Quiz</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f1f1f1;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      background: white;
+    }
+    th, td {
+      padding: 10px;
+      border: 1px solid #ccc;
+    }
+    th {
+      background-color: #007bff;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <h1>Acessos ao Quiz</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Data/Hora</th>
+        <th>Navegador</th>
+      </tr>
+    </thead>
+    <tbody id="acessos-body">
+      <tr><td colspan="2">Carregando...</td></tr>
+    </tbody>
+  </table>
+
+  <script>
+    const tbody = document.getElementById("acessos-body");
+
+    fetch("https://pwa-api-production-503d.up.railway.app/api/acessos")
+      .then(res => res.json())
+      .then(data => {
+        if (data.length === 0) {
+          tbody.innerHTML = "<tr><td colspan='2'>Nenhum acesso registrado ainda.</td></tr>";
+          return;
+        }
+
+        tbody.innerHTML = "";
+
+        data.reverse().forEach(item => {
+          const row = document.createElement("tr");
+          const date = new Date(item.timestamp).toLocaleString("pt-BR");
+          const userAgent = item.userAgent;
+          row.innerHTML = `<td>${date}</td><td>${userAgent}</td>`;
+          tbody.appendChild(row);
+        });
+      })
+      .catch(err => {
+        console.error(err);
+        tbody.innerHTML = "<tr><td colspan='2'>Erro ao carregar dados.</td></tr>";
+      });
+  </script>
+</body>
+</html>
