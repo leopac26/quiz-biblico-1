@@ -230,6 +230,21 @@ function shuffleArray(array) {
    }
 }
 
+function registrarAcesso() {
+  fetch('http://localhost:3000/api/registrar-acesso', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      userAgent: navigator.userAgent,
+    }),
+  })
+  .then(response => response.json())
+  .then(data => console.log('Acesso registrado:', data))
+  .catch(error => console.error('Erro ao registrar acesso:', error));
+}
+
 function startGame() {
     const playerName = document.getElementById("playerName").value.trim()
     if (!playerName) {
@@ -245,6 +260,9 @@ function startGame() {
     $startGameButton.classList.add("hide")
     $questionsContainer.classList.remove("hide")
     displayNextQuestion()
+
+    // Registrar acesso ao backend
+    registrarAcesso();
 
     // Enviar dados ao backend quando o jogo começar
     fetch('https://pwa-api-production-503d.up.railway.app/api/registrar-instalacao', {
@@ -432,6 +450,7 @@ function disableAnswers(){
         }
     })
 }
+
 
 // Suas perguntas de quiz
 const questions = [
