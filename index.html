@@ -151,6 +151,33 @@
     }
   </script>
   
+  <script>
+    // Envia dados da instalação quando o PWA é instalado
+    window.addEventListener('appinstalled', () => {
+      console.log('PWA instalado! Enviando dados para o backend...');
   
+      const nomeJogador = document.getElementById('playerName')?.value || 'Desconhecido';
+  
+      const dados = {
+        nome: nomeJogador,
+        navegador: navigator.userAgent,
+        idioma: navigator.language,
+        plataforma: navigator.platform,
+        instaladoEm: new Date().toISOString()
+      };
+  
+      fetch('https://pwa-api-production-503d.up.railway.app/api/registrar-instalacao', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(dados)
+      })
+      .then(response => response.json())
+      .then(data => console.log('Instalação registrada com sucesso:', data))
+      .catch(error => console.error('Erro ao registrar instalação:', error));
+    });
+  </script>
+  
+  
+   
 </body>
 </html>

@@ -1,4 +1,4 @@
-
+/*
 const $startGameButton = document.querySelector('.start-quiz')
 const $questionsContainer = document.querySelector('.questions-container')
 const $answersContainer = document.querySelector(".answers-container")
@@ -22,13 +22,6 @@ function shuffleArray(array) {
    }
 }
 
-/*
-voltar se der erro 
-function startGame(){
-   shuffleArray(questions) // <- Embaralha as perguntas
-    $startGameButton.classList.add("hide")
-    $questionsContainer.classList.remove("hide")
-    displayNextQuestion()*/
 
     function startGame() {
         const playerName = document.getElementById("playerName").value.trim()
@@ -109,32 +102,6 @@ function resetState(){
     document.body.removeAttribute("class")
     $nextQuestionButton.classList.add("hide")
 }
-/*
-function selectAnswer(event){
-    clearTimeout(timer)
-    clearInterval(countdownInterval)
-
-    const answerClicked = event.target
-
-    if (answerClicked.dataset.correct) {
-        document.body.classList.add("correct")
-        totalCorrect++
-    } else {
-        document.body.classList.add("incorrect")
-    }
-
-    document.querySelectorAll(".answer").forEach(button => {
-        if (button.dataset.correct) {
-            button.classList.add("correct")
-        } else {
-            button.classList.add("incorrect")
-        }
-        button.disabled = true
-    })
-
-    $nextQuestionButton.classList.remove("hide")
-    currentQuestionIndex++
-}*/
 
 function selectAnswer(event) {
     clearTimeout(timer)
@@ -238,6 +205,232 @@ function disableAnswers(){
         }
       })
       
+}*/
+
+const $startGameButton = document.querySelector('.start-quiz')
+const $questionsContainer = document.querySelector('.questions-container')
+const $answersContainer = document.querySelector(".answers-container")
+const $questionText = document.querySelector(".question")
+const $nextQuestionButton = document.querySelector(".next-question")
+const $timerBar = document.getElementById("timerBar")
+const $timeText = document.getElementById("timeText")
+
+let currentQuestionIndex = 0
+let totalCorrect = 0
+let timer
+let countdownInterval
+
+$startGameButton.addEventListener("click", startGame)
+$nextQuestionButton.addEventListener("click", displayNextQuestion)
+
+function shuffleArray(array) {
+   for (let i = array.length - 1; i > 0; i--) {
+       const j = Math.floor(Math.random() * (i + 1))
+       ;[array[i], array[j]] = [array[j], array[i]]
+   }
+}
+
+function startGame() {
+    const playerName = document.getElementById("playerName").value.trim()
+    if (!playerName) {
+      alert("Por favor, digite seu nome antes de começar.")
+      return
+    }
+
+    // Salvar nome no localStorage
+    localStorage.setItem("quizPlayerName", playerName)
+    localStorage.setItem("quizProgress", "0") // zerar progresso
+
+    shuffleArray(questions)
+    $startGameButton.classList.add("hide")
+    $questionsContainer.classList.remove("hide")
+    displayNextQuestion()
+
+    // Enviar dados ao backend quando o jogo começar
+    fetch('https://pwa-api-production-503d.up.railway.app/api/registrar-instalacao', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        evento: 'quiz_iniciado',
+        nome: playerName,
+        timestamp: new Date().toISOString(),
+        userAgent: navigator.userAgent
+      })
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Quiz iniciado registrado com sucesso:', data);
+    })
+    .catch(error => {
+      console.error('Erro ao registrar início do quiz:', error);
+    });
+}
+
+function displayNextQuestion(){
+    resetState()
+
+    if (questions.length === currentQuestionIndex) {
+        return finishGame()
+    }
+
+    const currentQuestion = questions[currentQuestionIndex]
+    $questionText.textContent = currentQuestion.question
+
+    currentQuestion.answers.forEach(answer => {
+        const newAnswer = document.createElement("button")
+        newAnswer.classList.add("button", "answer")
+        newAnswer.textContent = answer.text
+        if (answer.correct) {
+            newAnswer.dataset.correct = answer.correct
+        }
+        newAnswer.addEventListener("click", selectAnswer)
+        $answersContainer.appendChild(newAnswer)
+    })
+
+    startTimer()
+}
+
+function resetState(){
+    clearTimeout(timer)
+    clearInterval(countdownInterval)
+
+    $timeText.textContent = ""
+    $timerBar.style.transition = "none"
+    $timerBar.style.width = "0%"
+
+    while ($answersContainer.firstChild) {
+        $answersContainer.removeChild($answersContainer.firstChild)
+    }
+
+    document.body.removeAttribute("class")
+    $nextQuestionButton.classList.add("hide")
+}
+
+function selectAnswer(event) {
+    clearTimeout(timer)
+    clearInterval(countdownInterval)
+
+    const answerClicked = event.target
+    const playerName = localStorage.getItem("quizPlayerName") || "Desconhecido"
+
+    if (answerClicked.dataset.correct) {
+      document.body.classList.add("correct")
+      totalCorrect++
+
+      // Atualizar progresso salvo
+      localStorage.setItem("quizProgress", totalCorrect.toString())
+    } else {
+      document.body.classList.add("incorrect")
+    }
+
+    document.querySelectorAll(".answer").forEach(button => {
+      if (button.dataset.correct) button.classList.add("correct")
+      else button.classList.add("incorrect")
+      button.disabled = true
+    })
+
+    $nextQuestionButton.classList.remove("hide")
+    currentQuestionIndex++
+}
+
+function finishGame(){
+    const totalQuestion = questions.length
+    const performance = Math.floor(totalCorrect * 100 / totalQuestion)
+    const playerName = localStorage.getItem("quizPlayerName") || "Jogador"
+
+    let message = ""
+    switch (true) {
+        case (performance >= 90):
+            message = "Excelente :)"
+            break
+        case (performance >= 70):
+            message = "Muito bom :)"
+            break
+        default:
+            message = "Pode melhorar :("
+    }
+
+    $questionsContainer.innerHTML = `
+        <p class="final-message">
+            Você acertou ${totalCorrect} de ${totalQuestion} questões!<br>
+            <span>Resultado: ${message}</span>
+        </p>
+        <button onclick="window.location.reload()" class="button">Refazer teste</button>
+    `
+
+    // Enviar dados ao backend ao finalizar o quiz
+    fetch('https://pwa-api-production-503d.up.railway.app/api/registrar-instalacao', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        evento: 'quiz_finalizado',
+        nome: playerName,
+        acertos: totalCorrect,
+        total: totalQuestion,
+        desempenho: performance,
+        timestamp: new Date().toISOString()
+      })
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Quiz finalizado registrado com sucesso:', data);
+    })
+    .catch(error => {
+      console.error('Erro ao registrar fim do quiz:', error);
+    });
+}
+
+function startTimer(){
+    clearTimeout(timer)
+    clearInterval(countdownInterval)
+
+    let timeLeft = 30 // muda os segundos que aparece na tela
+    $timeText.textContent = `Tempo restante: ${timeLeft}s`
+
+    $timerBar.style.transition = 'none'
+    $timerBar.style.width = '100%'
+
+    setTimeout(() => {
+        $timerBar.style.transition = 'width 30s linear' // muda os segundos que aparece na barra
+        $timerBar.style.width = '0%'
+    }, 50)
+
+    countdownInterval = setInterval(() => {
+        timeLeft--
+        $timeText.textContent = `Tempo restante: ${timeLeft}s`
+        if (timeLeft <= 0) {
+            clearInterval(countdownInterval)
+        }
+    }, 1000)
+
+    timer = setTimeout(() => {
+        disableAnswers()
+        document.body.classList.add("incorrect")
+        $nextQuestionButton.classList.remove("hide")
+        currentQuestionIndex++
+    }, 30000) // muda o tempo de resposta
+}
+
+function disableAnswers(){
+    document.querySelectorAll(".answer").forEach(button => {
+        if (button.dataset.correct) {
+            button.classList.add("correct")
+        } else {
+            button.classList.add("incorrect")
+        }
+        button.disabled = true
+    })
+
+    window.addEventListener("DOMContentLoaded", () => {
+        const savedName = localStorage.getItem("quizPlayerName")
+        if (savedName) {
+          document.getElementById("playerName").value = savedName
+        }
+    })
 }
 
 // Suas perguntas de quiz
