@@ -219,6 +219,8 @@ let currentQuestionIndex = 0
 let totalCorrect = 0
 let timer
 let countdownInterval
+let currentPhase = 0
+let phaseLimits = [10, 20, 30] // número de perguntas por fase
 
 $startGameButton.addEventListener("click", startGame)
 $nextQuestionButton.addEventListener("click", displayNextQuestion)
@@ -268,11 +270,13 @@ function startGame() {
     });
 }
 
-function displayNextQuestion(){
+function displayNextQuestion() {
     resetState()
 
-    if (questions.length === currentQuestionIndex) {
-        return finishGame()
+    const totalAsked = phaseLimits.slice(0, currentPhase + 1).reduce((a, b) => a + b, 0)
+
+    if (currentQuestionIndex >= totalAsked || currentQuestionIndex >= questions.length) {
+        return finishPhase()
     }
 
     const currentQuestion = questions[currentQuestionIndex]
@@ -291,6 +295,49 @@ function displayNextQuestion(){
 
     startTimer()
 }
+
+function finishPhase() {
+    const totalThisPhase = phaseLimits[currentPhase]
+    const startIndex = phaseLimits.slice(0, currentPhase).reduce((a, b) => a + b, 0)
+    const correctThisPhase = totalCorrect - startIndex
+    const performance = Math.floor((correctThisPhase * 100) / totalThisPhase)
+
+    let message = ""
+    switch (true) {
+        case (performance >= 90):
+            message = "Excelente!"
+            break
+        case (performance >= 60):
+            message = "Muito bom! Vamos para a próxima fase?"
+            break
+        default:
+            message = "Fim do jogo! Treine mais e tente de novo!"
+    }
+
+    if (performance >= 60 && currentPhase + 1 < phaseLimits.length) {
+        $questionsContainer.innerHTML = `
+            <p class="final-message">
+                Você acertou ${correctThisPhase} de ${totalThisPhase} nesta fase.<br>
+                <span>${message}</span>
+            </p>
+            <button onclick="nextPhase()" class="button">Próxima fase</button>
+        `
+    } else {
+        $questionsContainer.innerHTML = `
+            <p class="final-message">
+                Quiz finalizado! Você acertou ${totalCorrect} no total.<br>
+                <span>${message}</span>
+            </p>
+            <button onclick="window.location.reload()" class="button">Refazer</button>
+        `
+    }
+}
+
+function nextPhase() {
+    currentPhase++
+    displayNextQuestion()
+}
+
 
 function resetState(){
     clearTimeout(timer)
@@ -336,7 +383,8 @@ function selectAnswer(event) {
 }
 
 function finishGame(){
-    const totalQuestion = questions.length
+    const totalQuestion = Math.min(30, questions.length)
+
     const performance = Math.floor(totalCorrect * 100 / totalQuestion)
     const playerName = localStorage.getItem("quizPlayerName") || "Jogador"
 
