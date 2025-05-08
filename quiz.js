@@ -235,47 +235,41 @@ function shuffleArray(array) {
 function startGame() {
     const playerName = document.getElementById("playerName").value.trim()
     if (!playerName) {
-      alert("Por favor, digite seu nome antes de começar.")
-      return
+        alert("Por favor, digite seu nome antes de começar.")
+        return
     }
 
-    // Salvar nome no localStorage
     localStorage.setItem("quizPlayerName", playerName)
-    localStorage.setItem("quizProgress", "0") // zerar progresso
+    localStorage.setItem("quizProgress", "0")
 
     shuffleArray(questions)
+
     $startGameButton.classList.add("hide")
     $questionsContainer.classList.remove("hide")
     displayNextQuestion()
 
-    // Enviar dados ao backend quando o jogo começar
     fetch('https://pwa-api-production-503d.up.railway.app/api/registrar-instalacao', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        evento: 'quiz_iniciado',
-        nome: playerName,
-        timestamp: new Date().toISOString(),
-        userAgent: navigator.userAgent
-      })
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            evento: 'quiz_iniciado',
+            nome: playerName,
+            timestamp: new Date().toISOString(),
+            userAgent: navigator.userAgent
+        })
     })
     .then(response => response.json())
-    .then(data => {
-      console.log('Quiz iniciado registrado com sucesso:', data);
-    })
-    .catch(error => {
-      console.error('Erro ao registrar início do quiz:', error);
-    });
+    .then(data => console.log('Quiz iniciado registrado com sucesso:', data))
+    .catch(error => console.error('Erro ao registrar início do quiz:', error))
 }
 
 function displayNextQuestion() {
     resetState()
 
-    const totalAsked = phaseLimits.slice(0, currentPhase + 1).reduce((a, b) => a + b, 0)
+    const phaseStartIndex = phaseLimits.slice(0, currentPhase).reduce((a, b) => a + b, 0)
+    const phaseEndIndex = phaseStartIndex + phaseLimits[currentPhase]
 
-    if (currentQuestionIndex >= totalAsked || currentQuestionIndex >= questions.length) {
+    if (currentQuestionIndex >= phaseEndIndex || currentQuestionIndex >= questions.length) {
         return finishPhase()
     }
 
@@ -286,9 +280,7 @@ function displayNextQuestion() {
         const newAnswer = document.createElement("button")
         newAnswer.classList.add("button", "answer")
         newAnswer.textContent = answer.text
-        if (answer.correct) {
-            newAnswer.dataset.correct = answer.correct
-        }
+        if (answer.correct) newAnswer.dataset.correct = answer.correct
         newAnswer.addEventListener("click", selectAnswer)
         $answersContainer.appendChild(newAnswer)
     })
@@ -297,49 +289,57 @@ function displayNextQuestion() {
 }
 
 function finishPhase() {
-    const totalThisPhase = phaseLimits[currentPhase]
     const startIndex = phaseLimits.slice(0, currentPhase).reduce((a, b) => a + b, 0)
-    const correctThisPhase = totalCorrect - startIndex
-    const performance = Math.floor((correctThisPhase * 100) / totalThisPhase)
+    const endIndex = startIndex + phaseLimits[currentPhase]
+    const questionsThisPhase = endIndex - startIndex
+    const previousCorrect = parseInt(localStorage.getItem(`phase${currentPhase - 1}TotalCorrect`) || "0", 10)
+    const correctThisPhase = totalCorrect - previousCorrect
+    const performance = Math.floor((correctThisPhase * 100) / questionsThisPhase)
+
+    localStorage.setItem(`phase${currentPhase}TotalCorrect`, totalCorrect)
 
     let message = ""
-    switch (true) {
-        case (performance >= 90):
-            message = "Excelente!"
-            break
-        case (performance >= 60):
-            message = "Muito bom! Vamos para a próxima fase?"
-            break
-        default:
-            message = "Fim do jogo! Treine mais e tente de novo!"
-    }
+    if (performance >= 90) message = "Excelente!"
+    else if (performance >= 60) message = "Muito bom! Vamos para a próxima fase?"
+    else message = "Fim do jogo! Treine mais e tente de novo!"
+
+    $questionsContainer.innerHTML = `
+        <p class="final-message">
+            Você acertou ${correctThisPhase} de ${questionsThisPhase} nesta fase.<br>
+            <span>${message}</span>
+        </p>
+    `
 
     if (performance >= 60 && currentPhase + 1 < phaseLimits.length) {
-        $questionsContainer.innerHTML = `
-            <p class="final-message">
-                Você acertou ${correctThisPhase} de ${totalThisPhase} nesta fase.<br>
-                <span>${message}</span>
-            </p>
-            <button onclick="nextPhase()" class="button">Próxima fase</button>
-        `
+        const nextButton = document.createElement("button")
+        nextButton.textContent = "Próxima fase"
+        nextButton.classList.add("button")
+        nextButton.addEventListener("click", nextPhase)
+        $questionsContainer.appendChild(nextButton)
+    } else if (performance >= 60 && currentPhase + 1 >= phaseLimits.length) {
+        const finishButton = document.createElement("button")
+        finishButton.textContent = "Ver resultado final"
+        finishButton.classList.add("button")
+        finishButton.addEventListener("click", finishGame)
+        $questionsContainer.appendChild(finishButton)
     } else {
-        $questionsContainer.innerHTML = `
-            <p class="final-message">
-                Quiz finalizado! Você acertou ${totalCorrect} no total.<br>
-                <span>${message}</span>
-            </p>
-            <button onclick="window.location.reload()" class="button">Refazer</button>
-        `
+        const retryButton = document.createElement("button")
+        retryButton.textContent = "Refazer"
+        retryButton.classList.add("button")
+        retryButton.addEventListener("click", () => window.location.reload())
+        $questionsContainer.appendChild(retryButton)
     }
 }
 
 function nextPhase() {
     currentPhase++
+    currentQuestionIndex = phaseLimits.slice(0, currentPhase).reduce((a, b) => a + b, 0)
+    resetState()
+    $questionText.textContent = ""
     displayNextQuestion()
 }
 
-
-function resetState(){
+function resetState() {
     clearTimeout(timer)
     clearInterval(countdownInterval)
 
@@ -363,87 +363,69 @@ function selectAnswer(event) {
     const playerName = localStorage.getItem("quizPlayerName") || "Desconhecido"
 
     if (answerClicked.dataset.correct) {
-      document.body.classList.add("correct")
-      totalCorrect++
-
-      // Atualizar progresso salvo
-      localStorage.setItem("quizProgress", totalCorrect.toString())
+        document.body.classList.add("correct")
+        totalCorrect++
+        localStorage.setItem("quizProgress", totalCorrect.toString())
     } else {
-      document.body.classList.add("incorrect")
+        document.body.classList.add("incorrect")
     }
 
-    document.querySelectorAll(".answer").forEach(button => {
-      if (button.dataset.correct) button.classList.add("correct")
-      else button.classList.add("incorrect")
-      button.disabled = true
-    })
-
+    disableAnswers()
     $nextQuestionButton.classList.remove("hide")
     currentQuestionIndex++
 }
 
-function finishGame(){
+function finishGame() {
     const totalQuestion = Math.min(30, questions.length)
-
     const performance = Math.floor(totalCorrect * 100 / totalQuestion)
     const playerName = localStorage.getItem("quizPlayerName") || "Jogador"
 
     let message = ""
-    switch (true) {
-        case (performance >= 90):
-            message = "Excelente :)"
-            break
-        case (performance >= 70):
-            message = "Muito bom :)"
-            break
-        default:
-            message = "Pode melhorar :("
-    }
+    if (performance >= 90) message = "Excelente :)"
+    else if (performance >= 70) message = "Muito bom :)"
+    else message = "Pode melhorar :("
 
     $questionsContainer.innerHTML = `
         <p class="final-message">
             Você acertou ${totalCorrect} de ${totalQuestion} questões!<br>
             <span>Resultado: ${message}</span>
         </p>
-        <button onclick="window.location.reload()" class="button">Refazer teste</button>
     `
+    const retryButton = document.createElement("button")
+    retryButton.textContent = "Refazer teste"
+    retryButton.classList.add("button")
+    retryButton.addEventListener("click", () => window.location.reload())
+    $questionsContainer.appendChild(retryButton)
 
-    // Enviar dados ao backend ao finalizar o quiz
     fetch('https://pwa-api-production-503d.up.railway.app/api/registrar-instalacao', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        evento: 'quiz_finalizado',
-        nome: playerName,
-        acertos: totalCorrect,
-        total: totalQuestion,
-        desempenho: performance,
-        timestamp: new Date().toISOString()
-      })
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            evento: 'quiz_finalizado',
+            nome: playerName,
+            acertos: totalCorrect,
+            total: totalQuestion,
+            desempenho: performance,
+            timestamp: new Date().toISOString()
+        })
     })
     .then(response => response.json())
-    .then(data => {
-      console.log('Quiz finalizado registrado com sucesso:', data);
-    })
-    .catch(error => {
-      console.error('Erro ao registrar fim do quiz:', error);
-    });
+    .then(data => console.log('Quiz finalizado registrado com sucesso:', data))
+    .catch(error => console.error('Erro ao registrar fim do quiz:', error))
 }
 
-function startTimer(){
+function startTimer() {
     clearTimeout(timer)
     clearInterval(countdownInterval)
 
-    let timeLeft = 30 // muda os segundos que aparece na tela
+    let timeLeft = 30
     $timeText.textContent = `Tempo restante: ${timeLeft}s`
 
     $timerBar.style.transition = 'none'
     $timerBar.style.width = '100%'
 
     setTimeout(() => {
-        $timerBar.style.transition = 'width 30s linear' // muda os segundos que aparece na barra
+        $timerBar.style.transition = 'width 30s linear'
         $timerBar.style.width = '0%'
     }, 50)
 
@@ -460,10 +442,10 @@ function startTimer(){
         document.body.classList.add("incorrect")
         $nextQuestionButton.classList.remove("hide")
         currentQuestionIndex++
-    }, 30000) // muda o tempo de resposta
+    }, 30000)
 }
 
-function disableAnswers(){
+function disableAnswers() {
     document.querySelectorAll(".answer").forEach(button => {
         if (button.dataset.correct) {
             button.classList.add("correct")
@@ -472,106 +454,58 @@ function disableAnswers(){
         }
         button.disabled = true
     })
-
-    window.addEventListener("DOMContentLoaded", () => {
-        const savedName = localStorage.getItem("quizPlayerName")
-        if (savedName) {
-          document.getElementById("playerName").value = savedName
-        }
-    })
 }
 
+window.addEventListener("DOMContentLoaded", () => {
+    const savedName = localStorage.getItem("quizPlayerName")
+    if (savedName) {
+        document.getElementById("playerName").value = savedName
+    }
+})
 
-// Suas perguntas de quiz
 const questions = [
    {
-        question: "(1) A quem Paulo chamou de 'meu companheiro de lutas' (Referência bíblica: Filemon 1:2)?",
-        answers:[
-            {text: "Apolo", correct: false },
-            {text: "Afia", correct: false },
-            {text: "Arquipo", correct: true},
-            {text: "Adonias", correct: false}
-        ]
+        question: "(1) A quem Paulo chamou de 'meu companheiro de lutas' (Filemon 1:2)?",
+        answers:[{text: "Apolo", correct: false },{text: "Afia", correct: false },{text: "Arquipo", correct: true},{text: "Adonias", correct: false}]
     },
-{
-    question: "(2) Quais discipulos perguntaram a jesus se podiam fazer descer fogo do céu? (Referencia biblica: Lucas 9:54.)",
-    answers: [
-        {text: "João e Tiago", correct: true},
-        {text: "Pedro e João", correct: false},
-        {text: "Tiago e Pedro", correct:false },
-        {text: "Tiago e Matheus", correct: false }
-    ]
-        },
-        {
-            question:'(3) Qual era o nome da serpente de bronze que Moisés tinha feito? (2 Reis 18:4.)',
-            answers:[
-               { text:'Aserá', correct: false},
-               {text:'Leviatã', correct: false},
-               {text:'Neustã', correct: true},
-               {text:"Athenis",correct: false},
-            ]},
-               {
-            question:'(4) Qual era o nome babilônico de Daniel? (Ref. biblica Daniel 1:7.)',
-            answers:[
-               { text:'Aspenaz', correct: false},
-               {text:'Beltessazar', correct: true},
-               {text:'Abede-Nego', correct: false},
-               {text:"Mongero",correct: false},
-            ]},
-            {
-            question:'(5) Qual o nome que Jacó deu ao lugar onde sonhou com Deus?',
-            answers:[
-               { text:'Betuel', correct: false},
-               {text:'Luz', correct: false},
-               {text:'Bezel', correct: false},
-               {text:"Betel",correct: true}
-            
-            ]},
-            {
-            question:'(6) Qual o livro da biblia que termina com um ponto de interrogação? (Ref. ? 4:11)',
-            answers:[
-               { text:'Jonas', correct: true},
-               {text:'Joel', correct: false},
-               {text:'Judas', correct: false},
-               {text:"João",correct: false}
-            
-            ]},
-            {
-            question:'Qual livro se encontra no novo testamento',
-            answers:[
-               { text:'Sofonias', correct: false},
-               {text:'Obadias', correct: false},
-               {text:'Habacuque', correct: false},
-               {text:"Filemom",correct: true}
-            
-            ]},
-            {
-            question:'(8) Em quais livros da Biblia não encontramos a palavra Deus',
-            answers:[
-               { text:'Ester e Cânticos', correct: true},
-               {text:'Ageu e Amós', correct: false},
-               {text:'Oséias e Eclesiastes', correct: false},
-               {text:"Obadias e Malaquias",correct: false}
-            
-            ]},
-            {
-            question:'(9) Qual o menor livro da Bíblia',
-            answers:[
-               { text:'judas', correct: false},
-               {text:'ll João', correct: true},
-               {text:'lll João', correct: false},
-               {text:"Ester",correct: false}
-            
-            ]},
-            {
-            question:'(10) Na visão profética de João, qual era o número de cavaleiros do Apocalpse?',
-            answers:[
-               { text:'7', correct: false},
-               {text:'6', correct: false},
-               {text:'5', correct: false},
-               {text:"4",correct: true}
-            
-            ]},
+    {
+        question: "(2) Quais discípulos perguntaram a Jesus se podiam fazer descer fogo do céu? (Lucas 9:54)",
+        answers: [{text: "João e Tiago", correct: true},{text: "Pedro e João", correct: false},{text: "Tiago e Pedro", correct:false },{text: "Tiago e Mateus", correct: false }]
+    },
+    {
+        question: "(3) Qual era o nome da serpente de bronze que Moisés tinha feito? (2 Reis 18:4)",
+        answers: [{text:'Aserá', correct: false},{text:'Leviatã', correct: false},{text:'Neustã', correct: true},{text:"Athenis",correct: false}]
+    },
+    {
+        question: "(4) Qual era o nome babilônico de Daniel? (Daniel 1:7)",
+        answers: [{text:'Aspenaz', correct: false},{text:'Beltessazar', correct: true},{text:'Abede-Nego', correct: false},{text:"Mongero",correct: false}]
+    },
+    {
+        question: "(5) Qual o nome que Jacó deu ao lugar onde sonhou com Deus?",
+        answers: [{text:'Betuel', correct: false},{text:'Luz', correct: false},{text:'Bezel', correct: false},{text:"Betel",correct: true}]
+    },
+    {
+        question: "(6) Qual o livro da Bíblia que termina com um ponto de interrogação? (Jonas 4:11)",
+        answers: [{text:'Jonas', correct: true},{text:'Joel', correct: false},{text:'Judas', correct: false},{text:"João",correct: false}]
+    },
+    {
+        question: "(7) Qual livro se encontra no Novo Testamento?",
+        answers: [{text:'Sofonias', correct: false},{text:'Obadias', correct: false},{text:'Habacuque', correct: false},{text:"Filemom",correct: true}]
+    },
+    {
+        question: "(8) Em quais livros da Bíblia não encontramos a palavra Deus?",
+        answers: [{text:'Ester e Cânticos', correct: true},{text:'Ageu e Amós', correct: false},{text:'Oséias e Eclesiastes', correct: false},{text:"Obadias e Malaquias",correct: false}]
+    },
+    {
+        question: "(9) Qual o menor livro da Bíblia?",
+        answers: [{text:'Judas', correct: false},{text:'II João', correct: true},{text:'III João', correct: false},{text:"Ester",correct: false}]
+    },
+    {
+        question: "(10) Na visão profética de João, qual era o número de cavaleiros do Apocalipse?",
+        answers: [{text:'7', correct: false},{text:'6', correct: false},{text:'5', correct: false},{text:"4",correct: true}]
+    },
+
+
             {
             question:'(11)  Quem escreveu a Epístola de Judas?',
             answers:[
