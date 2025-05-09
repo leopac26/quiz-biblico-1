@@ -54,16 +54,11 @@
       text-align: center;
     }
 
-    
-
-    
-
     /* Quiz layout */
-  .container {
-  padding-top: 130px;
-  text-align: center;
-}
-
+    .container {
+      padding-top: 130px;
+      text-align: center;
+    }
 
     .answers-container {
       margin-top: 20px;
@@ -91,10 +86,18 @@
         width: 100%;
       }
     }
-    .hide {
-  display: none;
-}
 
+    .hide {
+      display: none;
+    }
+
+    /* Novo estilo para mostrar fase e número de pergunta */
+    .question-progress {
+      font-weight: bold;
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+      color: #222;
+    }
   </style>
 </head>
 
@@ -105,14 +108,13 @@
   <!-- Menu principal horizontal -->
   <table class="menu-principal">
     <tr class="menu-tabela">
-        <td><a href="../index.html">Menu</a></td>
+      <td><a href="../index.html">Menu</a></td>
       <td><a href="../videos-youtube/videosyoutube.html">Videos</a></td>
       <td><a href="../louvores/index.html">Louvores</a></td>
       <td><a href="../genesis/index.html">Bíblia Sagrada</a></td>
       <td><a href="teclado.html">Teclado Virtual</a></td>
       <td><a href="../hinos-da-harpa/index.html">Hinos</a></td>
-      <td><a href="../quiz-Biblico/quiz.html" target="_blank" rel="noopener noreferrer">Quiz</a>
-      </td>
+      <td><a href="../quiz-Biblico/quiz.html" target="_blank" rel="noopener noreferrer">Quiz</a></td>
       <td><a href="../corinhos/corinhos.html">Corinhos</a></td>
     </tr>
   </table>
@@ -120,6 +122,12 @@
   <!-- Área do quiz -->
   <div class="container">
     <div class="questions-container hide">
+      <!-- Novo: Progresso da fase -->
+      <div class="question-progress">
+        <span id="phaseInfo">Fase 1</span> –
+        <span id="questionCount">Pergunta 1 de 10</span>
+      </div>
+
       <div class="timer-container">
         <div class="timer-bar" id="timerBar"></div>
       </div>
@@ -129,9 +137,6 @@
       <div class="answers-container"></div>
     </div>
   
-    
-    
-
     <div class="controls-container">
       <button class="start-quiz button">Começar Quiz!</button>
       <button class="next-question button hide">Próxima Pergunta</button> 
@@ -139,16 +144,16 @@
 
     <div class="player-container">
       <label for="playerName">Nome do Jogador:</label>
-
       <input type="text" id="playerName" placeholder="Digite seu nome">
     </div> 
+    <div id="faseAtual" class="fase-info"></div>
   </div>
-  
-  
 
   
 
-  <script src="quis-biblico.js" async></script>
+
+  
+  <script src="quiz.js" async></script>
 
   <script>
     if ("serviceWorker" in navigator) {

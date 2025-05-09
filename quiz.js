@@ -226,10 +226,10 @@ $startGameButton.addEventListener("click", startGame)
 $nextQuestionButton.addEventListener("click", displayNextQuestion)
 
 function shuffleArray(array) {
-   for (let i = array.length - 1; i > 0; i--) {
-       const j = Math.floor(Math.random() * (i + 1))
-       ;[array[i], array[j]] = [array[j], array[i]]
-   }
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1))
+        ;[array[i], array[j]] = [array[j], array[i]]
+    }
 }
 
 function startGame() {
@@ -247,6 +247,7 @@ function startGame() {
     $startGameButton.classList.add("hide")
     $questionsContainer.classList.remove("hide")
     displayNextQuestion()
+    atualizarFaseVisual()
 
     fetch('https://pwa-api-production-503d.up.railway.app/api/registrar-instalacao', {
         method: 'POST',
@@ -262,6 +263,14 @@ function startGame() {
     .then(data => console.log('Quiz iniciado registrado com sucesso:', data))
     .catch(error => console.error('Erro ao registrar início do quiz:', error))
 }
+
+function atualizarFaseVisual() {
+    const faseSpan = document.getElementById("faseAtual")
+    if (faseSpan) {
+        faseSpan.textContent = `Fase ${currentPhase + 1}`
+    }
+}
+
 
 function displayNextQuestion() {
     resetState()
@@ -311,18 +320,21 @@ function finishPhase() {
     `
 
     if (performance >= 60 && currentPhase + 1 < phaseLimits.length) {
-        const nextButton = document.createElement("button")
-        nextButton.textContent = "Próxima fase"
-        nextButton.classList.add("button")
-        nextButton.addEventListener("click", nextPhase)
-        $questionsContainer.appendChild(nextButton)
-    } else if (performance >= 60 && currentPhase + 1 >= phaseLimits.length) {
+    const nextButton = document.createElement("button");
+    nextButton.textContent = "Próxima fase";
+    nextButton.classList.add("button");
+    nextButton.addEventListener("click", nextPhase);
+    $questionsContainer.appendChild(nextButton);
+    }
+    
+     else if (performance >= 60 && currentPhase + 1 >= phaseLimits.length) {
         const finishButton = document.createElement("button")
         finishButton.textContent = "Ver resultado final"
         finishButton.classList.add("button")
         finishButton.addEventListener("click", finishGame)
         $questionsContainer.appendChild(finishButton)
-    } else {
+    }
+     else {
         const retryButton = document.createElement("button")
         retryButton.textContent = "Refazer"
         retryButton.classList.add("button")
@@ -332,11 +344,13 @@ function finishPhase() {
 }
 
 function nextPhase() {
-    currentPhase++
+    currentPhase++ // ISSO é o que deve mudar!
     currentQuestionIndex = phaseLimits.slice(0, currentPhase).reduce((a, b) => a + b, 0)
-    resetState()
+atualizarFaseVisual()
     $questionText.textContent = ""
     displayNextQuestion()
+    console.log("Fase atual:", currentPhase)
+
 }
 
 function resetState() {
@@ -374,6 +388,9 @@ function selectAnswer(event) {
     $nextQuestionButton.classList.remove("hide")
     currentQuestionIndex++
 }
+
+
+
 
 function finishGame() {
     const totalQuestion = Math.min(30, questions.length)
@@ -462,6 +479,8 @@ window.addEventListener("DOMContentLoaded", () => {
         document.getElementById("playerName").value = savedName
     }
 })
+
+
 
 const questions = [
    {
@@ -954,7 +973,7 @@ const questions = [
                    { text: "c) Areópago", correct: true },
                    { text: "d) Sinagoga", correct: false }
                ]
-           },
+           },]
            {
                question: "(61) No discurso de Paulo em Atenas, quem creu e se juntou a ele? (Atos 17:34)",
                answers: [
