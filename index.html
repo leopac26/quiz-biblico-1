@@ -2,104 +2,15 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="quiz.css" />
-  <link rel="manifest" href="manifest.json" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="quiz.css">
 
   <title>Quiz Bíblico</title>
-
   <style>
-    /* Título principal fixo */
-    .titulo-menu {
-      border: 1px solid blue;
-      background: blue;
-      color: rgb(250, 153, 9);
-      font-size: 32px;
-      text-align: center;
-      width: 100%;
-      position: fixed;
-      top: 0;
-      z-index: 1000;
-      height: 50px;
-    }
-
-    /* Menu principal horizontal */
-    .menu-principal {
-      width: 100%;
-      position: fixed;
-      top: 60px;
-      border: 1px solid black;
-      background: blue;
-      color: white;
-      display: flex;
-      justify-content: center;
-      font-size: 25px;
-      z-index: 1000;
-    }
-
-    .menu-principal td a {
-      color: white;
-      margin: 5px;
-      text-decoration: none;
-    }
-
-    .menu-tabela {
-      background: rgb(46, 7, 241);
-      width: 100%;
-    }
-
-    /* Quiz Título */
-    .titulo-quiz {
-      margin-top: 120px;
-      text-align: center;
-    }
-
-    /* Quiz layout */
-    .container {
-      padding-top: 130px;
-      text-align: center;
-    }
-
-    .answers-container {
-      margin-top: 20px;
-    }
-
-    .answer {
-      margin: 5px;
-      padding: 10px 20px;
-    }
-
-    /* Responsividade */
-    @media (max-width: 670px) {
-      .titulo-menu {
-        font-size: 20px;
-      }
-
-      .menu-principal {
-        font-size: 12px;
-        flex-wrap: wrap;
-      }
-
-      .menu-principal-quiz {
-        font-size: 12px;
-        top: 100px;
-        width: 100%;
-      }
-    }
-
-    .hide {
-      display: none;
-    }
-
-    /* Novo estilo para mostrar fase e número de pergunta */
-    .question-progress {
-      font-weight: bold;
-      font-size: 1.2rem;
-      margin-bottom: 10px;
-      color: #222;
-    }
+    
   </style>
 </head>
+
 
 <body>
   <!-- Título principal -->
@@ -119,112 +30,22 @@
     </tr>
   </table>
 
-  <!-- Área do quiz -->
-  <div class="container">
-    <div class="questions-container hide">
-      <!-- Novo: Progresso da fase -->
-      <div class="question-progress">
-        <span id="phaseInfo">Fase 1</span> –
-        <span id="questionCount">Pergunta 1 de 10</span>
-      </div>
 
-      <div class="timer-container">
-        <div class="timer-bar" id="timerBar"></div>
-      </div>
-      <p id="timeText">Tempo restante: 60s</p>
-      
-      <span class="question">Pergunta aqui</span>
-      <div class="answers-container"></div>
-    </div>
-  
-    <div class="controls-container">
-      <button class="start-quiz button">Começar Quiz!</button>
-      <button class="next-question button hide">Próxima Pergunta</button> 
-    </div>
 
-    <div class="player-container">
-      <label for="playerName">Nome do Jogador:</label>
-      <input type="text" id="playerName" placeholder="Digite seu nome">
-    </div> 
-    <div id="faseAtual" class="fase-info"></div>
+
+  <div class="quiz-container">
+    <div id="timer-bar" style="height: 10px; background: #4caf50; width: 100%; margin-bottom: 10px; transition: width 1s linear;"></div>
+    <div id="phase-info">Fase 1</div>
+    <div id="question-container">
+      <div id="question" class="question"></div>
+      <div id="answers" class="answers"></div>
+    </div>
+    <button id="next-btn" class="hidden">Próxima</button>
+    <div id="result" class="hidden"></div>
+    <button id="next-phase-btn" class="hidden">Ir para próxima fase</button>
+    <button id="restart-btn" class="hidden">Recomeçar</button>
   </div>
 
-  
-
-
-  
-  <script src="quiz.js" async></script>
-
-  <script>
-    if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.register("worker.js")
-        .then(() => console.log("Service Worker registrado com sucesso."))
-        .catch(error => console.log("Erro ao registrar o Service Worker:", error));
-    }
-  </script>
-  
-  <script>
-    // Envia dados da instalação quando o PWA é instalado
-    window.addEventListener('appinstalled', () => {
-      console.log('PWA instalado! Enviando dados para o backend...');
-  
-      const nomeJogador = document.getElementById('playerName')?.value || 'Desconhecido';
-  
-      const dados = {
-        nome: nomeJogador,
-        navegador: navigator.userAgent,
-        idioma: navigator.language,
-        plataforma: navigator.platform,
-        instaladoEm: new Date().toISOString()
-      };
-  
-      fetch('https://pwa-api-production-503d.up.railway.app/api/registrar-instalacao', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(dados)
-      })
-      .then(response => response.json())
-      .then(data => console.log('Instalação registrada com sucesso:', data))
-      .catch(error => console.error('Erro ao registrar instalação:', error));
-    });
-  </script>
-  
-
-
-<script>
-  function formatarData(timestamp) {
-    const data = new Date(timestamp);
-    return `${data.toLocaleDateString()} ${data.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
-  }
-
-  function detectarDispositivo(ua) {
-    if (ua.includes("Android")) return "Android / Chrome";
-    if (ua.includes("Windows")) return "Windows / Edge";
-    return "Outro";
-  }
-
-  fetch('https://pwa-api-production-503d.up.railway.app/api/logs')
-    .then(res => res.json())
-    .then(dados => {
-      const corpoTabela = document.getElementById("corpoTabela");
-      dados.forEach(item => {
-        const linha = `
-          <tr>
-            <td style="border: 1px solid #ccc; padding: 6px;">${formatarData(item.timestamp)}</td>
-            <td style="border: 1px solid #ccc; padding: 6px;">${item.evento}</td>
-            <td style="border: 1px solid #ccc; padding: 6px;">${item.nome}</td>
-            <td style="border: 1px solid #ccc; padding: 6px;">${detectarDispositivo(item.userAgent)}</td>
-          </tr>
-        `;
-        corpoTabela.innerHTML += linha;
-      });
-    })
-    .catch(error => {
-      console.error("Erro ao carregar logs:", error);
-      document.getElementById("logContainer").innerHTML += "<p>Erro ao carregar registros.</p>";
-    });
-</script>
-
-   
+  <script src="quiz.js"></script>
 </body>
 </html>

@@ -1,489 +1,6 @@
-/*
-const $startGameButton = document.querySelector('.start-quiz')
-const $questionsContainer = document.querySelector('.questions-container')
-const $answersContainer = document.querySelector(".answers-container")
-const $questionText = document.querySelector(".question")
-const $nextQuestionButton = document.querySelector(".next-question")
-const $timerBar = document.getElementById("timerBar")
-const $timeText = document.getElementById("timeText")
-
-let currentQuestionIndex = 0
-let totalCorrect = 0
-let timer
-let countdownInterval
-
-$startGameButton.addEventListener("click", startGame)
-$nextQuestionButton.addEventListener("click", displayNextQuestion)
-
-function shuffleArray(array) {
-   for (let i = array.length - 1; i > 0; i--) {
-       const j = Math.floor(Math.random() * (i + 1))
-       ;[array[i], array[j]] = [array[j], array[i]]
-   }
-}
-
-
-    function startGame() {
-        const playerName = document.getElementById("playerName").value.trim()
-        if (!playerName) {
-          alert("Por favor, digite seu nome antes de começar.")
-          return
-        }
-      
-        // Salvar nome no localStorage
-        localStorage.setItem("quizPlayerName", playerName)
-        localStorage.setItem("quizProgress", "0") // zerar progresso
-      
-        shuffleArray(questions)
-        $startGameButton.classList.add("hide")
-        $questionsContainer.classList.remove("hide")
-        displayNextQuestion()
-      
-        // (opcional) Enviar para backend se estiver online
-      
-      
-
-    // Enviar dados ao backend quando o jogo começar
-    fetch('http://localhost:3000/api/registrar-acesso', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        timestamp: new Date().toISOString(),
-        userAgent: navigator.userAgent
-      })
-    })
-    .then(response => response.json())
-    .then(data => {
-      console.log('Acesso registrado com sucesso:', data);
-    })
-    .catch(error => {
-      console.error('Erro ao registrar acesso:', error);
-    });
-}
-
-function displayNextQuestion(){
-    resetState()
-
-    if (questions.length === currentQuestionIndex) {
-        return finishGame()
-    }
-
-    const currentQuestion = questions[currentQuestionIndex]
-    $questionText.textContent = currentQuestion.question
-
-    currentQuestion.answers.forEach(answer => {
-        const newAnswer = document.createElement("button")
-        newAnswer.classList.add("button", "answer")
-        newAnswer.textContent = answer.text
-        if (answer.correct) {
-            newAnswer.dataset.correct = answer.correct
-        }
-        newAnswer.addEventListener("click", selectAnswer)
-        $answersContainer.appendChild(newAnswer)
-    })
-
-    startTimer()
-}
-
-function resetState(){
-    clearTimeout(timer)
-    clearInterval(countdownInterval)
-
-    $timeText.textContent = ""
-    $timerBar.style.transition = "none"
-    $timerBar.style.width = "0%"
-
-    while ($answersContainer.firstChild) {
-        $answersContainer.removeChild($answersContainer.firstChild)
-    }
-
-    document.body.removeAttribute("class")
-    $nextQuestionButton.classList.add("hide")
-}
-
-function selectAnswer(event) {
-    clearTimeout(timer)
-    clearInterval(countdownInterval)
-  
-    const answerClicked = event.target
-    const playerName = localStorage.getItem("quizPlayerName") || "Desconhecido"
-  
-    if (answerClicked.dataset.correct) {
-      document.body.classList.add("correct")
-      totalCorrect++
-  
-      // Atualizar progresso salvo
-      localStorage.setItem("quizProgress", totalCorrect.toString())
-    } else {
-      document.body.classList.add("incorrect")
-    }
-  
-    document.querySelectorAll(".answer").forEach(button => {
-      if (button.dataset.correct) button.classList.add("correct")
-      else button.classList.add("incorrect")
-      button.disabled = true
-    })
-  
-    $nextQuestionButton.classList.remove("hide")
-    currentQuestionIndex++
-  }
-  
-
-function finishGame(){
-    const totalQuestion = questions.length
-    const performance = Math.floor(totalCorrect * 100 / totalQuestion)
-    const playerName = localStorage.getItem("quizPlayerName") || "Jogador"
-
-    let message = ""
-    switch (true) {
-        case (performance >= 90):
-            message = "Excelente :)"
-            break
-        case (performance >= 70):
-            message = "Muito bom :)"
-            break
-        default:
-            message = "Pode melhorar :("
-    }
-
-    $questionsContainer.innerHTML = `
-        <p class="final-message">
-            Você acertou ${totalCorrect} de ${totalQuestion} questões!<br>
-            <span>Resultado: ${message}</span>
-        </p>
-        <button onclick="window.location.reload()" class="button">Refazer teste</button>
-    `
-}
-
-function startTimer(){
-    clearTimeout(timer)
-    clearInterval(countdownInterval)
-
-    let timeLeft = 30 // muda os segundos que aparece na tela
-    $timeText.textContent = `Tempo restante: ${timeLeft}s`
-
-    $timerBar.style.transition = 'none'
-    $timerBar.style.width = '100%'
-
-    setTimeout(() => {
-        $timerBar.style.transition = 'width 30s linear' // muda os segundos que aparece na barra
-        $timerBar.style.width = '0%'
-    }, 50)
-
-    countdownInterval = setInterval(() => {
-        timeLeft--
-        $timeText.textContent = `Tempo restante: ${timeLeft}s`
-        if (timeLeft <= 0) {
-            clearInterval(countdownInterval)
-        }
-    }, 1000)
-
-    timer = setTimeout(() => {
-        disableAnswers()
-        document.body.classList.add("incorrect")
-        $nextQuestionButton.classList.remove("hide")
-        currentQuestionIndex++
-    }, 30000) // muda o tempo de resposta
-}
-
-function disableAnswers(){
-    document.querySelectorAll(".answer").forEach(button => {
-        if (button.dataset.correct) {
-            button.classList.add("correct")
-        } else {
-            button.classList.add("incorrect")
-        }
-        button.disabled = true
-    })
-
-    window.addEventListener("DOMContentLoaded", () => {
-        const savedName = localStorage.getItem("quizPlayerName")
-        if (savedName) {
-          document.getElementById("playerName").value = savedName
-        }
-      })
-      
-}*/
-
-const $startGameButton = document.querySelector('.start-quiz')
-const $questionsContainer = document.querySelector('.questions-container')
-const $answersContainer = document.querySelector(".answers-container")
-const $questionText = document.querySelector(".question")
-const $nextQuestionButton = document.querySelector(".next-question")
-const $timerBar = document.getElementById("timerBar")
-const $timeText = document.getElementById("timeText")
-
-let currentQuestionIndex = 0
-let totalCorrect = 0
-let timer
-let countdownInterval
-let currentPhase = 0
-let phaseLimits = [10, 20, 30] // número de perguntas por fase
-
-$startGameButton.addEventListener("click", startGame)
-$nextQuestionButton.addEventListener("click", displayNextQuestion)
-
-function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1))
-        ;[array[i], array[j]] = [array[j], array[i]]
-    }
-}
-
-function startGame() {
-    const playerName = document.getElementById("playerName").value.trim()
-    if (!playerName) {
-        alert("Por favor, digite seu nome antes de começar.")
-        return
-    }
-
-    localStorage.setItem("quizPlayerName", playerName)
-    localStorage.setItem("quizProgress", "0")
-
-    shuffleArray(questions)
-
-    $startGameButton.classList.add("hide")
-    $questionsContainer.classList.remove("hide")
-    displayNextQuestion()
-    atualizarFaseVisual()
-
-    fetch('https://pwa-api-production-503d.up.railway.app/api/registrar-instalacao', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            evento: 'quiz_iniciado',
-            nome: playerName,
-            timestamp: new Date().toISOString(),
-            userAgent: navigator.userAgent
-        })
-    })
-    .then(response => response.json())
-    .then(data => console.log('Quiz iniciado registrado com sucesso:', data))
-    .catch(error => console.error('Erro ao registrar início do quiz:', error))
-}
-
-function atualizarFaseVisual() {
-    const faseSpan = document.getElementById("faseAtual")
-    if (faseSpan) {
-        faseSpan.textContent = `Fase ${currentPhase + 1}`
-    }
-}
-
-
-function displayNextQuestion() {
-    resetState()
-
-    const phaseStartIndex = phaseLimits.slice(0, currentPhase).reduce((a, b) => a + b, 0)
-    const phaseEndIndex = phaseStartIndex + phaseLimits[currentPhase]
-
-    if (currentQuestionIndex >= phaseEndIndex || currentQuestionIndex >= questions.length) {
-        return finishPhase()
-    }
-
-    const currentQuestion = questions[currentQuestionIndex]
-    $questionText.textContent = currentQuestion.question
-
-    currentQuestion.answers.forEach(answer => {
-        const newAnswer = document.createElement("button")
-        newAnswer.classList.add("button", "answer")
-        newAnswer.textContent = answer.text
-        if (answer.correct) newAnswer.dataset.correct = answer.correct
-        newAnswer.addEventListener("click", selectAnswer)
-        $answersContainer.appendChild(newAnswer)
-    })
-
-    startTimer()
-}
-
-function finishPhase() {
-    const startIndex = phaseLimits.slice(0, currentPhase).reduce((a, b) => a + b, 0)
-    const endIndex = startIndex + phaseLimits[currentPhase]
-    const questionsThisPhase = endIndex - startIndex
-    const previousCorrect = parseInt(localStorage.getItem(`phase${currentPhase - 1}TotalCorrect`) || "0", 10)
-    const correctThisPhase = totalCorrect - previousCorrect
-    const performance = Math.floor((correctThisPhase * 100) / questionsThisPhase)
-
-    localStorage.setItem(`phase${currentPhase}TotalCorrect`, totalCorrect)
-
-    let message = ""
-    if (performance >= 90) message = "Excelente!"
-    else if (performance >= 60) message = "Muito bom! Vamos para a próxima fase?"
-    else message = "Fim do jogo! Treine mais e tente de novo!"
-
-    $questionsContainer.innerHTML = `
-        <p class="final-message">
-            Você acertou ${correctThisPhase} de ${questionsThisPhase} nesta fase.<br>
-            <span>${message}</span>
-        </p>
-    `
-
-    if (performance >= 60 && currentPhase + 1 < phaseLimits.length) {
-    const nextButton = document.createElement("button");
-    nextButton.textContent = "Próxima fase";
-    nextButton.classList.add("button");
-    nextButton.addEventListener("click", nextPhase);
-    $questionsContainer.appendChild(nextButton);
-    }
-    
-     else if (performance >= 60 && currentPhase + 1 >= phaseLimits.length) {
-        const finishButton = document.createElement("button")
-        finishButton.textContent = "Ver resultado final"
-        finishButton.classList.add("button")
-        finishButton.addEventListener("click", finishGame)
-        $questionsContainer.appendChild(finishButton)
-    }
-     else {
-        const retryButton = document.createElement("button")
-        retryButton.textContent = "Refazer"
-        retryButton.classList.add("button")
-        retryButton.addEventListener("click", () => window.location.reload())
-        $questionsContainer.appendChild(retryButton)
-    }
-}
-
-function nextPhase() {
-    currentPhase++ // ISSO é o que deve mudar!
-    currentQuestionIndex = phaseLimits.slice(0, currentPhase).reduce((a, b) => a + b, 0)
-atualizarFaseVisual()
-    $questionText.textContent = ""
-    displayNextQuestion()
-    console.log("Fase atual:", currentPhase)
-
-}
-
-function resetState() {
-    clearTimeout(timer)
-    clearInterval(countdownInterval)
-
-    $timeText.textContent = ""
-    $timerBar.style.transition = "none"
-    $timerBar.style.width = "0%"
-
-    while ($answersContainer.firstChild) {
-        $answersContainer.removeChild($answersContainer.firstChild)
-    }
-
-    document.body.removeAttribute("class")
-    $nextQuestionButton.classList.add("hide")
-}
-
-function selectAnswer(event) {
-    clearTimeout(timer)
-    clearInterval(countdownInterval)
-
-    const answerClicked = event.target
-    const playerName = localStorage.getItem("quizPlayerName") || "Desconhecido"
-
-    if (answerClicked.dataset.correct) {
-        document.body.classList.add("correct")
-        totalCorrect++
-        localStorage.setItem("quizProgress", totalCorrect.toString())
-    } else {
-        document.body.classList.add("incorrect")
-    }
-
-    disableAnswers()
-    $nextQuestionButton.classList.remove("hide")
-    currentQuestionIndex++
-}
-
-
-
-
-function finishGame() {
-    const totalQuestion = Math.min(30, questions.length)
-    const performance = Math.floor(totalCorrect * 100 / totalQuestion)
-    const playerName = localStorage.getItem("quizPlayerName") || "Jogador"
-
-    let message = ""
-    if (performance >= 90) message = "Excelente :)"
-    else if (performance >= 70) message = "Muito bom :)"
-    else message = "Pode melhorar :("
-
-    $questionsContainer.innerHTML = `
-        <p class="final-message">
-            Você acertou ${totalCorrect} de ${totalQuestion} questões!<br>
-            <span>Resultado: ${message}</span>
-        </p>
-    `
-    const retryButton = document.createElement("button")
-    retryButton.textContent = "Refazer teste"
-    retryButton.classList.add("button")
-    retryButton.addEventListener("click", () => window.location.reload())
-    $questionsContainer.appendChild(retryButton)
-
-    fetch('https://pwa-api-production-503d.up.railway.app/api/registrar-instalacao', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            evento: 'quiz_finalizado',
-            nome: playerName,
-            acertos: totalCorrect,
-            total: totalQuestion,
-            desempenho: performance,
-            timestamp: new Date().toISOString()
-        })
-    })
-    .then(response => response.json())
-    .then(data => console.log('Quiz finalizado registrado com sucesso:', data))
-    .catch(error => console.error('Erro ao registrar fim do quiz:', error))
-}
-
-function startTimer() {
-    clearTimeout(timer)
-    clearInterval(countdownInterval)
-
-    let timeLeft = 30
-    $timeText.textContent = `Tempo restante: ${timeLeft}s`
-
-    $timerBar.style.transition = 'none'
-    $timerBar.style.width = '100%'
-
-    setTimeout(() => {
-        $timerBar.style.transition = 'width 30s linear'
-        $timerBar.style.width = '0%'
-    }, 50)
-
-    countdownInterval = setInterval(() => {
-        timeLeft--
-        $timeText.textContent = `Tempo restante: ${timeLeft}s`
-        if (timeLeft <= 0) {
-            clearInterval(countdownInterval)
-        }
-    }, 1000)
-
-    timer = setTimeout(() => {
-        disableAnswers()
-        document.body.classList.add("incorrect")
-        $nextQuestionButton.classList.remove("hide")
-        currentQuestionIndex++
-    }, 30000)
-}
-
-function disableAnswers() {
-    document.querySelectorAll(".answer").forEach(button => {
-        if (button.dataset.correct) {
-            button.classList.add("correct")
-        } else {
-            button.classList.add("incorrect")
-        }
-        button.disabled = true
-    })
-}
-
-window.addEventListener("DOMContentLoaded", () => {
-    const savedName = localStorage.getItem("quizPlayerName")
-    if (savedName) {
-        document.getElementById("playerName").value = savedName
-    }
-})
-
-
-
-const questions = [
-   {
+const allQuestions = [
+      // Fase 1: 10 perguntas
+      {
         question: "(1) A quem Paulo chamou de 'meu companheiro de lutas' (Filemon 1:2)?",
         answers:[{text: "Apolo", correct: false },{text: "Afia", correct: false },{text: "Arquipo", correct: true},{text: "Adonias", correct: false}]
     },
@@ -973,104 +490,135 @@ const questions = [
                    { text: "c) Areópago", correct: true },
                    { text: "d) Sinagoga", correct: false }
                ]
-           },]
-           {
-               question: "(61) No discurso de Paulo em Atenas, quem creu e se juntou a ele? (Atos 17:34)",
-               answers: [
-                   { text: "a) Nicodemos", correct: false },
-                   { text: "b) Dionísio", correct: true },
-                   { text: "c) Arquimedes", correct: false },
-                   { text: "d) Barnabé", correct: false }
-               ]
-           },
-           {
-               question: "(62) Qual foi o destino de Paulo depois de Atenas? (Atos 18:1)",
-               answers: [
-                   { text: "a) Tessalônica", correct: false },
-                   { text: "b) Roma", correct: false },
-                   { text: "c) Corinto", correct: true },
-                   { text: "d) Éfeso", correct: false }
-               ]
-           },
-           {
-               question: "(63) Quem jurou não comer nem beber enquanto não matassem Paulo? (Atos 23:12-14)",
-               answers: [
-                   { text: "a) Os judeus.", correct: true },
-                   { text: "b) Os gregos.", correct: false },
-                   { text: "c) Os romanos.", correct: false },
-                   { text: "d) Os coríntios.", correct: false }
-               ]
-           },
-           {
-               question: "(64) Quais são as 7 igrejas que receberam as cartas em Apocalipse? (Apocalipse 1:11)",
-               answers: [
-                   { text: "a) Éfeso, Filipo, Pérgamo, Tiatira, Creta, Filadélfia e Laodiceia.", correct: false },
-                   { text: "b) Éfeso, Esmirna, Pérgamo, Tiatira, Sardes, Filadélfia e Laodiceia.", correct: true },
-                   { text: "c) Éfeso, Macedônia, Pérgamo, Filipo, Tessalônica, Filadélfia e Laodiceia.", correct: false },
-                   { text: "d) Antioquia, Esmirna, Tiatira, Sardes, Tessalônica, Filadélfia e Laodiceia.", correct: false }
-               ]
-           },
-          {
-               question: "(65) O que houve quando o Cordeiro quebrou o último selo? (Apocalipse 8:1)",
-               answers: [
-                   { text: "a) O Diabo foi aprisionado durante 2000 anos.", correct: false },
-                   { text: "b) Houve um sinal que arrebatou os crentes em Cristo.", correct: false },
-                   { text: "c) Houve silêncio nos céus cerca de meia hora.", correct: true },
-                   { text: "d) Os anjos tocaram as trombetas.", correct: false }
-               ]
-           },
-           {
-               question: "(66) Qual era a característica da besta que saiu da terra? (Apocalipse 13:11)",
-               answers: [
-                   { text: "a) Dois chifres como cordeiro, mas que falava como dragão.", correct: true },
-                   { text: "b) Dez chifres e sete cabeças, com dez coroas, uma sobre cada chifre.", correct: false },
-                   { text: "c) Sete chifres, sete cabeças e da sua língua saía fogo.", correct: false },
-                   { text: "d) Um corpo de leopardo, pés de urso e boca de leão.", correct: false }
-               ]
-           },
-           {
-               question: "(67) Quantas taças da ira de Deus foram derramadas em Apocalipse? (Apocalipse 16:1)",
-               answers: [
-                   { text: "a) 6 taças.", correct: false },
-                   { text: "b) 12 taças.", correct: false },
-                   { text: "c) 7 taças.", correct: true },
-                   { text: "d) 10 taças.", correct: false }
-               ]
-           },
-           {
-               question: "(68) De que material era o muro da Nova Jerusalém? (Apocalipse 21:18)",
-               answers: [
-                   { text: "a) Ouro", correct: false },
-                   { text: "b) Jaspe", correct: true },
-                   { text: "c) Vidro", correct: false },
-                   { text: "d) Bronze", correct: false }
-               ]
-           },
-           
-            {
-              question: "(69) Quem foi o primogênito de Jacó? (Gênesis 29:32)",
-              answers: [
-                { text: "a) Júda", correct: false },
-                { text: "b) José", correct: false },
-                { text: "c) Rúben", correct: true },
-                { text: "d) Simeão", correct: false }
-              ]
-            },
-            {
-              question: "(70) Quem viu um arbusto em chamas que não se consumia? (Êxodo 3:2-3)",
-              answers: [
-                { text: "a) Abraão", correct: false },
-                { text: "b) Isaque", correct: false },
-                { text: "c) Moisés", correct: true },
-                { text: "d) Noé", correct: false }
-              ]
-            }];
+           }]
 
-           
-          
-                  
-          
-          
-           
-       
-           
+    let phaseLimits = [10, 30, 60];
+    let currentPhase = 1;
+    let currentQuestions = [];
+    let currentIndex = 0;
+    let score = 0;
+    let timePerQuestion = 60; // segundos
+    let timeLeft = timePerQuestion;
+    let timerInterval;
+
+
+    const questionEl = document.getElementById("question");
+    const answersEl = document.getElementById("answers");
+    const nextBtn = document.getElementById("next-btn");
+    const resultEl = document.getElementById("result");
+    const restartBtn = document.getElementById("restart-btn");
+    const phaseInfo = document.getElementById("phase-info");
+    const nextPhaseBtn = document.getElementById("next-phase-btn");
+
+    function startPhase(phase) {
+      phaseInfo.textContent = `Fase ${phase}`;
+      currentPhase = phase;
+      const start = phase === 1 ? 0 : phaseLimits[phase - 2];
+      const end = phaseLimits[phase - 1];
+      currentQuestions = allQuestions.slice(start, end);
+      shuffleArray(currentQuestions);
+      currentIndex = 0;
+      score = 0;
+      resultEl.classList.add("hidden");
+      nextBtn.classList.add("hidden");
+      restartBtn.classList.add("hidden");
+      nextPhaseBtn.classList.add("hidden");
+      showQuestion();
+    }
+
+    function showQuestion() {
+      const question = currentQuestions[currentIndex];
+      questionEl.textContent = question.question;
+      answersEl.innerHTML = "";
+      question.answers.forEach((ans, i) => {
+        const btn = document.createElement("button");
+        btn.textContent = ans.text;
+        btn.onclick = () => handleAnswer(ans.correct);
+        answersEl.appendChild(btn);
+        
+      });
+      startTimer();
+    }
+
+    function handleAnswer(correct) {
+      if (correct) score++;
+      nextBtn.classList.remove("hidden");
+      Array.from(answersEl.children).forEach(btn => {
+        btn.disabled = true;
+        if (btn.textContent === currentQuestions[currentIndex].answers.find(a => a.correct).text) {
+          btn.style.background = "#c8e6c9";
+        } else {
+          btn.style.background = "#ffcdd2";
+        }
+      });
+    }
+
+    nextBtn.onclick = () => {
+      currentIndex++;
+      if (currentIndex < currentQuestions.length) {
+        nextBtn.classList.add("hidden");
+        clearInterval(timerInterval);
+        showQuestion();
+      } else {
+        finishPhase();
+      }
+    };
+
+    function finishPhase() {
+      clearInterval(timerInterval);
+      questionEl.textContent = "";
+      answersEl.innerHTML = "";
+      nextBtn.classList.add("hidden");
+
+      const total = currentQuestions.length;
+      const percent = (score / total) * 100;
+      if (percent >= 60) {
+        resultEl.innerHTML = `<p>✅ Parabéns! Você acertou ${score} de ${total} perguntas.</p>`;
+        if (currentPhase < 3) {
+          nextPhaseBtn.classList.remove("hidden");
+        } else {
+          resultEl.innerHTML += "<p>🎉 Fim do quiz! Você completou todas as fases.</p>";
+          restartBtn.classList.remove("hidden");
+        }
+      } else {
+        resultEl.innerHTML = `<p>❌ Você acertou ${score} de ${total}. Tente novamente!</p>`;
+        restartBtn.classList.remove("hidden");
+      }
+
+      resultEl.classList.remove("hidden");
+    }
+
+    nextPhaseBtn.onclick = () => startPhase(currentPhase + 1);
+    restartBtn.onclick = () => startPhase(1);
+
+    function shuffleArray(arr) {
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+    }
+    function startTimer() {
+  clearInterval(timerInterval);
+  timeLeft = timePerQuestion;
+  updateTimerBar();
+
+  timerInterval = setInterval(() => {
+    timeLeft--;
+    updateTimerBar();
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      handleAnswer(false); // tempo esgotado = resposta errada
+    }
+  }, 1000);
+}
+
+function updateTimerBar() {
+  const bar = document.getElementById("timer-bar");
+  const percent = (timeLeft / timePerQuestion) * 100;
+  bar.style.width = percent + "%";
+  bar.style.background = percent <= 30 ? "#f44336" : "#4caf50";
+}
+
+
+    // Início do jogo
+    startPhase(1);
