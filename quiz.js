@@ -631,3 +631,21 @@ function updateTimerBar() {
       .catch(err => console.log('Erro ao registrar Service Worker:', err));
   });
 }
+
+
+
+if ('Notification' in window && 'serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/service-worker.js').then(registration => {
+    console.log('Service Worker registrado com sucesso!', registration);
+
+    // Solicitar permissão para notificações
+    Notification.requestPermission().then(permission => {
+      if (permission === 'granted') {
+        console.log('Permissão de notificação concedida!');
+      }
+    });
+  }).catch(error => {
+    console.error('Falha ao registrar o Service Worker:', error);
+  });
+}
+

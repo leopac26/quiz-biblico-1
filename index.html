@@ -51,6 +51,16 @@
     <button id="restart-btn" class="hidden">Recomeçar</button>
   </div>
 
+  <script>
+  fetch('http://localhost:3000/dados', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ nome: 'João', idade: 25 })
+})
+.then(res => res.json())
+.then(data => console.log(data));
+</script>
+
   <script src="quiz.js"></script>
 </body>
 </html>

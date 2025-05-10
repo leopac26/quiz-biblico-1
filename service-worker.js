@@ -9,38 +9,30 @@ const urlsToCache = [
   "icon-512.png"
 ];
 
-// Instala o cache
-self.addEventListener("install", (event) => {
-  self.skipWaiting();
-  event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(urlsToCache);
-    })
-  );
+self.addEventListener('install', event => {
+  self.skipWaiting(); // Faz o novo service worker assumir imediatamente
 });
 
-// Ativa e remove caches antigos
-self.addEventListener("activate", (event) => {
-  const cacheAllowlist = [CACHE_NAME];
+self.addEventListener('activate', event => {
   event.waitUntil(
-    caches.keys().then((cacheNames) =>
-      Promise.all(
-        cacheNames.map((cacheName) => {
-          if (!cacheAllowlist.includes(cacheName)) {
-            return caches.delete(cacheName);
-          }
+    caches.keys().then(cacheNames => {
+      return Promise.all(
+        cacheNames.map(cacheName => {
+          return caches.delete(cacheName); // Deleta caches antigos
         })
-      )
-    )
+      );
+    })
   );
-  
 });
 
-// Intercepta requisições
-self.addEventListener("fetch", (event) => {
-  event.respondWith(
-    caches.match(event.request).then((response) => {
-      return response || fetch(event.request);
-    })
+self.addEventListener('push', event => {
+  const options = {
+    body: event.data.text(),
+    icon: 'images/icon.png',
+    badge: 'images/badge.png',
+  };
+
+  event.waitUntil(
+    self.registration.showNotification('Nova Atualização!', options)
   );
 });
