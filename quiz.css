@@ -28,6 +28,15 @@ body {
   z-index: 1000;
 }
 
+.titulo-ingles{
+  font-size: 25px;
+  padding: 10px;
+  margin: auto;
+  text-align: center;
+  
+  color: rgb(87, 6, 17);
+}
+
 /* === Menu principal horizontal === */
 .menu-principal {
   position: fixed;
