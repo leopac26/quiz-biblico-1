@@ -17,9 +17,9 @@ body {
 /* === Título principal fixo === */
 .titulo-menu {
   position: fixed;
-  top: 0;
+  top: -21px;
   width: 100vw;
-  height: 50px;
+  height: 48px;
   background: blue;
   color: rgb(250, 153, 9);
   font-size: 32px;
@@ -40,13 +40,13 @@ body {
 /* === Menu principal horizontal === */
 .menu-principal {
   position: fixed;
-  top: 60px;
+  top: 50px;
   width: 100vw;
   display: flex;
   justify-content: center;
-  background: blue;
+  background: rgb(133, 133, 190);
   color: white;
-  border: 1px solid black;
+  border: 1px solid rgb(103, 103, 153);
   font-size: 25px;
   z-index: 1000;
 }
@@ -59,7 +59,7 @@ body {
 
 /* === Tabela do menu === */
 .menu-tabela {
-  background: rgb(46, 7, 241);
+  background: rgb(135, 127, 173);
   width: 100%;
 }
 
@@ -132,6 +132,7 @@ body {
 #next-btn,
 #restart-btn,
 #next-phase-btn {
+
   margin-top: 20px;
   padding: 10px 20px;
 }
@@ -139,16 +140,16 @@ body {
 /* === Responsividade para telas pequenas === */
 @media (max-width: 670px) {
   .titulo-menu {
-    font-size: 20px;
+    font-size: 30px;
   }
 
   .menu-principal {
-    font-size: 12px;
+    font-size: 20px;
     flex-wrap: wrap;
   }
 
   .menu-principal-quiz {
-    font-size: 12px;
+    font-size: 20px;
     top: 100px;
     width: 100%;
   }
