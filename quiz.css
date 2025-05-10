@@ -94,6 +94,7 @@ body {
   color: #222;
 }
 
+
 /* === Container do quiz === */
 .quiz-container {
   max-width: 600px;
@@ -104,6 +105,12 @@ body {
   box-shadow: 0 0 10px #ccc;
   box-sizing: border-box;
   margin-top: 40px;
+}
+
+.inicial-one{
+  margin: auto;
+  text-align: center;
+  font-size: 20px;
 }
 
 /* === Pergunta === */
