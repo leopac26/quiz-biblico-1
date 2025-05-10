@@ -77,12 +77,12 @@ const allQuestions = [
     { text: 'Roof', correct: false }
 ]},
 
-{ question: '10) What is your favorite color? (Qual é sua cor favorita?)',
+{ question: '10) How do you say "verde" in English? (como se diz "verde" em ingles?)',
   answers: [
     { text: 'Red', correct: false },
     { text: 'Blue', correct: false },
-    { text: 'Green', correct: false },
-    { text: 'Yellow', correct: true }
+    { text: 'Yellow', correct: false }
+    { text: 'Green', correct: true },
 ]},
 
 {
@@ -103,13 +103,14 @@ const allQuestions = [
     { text: 'd) Bookstore', correct: false }
   ]
 },
-{
-  question: '(13) What color is the sky? (De que cor é o céu?)',
+
+  {
+  question: '(14) How do you say "maçã" in English? (Como se diz "maçã" em inglês?)',
   answers: [
-    { text: 'a) Red', correct: false },
-    { text: 'b) Blue', correct: true },
-    { text: 'c) Green', correct: false },
-    { text: 'd) Yellow', correct: false }
+    { text: 'a) Banana', correct: false },
+    { text: 'b) Apple', correct: true },
+    { text: 'c) Orange', correct: false },
+    { text: 'd) Grape', correct: false }
   ]
 },
 {
@@ -131,7 +132,7 @@ const allQuestions = [
   ]
 },
 {
- question: '16) Qual é a tradução de "família"? (What is the translation of "family"?)',
+  question: '(16) What is the translation of "family"? (Qual é a tradução de "family"?)',
   answers: [
     { text: 'a) Família', correct: true },
     { text: 'b) Festa', correct: false },
@@ -139,15 +140,18 @@ const allQuestions = [
     { text: 'd) Folha', correct: false }
   ]
 },
-{ question: '17) What is your favorite food? (Qual é sua comida favorita?)',
+
+{
+  question: '(20) How do you say "feliz" in English? (Como se diz "feliz" em inglês?)',
   answers: [
-    { text: 'a) I have two sisters.', correct: false },
-    { text: 'b) My favorite food is pasta.', correct: true },
-    { text: 'c) I go to school.', correct: false },
-    { text: 'd) I love music.', correct: false }
+    { text: 'a) Sad', correct: false },
+    { text: 'b) Happy', correct: true },
+    { text: 'c) Angry', correct: false },
+    { text: 'd) Tired', correct: false }
   ]
 },
-{ question: '18) Como se diz "meu nome é João" em inglês? (How do you say "my name is João" in English?)',
+
+{ question: '18) Como se diz "meu nome é João" em inglês? (How do you say  in English?)',
   answers: [
     { text: 'a) My name is João.', correct: true },
     { text: 'b) I am João.', correct: false },
@@ -163,7 +167,7 @@ const allQuestions = [
     { text: 'd) It is night.', correct: false }
   ]
 },
-{ question: '20) Qual é a tradução de "mother"? (What is the translation of "mãe"?)',
+{ question: '20) Qual é a tradução de "mother"? (What is the translation of "mother"?)',
   answers: [
     { text: 'a) Irmã', correct: false },
     { text: 'b) Tia', correct: false },
@@ -180,35 +184,37 @@ const allQuestions = [
     { text: 'c) I live in a house.', correct: false },
     { text: 'd) I have a cat.', correct: false }]
 },
-{ question: '22) Como se diz "estou com fome" em inglês? (How do you say "I am hungry" in English?)',
+{ question: '22) Como se diz "estou com fome" em inglês? (How do you say "estou com fome" in English?)',
   answers: [
     { text: 'a) I am tired', correct: false },
     { text: 'b) I am hungry', correct: true },
     { text: 'c) I am sad', correct: false },
     { text: 'd) I am late', correct: false }]
 },
-{ question: '23) What color is the sky? (Qual é a cor do céu?)',
+{
+  question: '(26) How do you say "amigo" in English? (Como se diz "amigo" em inglês?)',
   answers: [
-    { text: 'a) It is green', correct: false },
-    { text: 'b) It is blue', correct: true },
-    { text: 'c) It is red', correct: false },
-    { text: 'd) It is black', correct: false }]
+    { text: 'a) Friend', correct: true },
+    { text: 'b) Teacher', correct: false },
+    { text: 'c) Family', correct: false },
+    { text: 'd) Neighbor', correct: false }
+  ]
 },
-{ question: '24) Qual é a tradução de "brother"? (What is the translation of "irmão"?)',
+{ question: '24) Qual é a tradução de "brother"? (What is the translation of "brother"?)',
   answers: [
     { text: 'a) Primo', correct: false },
     { text: 'b) Irmão', correct: true },
     { text: 'c) Pai', correct: false },
     { text: 'd) Filho', correct: false }]
 },
-{ question: '25) What do you do? (O que você faz?)',
+{ question: '25) What do you do? (O que você faz?)qual a resposta certa',
   answers: [
     { text: 'a) I am a student.', correct: true },
     { text: 'b) I like pizza.', correct: false },
     { text: 'c) I am tall.', correct: false },
     { text: 'd) I am hungry.', correct: false }]
 },
-{ question: '26) Como se diz "eu tenho um carro" em inglês? (How do you say "I have a car" in English?)',
+{ question: '26) Como se diz "eu tenho um carro" em inglês? (How do you say "eu tenho um carro" in English?)',
   answers: [
     { text: 'a) I drive fast', correct: false },
     { text: 'b) I like cars', correct: false },
@@ -222,7 +228,7 @@ const allQuestions = [
     { text: 'c) I like coffee.', correct: false },
     { text: 'd) I live here.', correct: false }]
 },
-{ question: '28) Qual é a tradução de "thank you"? (What is the translation of "obrigado"?)',
+{ question: '28) Qual é a tradução de "thank you"? (What is the translation of "thank you"?)',
   answers: [
     { text: 'a) Desculpe', correct: false },
     { text: 'b) De nada', correct: false },
@@ -236,7 +242,7 @@ const allQuestions = [
     { text: 'c) I have a pen.', correct: false },
     { text: 'd) I study math.', correct: false }]
 },
-{ question: '30) Como se diz "eu gosto de inglês" em inglês? (How do you say "I like English" in English?)',
+{ question: '30) Como se diz "eu gosto de inglês" em inglês? (How do you say "eu gosto de inglês" in English?)',
   answers: [
     { text: 'a) I speak English.', correct: false },
     { text: 'b) I like English.', correct: true },
@@ -251,7 +257,7 @@ const allQuestions = [
     { text: 'c) I eat rice.', correct: false },
     { text: 'd) I drink water.', correct: false }]
 },
-{ question: '32) Como se diz "eu estou cansado" em inglês? (How do you say "I am tired" in English?)',
+{ question: '32) Como se diz "eu estou cansado" em inglês? (How do you say "eu estou cansado" in English?)',
   answers: [
     { text: 'a) I am tall.', correct: false },
     { text: 'b) I am late.', correct: false },
@@ -265,7 +271,7 @@ const allQuestions = [
     { text: 'c) I eat lunch.', correct: false },
     { text: 'd) It is sunny.', correct: false }]
 },
-{ question: '34) Qual é a tradução de "cat"? (What is the translation of "gato"?)',
+{ question: '34) Qual é a tradução de "cat"? (What is the translation of "cat"?)',
   answers: [
     { text: 'a) Cão', correct: false },
     { text: 'b) Gato', correct: true },
@@ -279,7 +285,7 @@ const allQuestions = [
     { text: 'c) I am a doctor.', correct: false },
     { text: 'd) I have a car.', correct: false }]
 },
-{ question: '36) Como se diz "ela é minha irmã" em inglês? (How do you say "She is my sister" in English?)',
+{ question: '36) Como se diz "ela é minha irmã" em inglês? (How do you say "ela é minha irmã" in English?)',
   answers: [
     { text: 'a) She is my friend.', correct: false },
     { text: 'b) She is my sister.', correct: true },
@@ -293,7 +299,7 @@ const allQuestions = [
     { text: 'c) I go to school.', correct: false },
     { text: 'd) I have a computer.', correct: false }]
 },
-{ question: '38) Qual é a tradução de "house"? (What is the translation of "casa"?)',
+{ question: '38) Qual é a tradução de "house"? (What is the translation of "house"?)',
   answers: [
     { text: 'a) Janela', correct: false },
     { text: 'b) Porta', correct: false },
@@ -307,7 +313,7 @@ const allQuestions = [
     { text: 'c) I work at school.', correct: false },
     { text: 'd) I eat salad.', correct: false }]
 },
-{ question: '40) Como se diz "ele é médico" em inglês? (How do you say "He is a doctor" in English?)',
+{ question: '40) Como se diz "ele é médico" em inglês? (How do you say "ele é médico" in English?)',
   answers: [
     { text: 'a) He is a lawyer.', correct: false },
     { text: 'b) He is a doctor.', correct: true },
@@ -324,7 +330,7 @@ const allQuestions = [
     { text: 'd) I like animals.', correct: false }]
 },
 {
-  question: '42) Como se diz "nós estamos prontos" em inglês? (How do you say "We are ready" in English?)',
+  question: '42) Como se diz "nós estamos prontos" em inglês? (How do you say "nós estamos prontos" in English?)',
   answers: [
     { text: 'a) We are late.', correct: false },
     { text: 'b) We are ready.', correct: true },
@@ -340,7 +346,7 @@ const allQuestions = [
     { text: 'd) I speak French.', correct: false }]
 },
 {
-  question: '44) Qual é a tradução de "window"? (What is the translation of "janela"?)',
+  question: '44) Qual é a tradução de "window"? (What is the translation of "window"?)',
   answers: [
     { text: 'a) Cadeira', correct: false },
     { text: 'b) Porta', correct: false },
@@ -356,7 +362,7 @@ const allQuestions = [
     { text: 'd) I have a dog.', correct: false }]
 },
 {
-  question: '46) Como se diz "eu estou com fome" em inglês? (How do you say "I am hungry" in English?)',
+  question: '46) Como se diz "eu estou com fome" em inglês? (How do you say "eu estou com fome" in English?)',
   answers: [
     { text: 'a) I am sad.', correct: false },
     { text: 'b) I am hungry.', correct: true },
@@ -372,11 +378,11 @@ const allQuestions = [
     { text: 'd) They are here.', correct: false }]
 },
 {
-  question: '48) Qual é a tradução de "car"? (What is the translation of "carro"?)',
+  question: '48) Qual é a tradução de "plane"? (What is the translation of "plane"?)',
   answers: [
     { text: 'a) Bicicleta', correct: false },
-    { text: 'b) Avião', correct: false },
-    { text: 'c) Carro', correct: true },
+    { text: 'b) Avião', correct: true },
+    { text: 'c) Carro', correct: false },
     { text: 'd) Barco', correct: false }]
 },
 {
@@ -388,7 +394,7 @@ const allQuestions = [
     { text: 'd) It is hot.', correct: false }]
 },
 {
-  question: '50) Como se diz "eles são meus amigos" em inglês? (How do you say "They are my friends" in English?)',
+  question: '50) Como se diz "eles são meus amigos" em inglês? (How do you say "eles são meus amigos" in English?)',
   answers: [
     { text: 'a) They are my parents.', correct: false },
     { text: 'b) They are my brothers.', correct: false },
@@ -405,7 +411,7 @@ const allQuestions = [
     { text: 'd) I am studying.', correct: false }]
 },
 {
-  question: '52) Qual é a tradução de "book"? (What is the translation of "livro"?)',
+  question: '52) como se diz "livro" em inglês? (What is the translation of "livro"?)',
   answers: [
     { text: 'a) Book', correct: true },
     { text: 'b) Table', correct: false },
@@ -421,7 +427,7 @@ const allQuestions = [
     { text: 'd) I like pizza.', correct: false }]
 },
 {
-  question: '54) Como se diz "Eu não entendo" em inglês? (How do you say "I don\'t understand" in English?)',
+  question: '54) Como se diz "Eu não entendo" em inglês? (How do you say "Eu não entendo" in English?)',
   answers: [
     { text: 'a) I don\'t understand.', correct: true },
     { text: 'b) I am fine.', correct: false },
@@ -437,7 +443,7 @@ const allQuestions = [
     { text: 'd) I like music.', correct: false }]
 },
 {
-  question: '56) Qual é a tradução de "school"? (What is the translation of "escola"?)',
+  question: '56) como se diz "escola" em ingles? (What is the translation of "escola"?)',
   answers: [
     { text: 'a) School', correct: true },
     { text: 'b) Hospital', correct: false },
@@ -453,7 +459,7 @@ const allQuestions = [
     { text: 'd) I am studying English.', correct: false }]
 },
 {
-  question: '58) Como se diz "Eu gosto de ler" em inglês? (How do you say "I like to read" in English?)',
+  question: '58) Como se diz "Eu gosto de ler" em inglês? (How do you say "Eu gosto de ler" in English?)',
   answers: [
     { text: 'a) I like to read.', correct: true },
     { text: 'b) I am tired.', correct: false },
@@ -469,12 +475,12 @@ const allQuestions = [
     { text: 'd) I like swimming.', correct: false }]
 },
 {
-  question: '60) Qual é a tradução de "cat"? (What is the translation of "gato"?)',
+  question: '60) Qual é a tradução de "peixe"? (What is the translation of "peixe"?)',
   answers: [
-    { text: 'a) Dog', correct: false },
+    { text: 'a) shark', correct: false },
     { text: 'b) Bird', correct: false },
-    { text: 'c) Cat', correct: true },
-    { text: 'd) Fish', correct: false }]
+    { text: 'c) Cat', correct: false },
+    { text: 'd) Fish', correct: true }]
 }
        ]
 
