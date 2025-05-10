@@ -54,7 +54,7 @@ self.addEventListener("message", (event) => {
 
 */
 
-const CACHE_NAME = "quiz-biblico-cache-v3";
+const CACHE_NAME = "quiz-biblico-cache-v4";
 const urlsToCache = [
   "index.html",
   "quiz.css",
