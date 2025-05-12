@@ -548,8 +548,11 @@ const allQuestions = [
         if (btn.textContent === currentQuestions[currentIndex].answers.find(a => a.correct).text) {
           btn.style.background = "#c8e6c9";
         } else {
-          btn.style.background = "#ffcdd2";
+          btn.style.background = "#ffcdd2"; 
+          btn.style.color = "black";
         }
+
+
       });
     }
 

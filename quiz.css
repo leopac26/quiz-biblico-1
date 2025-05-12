@@ -45,8 +45,8 @@ body {
   display: flex;
   justify-content: center;
   background: rgb(133, 133, 190);
-  color: white;
-  border: 1px solid rgb(103, 103, 153);
+  color: rgb(50, 47, 75);
+  border: 1px solid rgb(56, 56, 92);
   font-size: 25px;
   z-index: 1000;
 }
@@ -59,7 +59,7 @@ body {
 
 /* === Tabela do menu === */
 .menu-tabela {
-  background: rgb(135, 127, 173);
+  background: rgb(101, 92, 148);
   width: 100%;
 }
 
@@ -78,6 +78,7 @@ body {
 .answer {
   margin: 5px;
   padding: 10px 20px;
+  
 }
 
 /* === Elemento escondido === */
@@ -91,7 +92,7 @@ body {
   font-weight: bold;
   font-size: 1.2rem;
   margin-bottom: 10px;
-  color: #222;
+  color: #b10606;
 }
 
 
@@ -102,7 +103,7 @@ body {
   background: white;
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 0 10px #ccc;
+  box-shadow: 0 0 10px #d8c6c6;
   box-sizing: border-box;
   margin-top: 40px;
 }
@@ -115,7 +116,7 @@ body {
 
 /* === Pergunta === */
 .question {
-  font-size: 1.2rem;
+  font-size: 1.6rem;
   margin-bottom: 10px;
 }
 
@@ -136,6 +137,7 @@ body {
   margin-top: 20px;
   padding: 10px 20px;
 }
+
 
 /* === Responsividade para telas pequenas === */
 @media (max-width: 670px) {
