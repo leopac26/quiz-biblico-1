@@ -12,7 +12,7 @@ app.use(bodyParser.json());
 
 app.post("/progresso", (req, res) => {
   const dados = req.body;
-  console.log("Dados recebidos:", dados);
+  console.log("Dados adquiridos:", dados);
 
   // Lê o arquivo existente ou cria um array vazio se não existir
   let registros = [];
