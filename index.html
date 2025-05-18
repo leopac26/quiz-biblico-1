@@ -61,6 +61,28 @@
 .then(data => console.log(data));
 </script>
 
+<script>
+  // Detectar entrada no app
+  window.addEventListener('load', () => {
+    const entrada = {
+      userAgent: navigator.userAgent,
+      idioma: navigator.language,
+      dataHora: new Date().toISOString(),
+      origem: window.location.href,
+      tipo: 'entrada-app'
+    };
+
+    fetch('https://SEU_BACKEND.com/registrar-entrada', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(entrada)
+    })
+    .then(res => res.json())
+    .then(data => console.log('Usuário registrado:', data))
+    .catch(err => console.error('Erro ao registrar entrada:', err));
+  });
+</script>
+
   <script src="quiz.js"></script>
 </body>
 </html>
