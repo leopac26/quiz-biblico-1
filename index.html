@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!--<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
@@ -28,7 +28,7 @@
       <td><a href="teclado.html">Teclado Virtual</a></td>
       <td><a href="../hinos-da-harpa/index.html">Hinos</a></td>
       <td><a href="../quiz-Biblico/quiz.html" target="_blank" rel="noopener noreferrer">Quiz</a></td>
-      <td><a href="../corinhos/corinhos.html">Corinhos</a></td>--> 
+      <td><a href="../corinhos/corinhos.html">Corinhos</a></td>
     </tr>
   </table>
 
@@ -85,4 +85,101 @@
 
   <script src="quiz.js"></script>
 </body>
+</html>-->
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="theme-color" content="#1e90ff">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="quiz.css">
+  <title>Quiz Bíblico</title>
+</head>
+
+<body>
+  <h1 class="titulo-menu">Assembléia de Deus Shekinah Kadosh</h1>
+
+  <table class="menu-principal">
+    <tr class="menu-tabela">
+      <td><a href="Quiz-ingles/Quiz-ingles.html">Quiz ingles</a></td>
+      <td><a href="quiz-nivel02/quiz-nivel02.html">NIVEL 2</a></td>
+    </tr>
+  </table>
+
+  <div class="quiz-container">
+    <h1 class="inicial-one">NIVEL 1</h1>
+    <h1 class="titulo-ingles">Quiz Bíblico</h1>
+    <div id="timer-bar" style="height: 10px; background: #4caf50; width: 100%; margin-bottom: 10px; transition: width 1s linear;"></div>
+    <div id="phase-info">Fase 1</div>
+
+    <!-- Campo de usuário -->
+    <input type="text" id="usuario" placeholder="Digite seu nome" style="margin: 10px 0; padding: 5px;" />
+
+    <!-- Botões de salvar e consultar -->
+    <button onclick="salvar()">Salvar Progresso</button>
+    <button onclick="consultar()">Ver Progresso</button>
+
+    <div id="question-container">
+      <div id="question" class="question"></div>
+      <div id="answers" class="answers"></div>
+    </div>
+    <button id="next-btn" class="hidden">Próxima</button>
+    <div id="result" class="hidden"></div>
+    <button id="next-phase-btn" class="hidden">Ir para próxima fase</button>
+    <button id="restart-btn" class="hidden">Recomeçar</button>
+  </div>
+
+  <!-- Scripts de integração com backend -->
+  <script>
+    const BACKEND_URL = 'http://localhost:3000'; // Altere para seu domínio em produção
+
+    function salvar() {
+      const usuario = document.getElementById('usuario').value.trim();
+      if (!usuario) return alert("Digite seu nome!");
+
+      // Exemplo fixo de fase e pontuação. Substitua pelos dados reais do quiz.
+      const dados = {
+        usuario,
+        fase: 1,
+        pontuacao: 9
+      };
+
+      fetch(`${BACKEND_URL}/progresso`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(dados)
+      })
+      .then(res => res.json())
+      .then(data => alert("✅ Progresso salvo!"))
+      .catch(err => {
+        console.error("Erro ao salvar:", err);
+        alert("❌ Falha ao salvar progresso.");
+      });
+    }
+
+    function consultar() {
+      const usuario = document.getElementById('usuario').value.trim();
+      if (!usuario) return alert("Digite seu nome!");
+
+      fetch(`${BACKEND_URL}/progresso?usuario=${encodeURIComponent(usuario)}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data.length === 0) return alert("Nenhum progresso encontrado.");
+          console.log(data);
+          alert(`📊 Último progresso:\nFase: ${data.at(-1).fase}\nPontuação: ${data.at(-1).pontuacao}`);
+        })
+        .catch(err => {
+          console.error("Erro ao buscar:", err);
+          alert("❌ Falha ao buscar progresso.");
+        });
+    }
+  </script>
+
+  <script src="quiz.js"></script>
+</body>
 </html>
+
+
+

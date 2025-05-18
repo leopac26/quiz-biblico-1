@@ -14,7 +14,9 @@ app.use(bodyParser.json());
 
 app.post("/progresso", (req, res) => {
   const dados = req.body;
-  console.log("Dados adquiridos:", dados);
+  console.log(req.body, dados);
+
+  
 
   let registros = [];
 
@@ -44,6 +46,36 @@ app.post("/progresso", (req, res) => {
     res.status(500).json({ mensagem: "Erro ao salvar os dados." });
   }
 });
+
+app.get("/progresso", (req, res) => {
+  const usuario = req.query.usuario;
+
+  if (!usuario) {
+    return res.status(400).json({ mensagem: "Usuário não informado." });
+  }
+
+  if (!fs.existsSync(CAMINHO_ARQUIVO)) {
+    return res.status(404).json({ mensagem: "Nenhum dado encontrado." });
+  }
+
+  try {
+    const conteudo = fs.readFileSync(CAMINHO_ARQUIVO, "utf8");
+    const registros = JSON.parse(conteudo);
+
+    // Filtra os registros pelo nome do usuário
+    const registrosDoUsuario = registros.filter(r => r.usuario === usuario);
+
+    res.status(200).json(registrosDoUsuario);
+  } catch (erro) {
+    console.error("Erro ao ler os dados:", erro);
+    res.status(500).json({ mensagem: "Erro ao acessar os dados salvos." });
+  }
+});
+
+
+
+
+
 
 app.listen(PORT, () => {
   console.log(`🚀 Servidor rodando em http://localhost:${PORT}`);
