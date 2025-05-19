@@ -181,20 +181,20 @@ const allQuestions = [
             question:'(26) A estátua do sonho de Nabucodonosor era composta de quais elementos?',
             answers:[
                { text:'a) Toda em ouro', correct: false},
-               {text:'b) Ouro, prata, , onix e ferro', correct: false},
-               {text:'Ouro, prata, bronze, onix e ferro', correct: false},
+               {text:'b) Ouro, prata, ônix e ferro', correct: false},
+               {text:'c) Ouro, prata, bronze, onix e ferro', correct: false},
                {text:"d) Ouro, prata, bronze, ferro e barro.",correct: true}
             
             ]},
             {
-            question:'(27) Quem era conhecido por ser cobrador de impostos?',
-            answers:[
-               { text:'a) Zacarias', correct: false},
-               {text:'b) Zebedeu', correct: false},
-               {text:'c) Zaqueu', correct: true},
-               {text:"d) Zebeus",correct: false}
-            
-            ]},
+  question:'(27) Quem era conhecido por ser cobrador de impostos?',
+  answers:[
+     { text:'a) João Batista', correct: false },
+     { text:'b) Bartolomeu', correct: false },
+     { text:'c) Zaqueu', correct: true },
+     { text:'d) Judas Tadeu', correct: false }
+  ]
+},
             {
             question:'(28) Quanto tempo Jonas ficou preso dentro da barriga de um grande peixe?',
             answers:[
