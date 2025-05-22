@@ -3,9 +3,6 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#2f2f2f">
-
   <title>Quiz Bíblico</title>
   <style>
     body {
@@ -44,22 +41,37 @@
       background: #34a853;
       margin: 5px;
     }
+    #start-btn {
+      background: #fbbc05;
+      padding: 10px 20px;
+      font-size: 16px;
+      margin-bottom: 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
 
   <h1>Quiz Bíblico</h1>
 
-  <div id="phase-info"></div>
-  <div id="question"></div>
-  <div id="answers"></div>
+  <div id="start-screen">
+    <h2>Bem-vindo ao Quiz!</h2>
+    <input type="text" id="usuario" placeholder="Digite seu nome" />
+    <br>
+    <button id="start-btn">Iniciar</button>
+  </div>
 
-  <button id="next-btn" class="hidden">Próxima Pergunta</button>
-  <button id="next-phase-btn" class="hidden">Avançar para a Próxima Fase</button>
+  <div id="quiz-container" class="hidden">
+    <div id="phase-info"></div>
+    <div id="question"></div>
+    <div id="answers"></div>
+    <button id="next-btn" class="hidden">Próxima Pergunta</button>
+    <button id="next-phase-btn" class="hidden">Avançar para a Próxima Fase</button>
+    <div id="result" class="hidden"></div>
+  </div>
 
-  <div id="result" class="hidden"></div>
-
-  <input type="text" id="usuario" placeholder="Digite seu nome" />
   <div>
     <button class="action" onclick="salvarProgresso()">💾 Salvar Progresso</button>
     <button class="action" onclick="consultarProgresso()">📊 Ver Progresso</button>
@@ -67,8 +79,22 @@
   <div id="progresso-info"></div>
 
   <script>
-    const allQuestions = [
-     {
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("start-btn").addEventListener("click", () => {
+        const nome = document.getElementById("usuario").value.trim();
+        if (!nome) {
+          alert("Digite seu nome para começar o quiz.");
+          return;
+        }
+
+        localStorage.setItem("usuario", nome);
+        document.getElementById("start-screen").classList.add("hidden");
+        document.getElementById("quiz-container").classList.remove("hidden");
+        startPhase(1);
+      });
+
+      const allQuestions = [
+        {
         question: "(1) A quem Paulo chamou de 'meu companheiro de lutas' (Filemon 1:2)?",
         answers:[{text: "Apolo", correct: false },{text: "Afia", correct: false },{text: "Arquipo", correct: true},{text: "Adonias", correct: false}]
     },
@@ -559,201 +585,143 @@
                    { text: "d) Sinagoga", correct: false }
                ]
            },
+      ];
 
+      let currentPhase = 1;
+      let currentIndex = 0;
+      let score = 0;
+      const phaseLimits = [10, 30, 60];
+      let currentQuestions = [];
 
-      // Fase 2 e 3 (adicione até 60 total conforme quiser)
-    ];
+      const questionEl = document.getElementById("question");
+      const answersEl = document.getElementById("answers");
+      const nextBtn = document.getElementById("next-btn");
+      const resultEl = document.getElementById("result");
+      const phaseInfo = document.getElementById("phase-info");
+      const nextPhaseBtn = document.getElementById("next-phase-btn");
 
-    let currentPhase = 1;
-    let currentIndex = 0;
-    let score = 0;
-
-    const phaseLimits = [10, 30, 60];
-    let currentQuestions = [];
-
-    const questionEl = document.getElementById("question");
-    const answersEl = document.getElementById("answers");
-    const nextBtn = document.getElementById("next-btn");
-    const resultEl = document.getElementById("result");
-    const phaseInfo = document.getElementById("phase-info");
-    const nextPhaseBtn = document.getElementById("next-phase-btn");
-
-    function shuffleArray(arr) {
-      for (let i = arr.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [arr[i], arr[j]] = [arr[j], arr[i]];
+      function shuffleArray(arr) {
+        for (let i = arr.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
       }
-    }
 
-    function startPhase(phase) {
-      phaseInfo.textContent = `Fase ${phase}`;
-      currentPhase = phase;
-      const start = phase === 1 ? 0 : phaseLimits[phase - 2];
-      const end = phaseLimits[phase - 1];
-      currentQuestions = allQuestions.slice(start, end);
-      shuffleArray(currentQuestions);
-      currentIndex = 0;
-      score = 0;
-      resultEl.classList.add("hidden");
-      nextBtn.classList.add("hidden");
-      nextPhaseBtn.classList.add("hidden");
-      showQuestion();
-    }
-
-    function showQuestion() {
-      const question = currentQuestions[currentIndex];
-      questionEl.textContent = question.question;
-      answersEl.innerHTML = "";
-      question.answers.forEach((ans) => {
-        const btn = document.createElement("button");
-        btn.textContent = ans.text;
-        btn.onclick = () => handleAnswer(ans.correct);
-        answersEl.appendChild(btn);
-      });
-    }
-
-    function handleAnswer(correct) {
-      if (correct) score++;
-      nextBtn.classList.remove("hidden");
-      Array.from(answersEl.children).forEach(btn => btn.disabled = true);
-    }
-
-    nextBtn.onclick = () => {
-      if (currentIndex < currentQuestions.length - 1) {
-        currentIndex++;
+      function startPhase(phase) {
+        phaseInfo.textContent = `Fase ${phase}`;
+        currentPhase = phase;
+        const start = phase === 1 ? 0 : phaseLimits[phase - 2];
+        const end = phaseLimits[phase - 1];
+        currentQuestions = allQuestions.slice(start, end);
+        shuffleArray(currentQuestions);
+        currentIndex = 0;
+        score = 0;
+        resultEl.classList.add("hidden");
         nextBtn.classList.add("hidden");
+        nextPhaseBtn.classList.add("hidden");
         showQuestion();
-      } else {
-        resultEl.classList.remove("hidden");
-        resultEl.textContent = `Fim da fase ${currentPhase}! Pontuação: ${score}/${currentQuestions.length}`;
-        nextPhaseBtn.classList.remove("hidden");
-        nextBtn.classList.add("hidden");
-      }
-    };
-
-    nextPhaseBtn.onclick = () => {
-      if (currentPhase < 3) {
-        startPhase(currentPhase + 1);
-      } else {
-        alert("🎉 Você concluiu todas as fases!");
-      }
-    };
-
-    startPhase(1);
-
-    async function salvarProgresso() {
-      const usuario = document.getElementById("usuario").value.trim();
-      const fase = currentPhase;
-      const pontuacao = score;
-
-      if (!usuario) {
-        alert("Por favor, digite seu nome para salvar o progresso.");
-        return;
       }
 
-      try {
-        const resposta = await fetch("http://localhost:3000/progresso", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ usuario, fase, pontuacao }),
+      function showQuestion() {
+        const question = currentQuestions[currentIndex];
+        questionEl.textContent = question.question;
+        answersEl.innerHTML = "";
+        question.answers.forEach((ans) => {
+          const btn = document.createElement("button");
+          btn.textContent = ans.text;
+          btn.onclick = () => handleAnswer(ans.correct);
+          answersEl.appendChild(btn);
         });
+      }
 
-        const dados = await resposta.json();
+      function handleAnswer(correct) {
+        if (correct) score++;
+        nextBtn.classList.remove("hidden");
+        Array.from(answersEl.children).forEach((btn) => (btn.disabled = true));
+      }
 
-        if (resposta.ok) {
-          alert(dados.mensagem);
+      nextBtn.onclick = () => {
+        if (currentIndex < currentQuestions.length - 1) {
+          currentIndex++;
+          nextBtn.classList.add("hidden");
+          showQuestion();
         } else {
-          alert(`Erro: ${dados.mensagem}`);
+          resultEl.classList.remove("hidden");
+          resultEl.textContent = `Fim da fase ${currentPhase}! Pontuação: ${score}/${currentQuestions.length}`;
+          nextPhaseBtn.classList.remove("hidden");
+          nextBtn.classList.add("hidden");
+
+          if (score > 0) salvarProgresso();
         }
-      } catch (error) {
-        alert("Erro ao conectar com o servidor.");
-        console.error("Erro:", error);
-      }
-    }
+      };
 
-    async function consultarProgresso() {
-      const usuario = document.getElementById("usuario").value.trim();
-
-      if (!usuario) {
-        alert("Digite o nome do usuário para consultar o progresso.");
-        return;
-      }
-
-      try {
-        const resposta = await fetch(`http://localhost:3000/progresso?usuario=${encodeURIComponent(usuario)}`);
-        const dados = await resposta.json();
-
-        if (resposta.ok) {
-          const ultimo = dados;
-          document.getElementById("progresso-info").innerHTML = `
-            <strong>📌 Último progresso:</strong><br>
-            👤 Usuário: ${ultimo.usuario}<br>
-            🚩 Fase: ${ultimo.fase}<br>
-            ⭐ Pontuação: ${ultimo.pontuacao}
-          `;
+      nextPhaseBtn.onclick = async () => {
+        if (score > 0) await salvarProgresso();
+        if (currentPhase < 3) {
+          startPhase(currentPhase + 1);
         } else {
-          alert(`Erro: ${dados.mensagem}`);
+          alert("🎉 Você concluiu todas as fases!");
         }
-      } catch (error) {
-        alert("Erro ao consultar o progresso.");
-        console.error("Erro:", error);
+      };
+
+      async function salvarProgresso() {
+        const usuario = localStorage.getItem("usuario") || document.getElementById("usuario").value.trim();
+        if (!usuario) {
+          alert("Por favor, digite seu nome para salvar o progresso.");
+          return;
+        }
+
+        try {
+          const resposta = await fetch("http://localhost:3000/progresso", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ usuario, fase: currentPhase, pontuacao: score }),
+          });
+
+          const dados = await resposta.json();
+          if (resposta.ok) {
+            alert(dados.mensagem);
+          } else {
+            alert(`Erro: ${dados.mensagem}`);
+          }
+        } catch (error) {
+          alert("Erro ao conectar com o servidor.");
+          console.error("Erro:", error);
+        }
       }
-    }
-  </script>
 
- <script>
-function salvarProgresso(usuario, fase, pontuacao) {
-  const progresso = { usuario, fase, pontuacao };
+      async function consultarProgresso() {
+        const usuario = document.getElementById("usuario").value.trim();
+        if (!usuario) {
+          alert("Digite o nome do usuário para consultar o progresso.");
+          return;
+        }
 
-  if (navigator.onLine) {
-    fetch("http://localhost:3000/progresso", { // Troque para seu backend real
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(progresso)
-    })
-    .then(res => {
-      if (!res.ok) throw new Error("Erro ao salvar");
-      console.log("Salvo no servidor com sucesso");
-    })
-    .catch(err => {
-      console.warn("Erro ao salvar online, salvando local", err);
-      localStorage.setItem("progressoPendente", JSON.stringify(progresso));
+        try {
+          const resposta = await fetch(`http://localhost:3000/progresso?usuario=${encodeURIComponent(usuario)}`);
+          const dados = await resposta.json();
+
+          if (resposta.ok) {
+            const ultimo = dados;
+            document.getElementById("progresso-info").innerHTML = `
+              <strong>📌 Último progresso:</strong><br>
+              👤 Usuário: ${ultimo.usuario}<br>
+              🚩 Fase: ${ultimo.fase}<br>
+              ⭐ Pontuação: ${ultimo.pontuacao}
+            `;
+          } else {
+            alert(`Erro: ${dados.mensagem}`);
+          }
+        } catch (error) {
+          alert("Erro ao consultar o progresso.");
+          console.error("Erro:", error);
+        }
+      }
+
+      window.salvarProgresso = salvarProgresso;
+      window.consultarProgresso = consultarProgresso;
     });
-  } else {
-    console.warn("Offline. Progresso salvo localmente.");
-    localStorage.setItem("progressoPendente", JSON.stringify(progresso));
-  }
-}
-
-window.addEventListener("online", () => {
-  const pendente = localStorage.getItem("progressoPendente");
-  if (pendente) {
-    const progresso = JSON.parse(pendente);
-    fetch("https://192.168.0.112:3000/progresso", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(progresso)
-    })
-    .then(res => {
-      if (res.ok) {
-        console.log("Progresso sincronizado!");
-        localStorage.removeItem("progressoPendente");
-      }
-    })
-    .catch(err => console.error("Falha ao sincronizar:", err));
-  }
-});
-</script>
-
-<script>
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('service-worker.js')
-    .then(() => console.log('Service Worker registrado com sucesso.'))
-    .catch(error => console.error('Erro ao registrar Service Worker:', error));
-}
-</script>
-
-
+  </script>
 </body>
 </html>
 
