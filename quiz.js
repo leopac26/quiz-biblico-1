@@ -1,3 +1,7 @@
+
+
+    
+// Exemplo de perguntas divididas em fases
 const allQuestions = [
       // Fase 1: 10 perguntas
       {
@@ -490,165 +494,136 @@ const allQuestions = [
                    { text: "c) Areópago", correct: true },
                    { text: "d) Sinagoga", correct: false }
                ]
-           }]
+           },
+];
 
-    let phaseLimits = [10, 30, 60];
-    let currentPhase = 1;
-    let currentQuestions = [];
-    let currentIndex = 0;
-    let score = 0;
-    let timePerQuestion = 60; // segundos
-    let timeLeft = timePerQuestion;
-    let timerInterval;
+let currentPhase = 1;  // Inicia na fase 1
+let currentIndex = 0;  // Índice da pergunta atual
+let score = 0;  // Pontuação
 
+// Limites para as fases (por exemplo, 10 perguntas na fase 1, 20 na fase 2 e 30 na fase 3)
+const phaseLimits = [10, 30, 60];  
+let currentQuestions = [];  // Armazena as perguntas da fase atual
 
-    const questionEl = document.getElementById("question");
-    const answersEl = document.getElementById("answers");
-    const nextBtn = document.getElementById("next-btn");
-    const resultEl = document.getElementById("result");
-    const restartBtn = document.getElementById("restart-btn");
-    const phaseInfo = document.getElementById("phase-info");
-    const nextPhaseBtn = document.getElementById("next-phase-btn");
+const questionEl = document.getElementById("question");
+const answersEl = document.getElementById("answers");
+const nextBtn = document.getElementById("next-btn");
+const resultEl = document.getElementById("result");
+const phaseInfo = document.getElementById("phase-info");
+const nextPhaseBtn = document.getElementById("next-phase-btn");
 
-    function startPhase(phase) {
-      phaseInfo.textContent = `Fase ${phase}`;
-      currentPhase = phase;
-      const start = phase === 1 ? 0 : phaseLimits[phase - 2];
-      const end = phaseLimits[phase - 1];
-      currentQuestions = allQuestions.slice(start, end);
-      shuffleArray(currentQuestions);
-      currentIndex = 0;
-      score = 0;
-      resultEl.classList.add("hidden");
-      nextBtn.classList.add("hidden");
-      restartBtn.classList.add("hidden");
-      nextPhaseBtn.classList.add("hidden");
-      showQuestion();
-    }
-
-    function showQuestion() {
-      const question = currentQuestions[currentIndex];
-      questionEl.textContent = question.question;
-      answersEl.innerHTML = "";
-      question.answers.forEach((ans, i) => {
-        const btn = document.createElement("button");
-        btn.textContent = ans.text;
-        btn.onclick = () => handleAnswer(ans.correct);
-        answersEl.appendChild(btn);
-        
-      });
-      startTimer();
-    }
-
-    function handleAnswer(correct) {
-      if (correct) score++;
-      nextBtn.classList.remove("hidden");
-      Array.from(answersEl.children).forEach(btn => {
-        btn.disabled = true;
-        if (btn.textContent === currentQuestions[currentIndex].answers.find(a => a.correct).text) {
-          btn.style.background = "#c8e6c9";
-        } else {
-          btn.style.background = "#ffcdd2"; 
-          btn.style.color = "black";
-        }
-
-
-      });
-    }
-
-    nextBtn.onclick = () => {
-      currentIndex++;
-      if (currentIndex < currentQuestions.length) {
-        nextBtn.classList.add("hidden");
-        clearInterval(timerInterval);
-        showQuestion();
-      } else {
-        finishPhase();
-      }
-    };
-
-    function finishPhase() {
-      clearInterval(timerInterval);
-      questionEl.textContent = "";
-      answersEl.innerHTML = "";
-      nextBtn.classList.add("hidden");
-
-      const total = currentQuestions.length;
-      const percent = (score / total) * 100;
-      if (percent >= 60) {
-        resultEl.innerHTML = `<p>✅ Parabéns! Você acertou ${score} de ${total} perguntas.</p>`;
-        if (currentPhase < 3) {
-          nextPhaseBtn.classList.remove("hidden");
-        } else {
-          resultEl.innerHTML += "<p>🎉 Fim do quiz! Você completou todas as fases.</p>";
-          restartBtn.classList.remove("hidden");
-        }
-      } else {
-        resultEl.innerHTML = `<p>❌ Você acertou ${score} de ${total}. Tente novamente!</p>`;
-        restartBtn.classList.remove("hidden");
-      }
-
-      resultEl.classList.remove("hidden");
-    }
-
-    nextPhaseBtn.onclick = () => startPhase(currentPhase + 1);
-    restartBtn.onclick = () => startPhase(1);
-
-    function shuffleArray(arr) {
-      for (let i = arr.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [arr[i], arr[j]] = [arr[j], arr[i]];
-      }
-    }
-    function startTimer() {
-  clearInterval(timerInterval);
-  timeLeft = timePerQuestion;
-  updateTimerBar();
-
-  timerInterval = setInterval(() => {
-    timeLeft--;
-    updateTimerBar();
-    if (timeLeft <= 0) {
-      clearInterval(timerInterval);
-      handleAnswer(false); // tempo esgotado = resposta errada
-    }
-  }, 1000);
+function shuffleArray(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]]; // Troca os elementos
+  }
 }
 
-function updateTimerBar() {
-  const bar = document.getElementById("timer-bar");
-  const percent = (timeLeft / timePerQuestion) * 100;
-  bar.style.width = percent + "%";
-  bar.style.background = percent <= 30 ? "#f44336" : "#4caf50";
+// Função para iniciar a fase
+function startPhase(phase) {
+  phaseInfo.textContent = `Fase ${phase}`;
+  currentPhase = phase;
+  const start = phase === 1 ? 0 : phaseLimits[phase - 2];
+  const end = phaseLimits[phase - 1];
+  currentQuestions = allQuestions.slice(start, end);
+  shuffleArray(currentQuestions);
+  currentIndex = 0;
+  score = 0;
+  resultEl.classList.add("hidden");
+  nextBtn.classList.add("hidden");
+  nextPhaseBtn.classList.add("hidden");
+  showQuestion();
 }
 
-
-    // Início do jogo
-    startPhase(1);
-
-// Service worker//
-    if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/service-worker.js')
-      .then(reg => console.log('Service Worker registrado:', reg))
-      .catch(err => console.log('Erro ao registrar Service Worker:', err));
+// Função para exibir a pergunta
+function showQuestion() {
+  const question = currentQuestions[currentIndex];
+  questionEl.textContent = question.question;
+  answersEl.innerHTML = "";
+  question.answers.forEach((ans, i) => {
+    const btn = document.createElement("button");
+    btn.textContent = ans.text;
+    btn.onclick = () => handleAnswer(ans.correct);
+    answersEl.appendChild(btn);
   });
 }
 
+// Função para lidar com a resposta
+function handleAnswer(correct) {
+  if (correct) score++;
+  nextBtn.classList.remove("hidden");
+  Array.from(answersEl.children).forEach(btn => btn.disabled = true);
+}
 
+// Função para ir para a próxima pergunta
+nextBtn.onclick = () => {
+  if (currentIndex < currentQuestions.length - 1) {
+    currentIndex++;
+    showQuestion();
+  } else {
+    nextPhaseBtn.classList.remove("hidden");
+  }
+};
 
-if ('Notification' in window && 'serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/service-worker.js').then(registration => {
-    console.log('Service Worker registrado com sucesso!', registration);
+// Função para ir para a próxima fase
+nextPhaseBtn.onclick = () => startPhase(currentPhase + 1);
 
-    // Solicitar permissão para notificações
-    Notification.requestPermission().then(permission => {
-      if (permission === 'granted') {
-        console.log('Permissão de notificação concedida!');
-      }
+// Iniciar a primeira fase
+startPhase(1);
+
+async function salvarProgresso() {
+  const usuario = document.getElementById("usuario").value.trim();
+  const fase = currentPhase;  // substitua por sua variável de fase atual
+  const pontuacao = score;    // substitua por sua variável de pontuação
+
+  if (!usuario) {
+    alert("Por favor, digite seu nome para salvar o progresso.");
+    return;
+  }
+
+  try {
+    const resposta = await fetch("http://localhost:3000/progresso", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ usuario, fase, pontuacao }),
     });
-  }).catch(error => {
-    console.error('Falha ao registrar o Service Worker:', error);
-  });
+
+    const dados = await resposta.json();
+
+    if (resposta.ok) {
+      alert(dados.mensagem); // ✅ Progresso salvo com sucesso!
+    } else {
+      alert(`Erro: ${dados.mensagem}`);
+    }
+  } catch (error) {
+    alert("Erro ao conectar com o servidor.");
+    console.error("Erro:", error);
+  }
+}
+
+async function consultarProgresso() {
+  const usuario = document.getElementById("usuario").value.trim();
+
+  if (!usuario) {
+    alert("Digite o nome do usuário para consultar o progresso.");
+    return;
+  }
+
+  try {
+    const resposta = await fetch(`http://localhost:3000/progresso?usuario=${encodeURIComponent(usuario)}`);
+    const dados = await resposta.json();
+
+    if (resposta.ok) {
+      const ultimo = dados[0];
+      alert(`📌 Último progresso:\n👤 Usuário: ${ultimo.usuario}\n🚩 Fase: ${ultimo.fase}\n⭐ Pontuação: ${ultimo.pontuacao}`);
+    } else {
+      alert(`Erro: ${dados.mensagem}`);
+    }
+  } catch (error) {
+    alert("Erro ao consultar o progresso.");
+    console.error("Erro:", error);
+  }
 }
 

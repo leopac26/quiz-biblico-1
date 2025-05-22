@@ -1,82 +1,84 @@
-// index.js
-const express = require("express");
-const fs = require("fs");
-const path = require("path");
-const bodyParser = require("body-parser");
-const cors = require("cors");
+
+
+import express from 'express';
+import cors from 'cors';
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const app = express();
-const PORT = 3000;
-const CAMINHO_ARQUIVO = path.join(__dirname, "dados.json");
+
+// Conectar ao MongoDB
+mongoose.connect('mongodb+srv://leonardopac26:Lidileo%402018@meubanco.qsurucu.mongodb.net/quizbiblico?retryWrites=true&w=majority', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
+.then(() => console.log("Conectado ao MongoDB"))
+.catch((error) => console.error("Erro ao conectar ao MongoDB:", error));
+
+// Definir o modelo de dados usando Mongoose
+const progressoSchema = new mongoose.Schema({
+  usuario: { type: String, required: true },
+  fase: { type: Number, required: true },
+  pontuacao: { type: Number, required: true },
+  criadoEm: { type: Date, default: Date.now }
+});
+
+const Progresso = mongoose.model('Progresso', progressoSchema);
 
 app.use(cors());
-app.use(bodyParser.json());
+app.use(express.json());
 
-app.post("/progresso", (req, res) => {
-  const dados = req.body;
-  console.log(req.body, dados);
+// Rota para salvar progresso
+app.post("/progresso", async (req, res) => {
+  const { usuario, fase, pontuacao } = req.body;
 
-  
+  // Validação de dados
+  if (
+    !usuario || typeof usuario !== "string" ||
+    typeof fase !== "number" ||
+    typeof pontuacao !== "number"
+  ) {
+    return res.status(400).json({ mensagem: "Dados inválidos. Verifique os tipos." });
+  }
 
-  let registros = [];
+  try {
+    const novoProgresso = new Progresso({ usuario, fase, pontuacao });
+    await novoProgresso.save();
+    res.status(201).json({
+      mensagem: "Progresso salvo com sucesso",
+      progresso: novoProgresso
+    });
+  } catch (error) {
+    console.error("Erro ao salvar progresso:", error);
+    res.status(500).json({ mensagem: "Erro ao salvar progresso", erro: error.message });
+  }
+});
 
-  // Lê o arquivo existente, se houver
-  if (fs.existsSync(CAMINHO_ARQUIVO)) {
-    try {
-      const conteudo = fs.readFileSync(CAMINHO_ARQUIVO, "utf8");
-      registros = JSON.parse(conteudo);
-    } catch (erro) {
-      console.error("Erro ao ler ou parsear o arquivo:", erro);
-      return res.status(500).json({ mensagem: "Erro ao acessar os dados salvos." });
+// Rota para consultar o último progresso do usuário
+app.get("/progresso", async (req, res) => {
+  const { usuario } = req.query;
+
+  // Verificação de parâmetros
+  if (!usuario || typeof usuario !== "string") {
+    return res.status(400).json({ mensagem: "Usuário não informado ou inválido" });
+  }
+
+  try {
+    const progresso = await Progresso.find({ usuario }).sort({ criadoEm: -1 }).limit(1);
+
+    if (progresso.length === 0) {
+      return res.status(404).json({ mensagem: "Progresso não encontrado" });
     }
-  }
 
-  // Adiciona novo registro com data/hora
-  registros.push({
-    ...dados,
-    recebidoEm: new Date().toISOString()
-  });
-
-  // Salva novamente no arquivo
-  try {
-    fs.writeFileSync(CAMINHO_ARQUIVO, JSON.stringify(registros, null, 2), "utf8");
-    res.status(200).json({ mensagem: "Progresso salvo com sucesso!" });
-  } catch (erro) {
-    console.error("Erro ao salvar os dados:", erro);
-    res.status(500).json({ mensagem: "Erro ao salvar os dados." });
+    res.json(progresso[0]); // Retorna o último progresso
+  } catch (error) {
+    console.error("Erro ao consultar progresso:", error);
+    res.status(500).json({ mensagem: "Erro ao consultar progresso", erro: error.message });
   }
 });
 
-app.get("/progresso", (req, res) => {
-  const usuario = req.query.usuario;
-
-  if (!usuario) {
-    return res.status(400).json({ mensagem: "Usuário não informado." });
-  }
-
-  if (!fs.existsSync(CAMINHO_ARQUIVO)) {
-    return res.status(404).json({ mensagem: "Nenhum dado encontrado." });
-  }
-
-  try {
-    const conteudo = fs.readFileSync(CAMINHO_ARQUIVO, "utf8");
-    const registros = JSON.parse(conteudo);
-
-    // Filtra os registros pelo nome do usuário
-    const registrosDoUsuario = registros.filter(r => r.usuario === usuario);
-
-    res.status(200).json(registrosDoUsuario);
-  } catch (erro) {
-    console.error("Erro ao ler os dados:", erro);
-    res.status(500).json({ mensagem: "Erro ao acessar os dados salvos." });
-  }
-});
-
-
-
-
-
-
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`🚀 Servidor rodando em http://localhost:${PORT}`);
+  console.log(`Servidor rodando na porta ${PORT}`);
 });

@@ -1,23 +1,28 @@
 {
   "name": "quiz-biblico",
   "version": "1.0.0",
-  "description": "",
+  "type": "module",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "generate": "prisma generate",
+    "migrate": "prisma migrate dev"
   },
-  "scripts": {
-  "start": "node index.js"
-},
-  
-
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "^2.2.0",
+    "@prisma/client": "^6.8.2",
     "cors": "^2.8.5",
-    "express": "^5.1.0",
+    "dotenv": "^16.5.0",
+    "express": "^4.21.2",
+    "mongoose": "^8.15.0",
     "web-push": "^3.6.7"
-  }
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22",
+    "prisma": "^6.8.2"
+  },
+  "description": ""
 }
