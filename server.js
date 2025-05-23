@@ -14,7 +14,12 @@ app.post("/progresso", async (req, res) => {
 
   console.log("Dados recebidos para salvar o progresso:", { usuario, fase, pontuacao });
 
-  if (!usuario?.trim() || fase == null || pontuacao == null || fase < 1 || pontuacao < 0) {
+  // Validação dos dados
+  if (
+    typeof usuario !== "string" || !usuario.trim() ||
+    typeof fase !== "number" || fase < 1 ||
+    typeof pontuacao !== "number" || pontuacao < 0
+  ) {
     return res.status(400).json({ mensagem: "Dados inválidos" });
   }
 
@@ -26,15 +31,19 @@ app.post("/progresso", async (req, res) => {
 
     let resultado;
     if (progressoExistente) {
-      // Atualiza o progresso existente
+      console.log(`Atualizando progresso para o usuário ${usuario}, fase ${fase}`);
       resultado = await prisma.progresso.update({
         where: { id: progressoExistente.id },
         data: { pontuacao },
       });
     } else {
-      // Cria novo progresso
+      console.log(`Criando novo progresso para o usuário ${usuario}, fase ${fase}`);
       resultado = await prisma.progresso.create({
-        data: { usuario, fase, pontuacao },
+        data: {
+          usuario: usuario.trim(),
+          fase,
+          pontuacao,
+        },
       });
     }
 
@@ -44,7 +53,7 @@ app.post("/progresso", async (req, res) => {
     });
   } catch (error) {
     console.error("Erro ao salvar progresso:", error);
-    res.status(500).json({ mensagem: "Erro ao salvar progresso" });
+    res.status(500).json({ mensagem: "Erro interno ao salvar progresso", detalhe: error.message });
   }
 });
 
@@ -79,6 +88,8 @@ app.get("/progresso", async (req, res) => {
 app.get("/progresso/todos", async (req, res) => {
   const { usuario } = req.query;
 
+  console.log("Consultando todo o histórico de progresso para o usuário:", usuario);
+
   if (!usuario?.trim()) {
     return res.status(400).json({ mensagem: "Usuário não informado" });
   }
@@ -90,8 +101,8 @@ app.get("/progresso/todos", async (req, res) => {
     });
     res.json(lista);
   } catch (err) {
-    console.error("Erro ao consultar progresso:", err);
-    res.status(500).json({ mensagem: "Erro ao consultar progresso" });
+    console.error("Erro ao consultar histórico de progresso:", err);
+    res.status(500).json({ mensagem: "Erro ao consultar histórico de progresso" });
   }
 });
 
