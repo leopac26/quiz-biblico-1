@@ -17,10 +17,12 @@
       border: none;
       border-radius: 5px;
       cursor: pointer;
+      font-size: 18px;
     }
     #answers button:disabled {
-      background: #ccc;
+      background: #4285f4;
       cursor: not-allowed;
+      font-size: 18px;
     }
     .hidden { display: none; }
     #result, #phase-info, #progresso-info {
@@ -44,4 +46,47 @@
       border: none;
       border-radius: 8px;
       cursor: pointer;
+    }
+
+    @media (max-width: 600px) {
+  body {
+    font-size: 20px;
+    padding: 20px;
+    background-color: #35428d;
+    color: white;
+  }
+
+  .action{
+    font-size: 20px;
+    color: white;
+     
+}
+
+.progresso{
+    margin: 20px;
+
+}
+#next-btn{
+  margin: 20px;
+    font-size: 20px;
+    color: white;
+    background: #fbbc05;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  #start-btn{
+    margin: 20px;
+    font-size: 20px;
+    color: white;
+    background: #fbbc05;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer
+}
+ h1{
+  color: rgb(211, 192, 21);
+ }
     }

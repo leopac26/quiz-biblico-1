@@ -628,11 +628,13 @@
 
         if (resposta.ok) {
           const ultimo = dados;
+          const totalPerguntas = ultimo.fase === 1 ? 10 : ultimo.fase === 2 ? 30 : 60;
           document.getElementById("progresso-info").innerHTML = `
             <strong>📌 Último progresso:</strong><br>
             👤 Usuário: ${ultimo.usuario}<br>
             🚩 Fase: ${ultimo.fase}<br>
-            ⭐ Pontuação: ${ultimo.pontuacao}
+            ⭐ Pontuação: ${ultimo.pontuacao}de ${totalPerguntas} perguntas
+            
           `;
         } else {
           alert(`Erro: ${dados.mensagem}`);
@@ -647,3 +649,11 @@
     window.salvarProgresso = salvarProgresso;
     window.consultarProgresso = consultarProgresso;
   
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker
+      .register('service-worker.js')
+      .then(reg => console.log("✅ Service Worker registrado!", reg))
+      .catch(err => console.error("❌ Erro no Service Worker:", err));
+  });
+}

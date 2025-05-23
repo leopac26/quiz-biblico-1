@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <link rel="manifest" href="/manifest.json" />
+  <link rel="manifest" href="./manifest.json" />
   <link rel="stylesheet" href="./quiz.css">
 
   <title>Quiz Bíblico</title>
@@ -75,11 +75,12 @@
     <div id="result" class="hidden"></div>
   </div>
 
-  <div>
+  <div class="progresso">
     <button class="action" onclick="salvarProgresso()">💾 Salvar Progresso</button>
     <button class="action" onclick="consultarProgresso()">📊 Ver Progresso</button>
   </div>
-  <div id="progresso-info"></div>
+  <div id="progresso-info" style="margin-top: 20px; font-size: 18px;"></div>
+
 
   <script>
    /* const allQuestions = [
