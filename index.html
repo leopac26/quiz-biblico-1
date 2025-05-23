@@ -587,136 +587,138 @@
            },
       ];
 
-      let currentPhase = 1;
-      let currentIndex = 0;
-      let score = 0;
-      const phaseLimits = [10, 30, 60];
-      let currentQuestions = [];
+let currentPhase = 1;
+let currentIndex = 0;
+let score = 0;
+const phaseLimits = [10, 30, 60];
+let currentQuestions = [];
 
-      const questionEl = document.getElementById("question");
-      const answersEl = document.getElementById("answers");
-      const nextBtn = document.getElementById("next-btn");
-      const resultEl = document.getElementById("result");
-      const phaseInfo = document.getElementById("phase-info");
-      const nextPhaseBtn = document.getElementById("next-phase-btn");
+const questionEl = document.getElementById("question");
+const answersEl = document.getElementById("answers");
+const nextBtn = document.getElementById("next-btn");
+const resultEl = document.getElementById("result");
+const phaseInfo = document.getElementById("phase-info");
+const nextPhaseBtn = document.getElementById("next-phase-btn");
 
-      function shuffleArray(arr) {
-        for (let i = arr.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [arr[i], arr[j]] = [arr[j], arr[i]];
-        }
-      }
+function shuffleArray(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+}
 
-      function startPhase(phase) {
-        phaseInfo.textContent = `Fase ${phase}`;
-        currentPhase = phase;
-        const start = phase === 1 ? 0 : phaseLimits[phase - 2];
-        const end = phaseLimits[phase - 1];
-        currentQuestions = allQuestions.slice(start, end);
-        shuffleArray(currentQuestions);
-        currentIndex = 0;
-        score = 0;
-        resultEl.classList.add("hidden");
-        nextBtn.classList.add("hidden");
-        nextPhaseBtn.classList.add("hidden");
-        showQuestion();
-      }
+function startPhase(phase) {
+  phaseInfo.textContent = `Fase ${phase}`;
+  currentPhase = phase;
+  const start = phase === 1 ? 0 : phaseLimits[phase - 2];
+  const end = phaseLimits[phase - 1];
+  currentQuestions = allQuestions.slice(start, end);
+  shuffleArray(currentQuestions);
+  currentIndex = 0;
+  score = 0;
+  resultEl.classList.add("hidden");
+  nextBtn.classList.add("hidden");
+  nextPhaseBtn.classList.add("hidden");
+  showQuestion();
+}
 
-      function showQuestion() {
-        const question = currentQuestions[currentIndex];
-        questionEl.textContent = question.question;
-        answersEl.innerHTML = "";
-        question.answers.forEach((ans) => {
-          const btn = document.createElement("button");
-          btn.textContent = ans.text;
-          btn.onclick = () => handleAnswer(ans.correct);
-          answersEl.appendChild(btn);
-        });
-      }
+function showQuestion() {
+  const question = currentQuestions[currentIndex];
+  questionEl.textContent = question.question;
+  answersEl.innerHTML = "";
+  question.answers.forEach((ans) => {
+    const btn = document.createElement("button");
+    btn.textContent = ans.text;
+    btn.onclick = () => handleAnswer(ans.correct);
+    answersEl.appendChild(btn);
+  });
+}
 
-      function handleAnswer(correct) {
-        if (correct) score++;
-        nextBtn.classList.remove("hidden");
-        Array.from(answersEl.children).forEach((btn) => (btn.disabled = true));
-      }
+function handleAnswer(correct) {
+  if (correct) score++;
+  nextBtn.classList.remove("hidden");
+  Array.from(answersEl.children).forEach((btn) => (btn.disabled = true));
+}
 
-      nextBtn.onclick = () => {
-        if (currentIndex < currentQuestions.length - 1) {
-          currentIndex++;
-          nextBtn.classList.add("hidden");
-          showQuestion();
-        } else {
-          resultEl.classList.remove("hidden");
-          resultEl.textContent = `Fim da fase ${currentPhase}! Pontuação: ${score}/${currentQuestions.length}`;
-          nextPhaseBtn.classList.remove("hidden");
-          nextBtn.classList.add("hidden");
+nextBtn.onclick = () => {
+  if (currentIndex < currentQuestions.length - 1) {
+    currentIndex++;
+    nextBtn.classList.add("hidden");
+    showQuestion();
+  } else {
+    resultEl.classList.remove("hidden");
+    resultEl.textContent = `Fim da fase ${currentPhase}! Pontuação: ${score}/${currentQuestions.length}`;
+    nextPhaseBtn.classList.remove("hidden");
+    nextBtn.classList.add("hidden");
 
-          if (score > 0) salvarProgresso();
-        }
-      };
+    if (score > 0) salvarProgresso();
+  }
+};
 
-      nextPhaseBtn.onclick = async () => {
-        if (score > 0) await salvarProgresso();
-        if (currentPhase < 3) {
-          startPhase(currentPhase + 1);
-        } else {
-          alert("🎉 Você concluiu todas as fases!");
-        }
-      };
+nextPhaseBtn.onclick = async () => {
+  if (score > 0) await salvarProgresso();
+  if (currentPhase < 3) {
+    startPhase(currentPhase + 1);
+  } else {
+    alert("🎉 Você concluiu todas as fases!");
+  }
+};
 
-      async function salvarProgresso() {
-        const usuario = localStorage.getItem("usuario") || document.getElementById("usuario").value.trim();
-        if (!usuario) {
-          alert("Por favor, digite seu nome para salvar o progresso.");
-          return;
-        }
+async function salvarProgresso() {
+  const usuario = localStorage.getItem("usuario") || document.getElementById("usuario").value.trim();
+  if (!usuario) {
+    alert("Por favor, digite seu nome para salvar o progresso.");
+    return;
+  }
 
-        try {
-          const resposta = await fetch("https://quizbiblico-production.up.railway.app/progresso", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ usuario, fase: currentPhase, pontuacao: score }),
-          });
+  try {
+    const resposta = await fetch("https://quizbiblico-production.up.railway.app/progresso", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ usuario, fase: currentPhase, pontuacao: score }),
+    });
 
-          const dados = await resposta.json();
-          if (resposta.ok) {
-            alert(dados.mensagem);
-          } else {
-            alert(`Erro: ${dados.mensagem}`);
-          }
-        } catch (error) {
-          alert("Erro ao conectar com o servidor.");
-          console.error("Erro:", error);
-        }
-      }
+    const dados = await resposta.json();
+    if (resposta.ok) {
+      alert(dados.mensagem);
+      localStorage.setItem("usuario", usuario); // Salvar nome do usuário no localStorage
+    } else {
+      alert(`Erro: ${dados.mensagem}`);
+    }
+  } catch (error) {
+    alert("Erro ao conectar com o servidor.");
+    console.error("Erro:", error);
+  }
+}
 
-      async function consultarProgresso() {
-        const usuario = document.getElementById("usuario").value.trim();
-        if (!usuario) {
-          alert("Digite o nome do usuário para consultar o progresso.");
-          return;
-        }
+async function consultarProgresso() {
+  const usuario = document.getElementById("usuario").value.trim();
+  if (!usuario) {
+    alert("Digite o nome do usuário para consultar o progresso.");
+    return;
+  }
 
-        try {
-          const resposta = await fetch(`https://quizbiblico-production.up.railway.app/progresso?usuario=${encodeURIComponent(usuario)}`);
-          const dados = await resposta.json();
+  try {
+    const resposta = await fetch(`https://quizbiblico-production.up.railway.app/progresso?usuario=${encodeURIComponent(usuario)}`);
+    const dados = await resposta.json();
 
-          if (resposta.ok) {
-            const ultimo = dados;
-            document.getElementById("progresso-info").innerHTML = `
-              <strong>📌 Último progresso:</strong><br>
-              👤 Usuário: ${ultimo.usuario}<br>
-              🚩 Fase: ${ultimo.fase}<br>
-              ⭐ Pontuação: ${ultimo.pontuacao}
-            `;
-          } else {
-            alert(`Erro: ${dados.mensagem}`);
-          }
-        } catch (error) {
-          alert("Erro ao consultar o progresso.");
-          console.error("Erro:", error);
-        }
-      }
+    if (resposta.ok) {
+      const ultimo = dados;
+      document.getElementById("progresso-info").innerHTML = `
+        <strong>📌 Último progresso:</strong><br>
+        👤 Usuário: ${ultimo.usuario}<br>
+        🚩 Fase: ${ultimo.fase}<br>
+        ⭐ Pontuação: ${ultimo.pontuacao}
+      `;
+    } else {
+      alert(`Erro: ${dados.mensagem}`);
+    }
+  } catch (error) {
+    alert("Erro ao consultar o progresso.");
+    console.error("Erro:", error);
+  }
+}
+
 
       window.salvarProgresso = salvarProgresso;
       window.consultarProgresso = consultarProgresso;
