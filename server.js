@@ -14,7 +14,6 @@ app.post("/progresso", async (req, res) => {
 
   console.log("req.body recebido:", req.body);
 
-  // Validação dos dados
   if (
     typeof usuario !== "string" || !usuario.trim() ||
     typeof fase !== "number" || fase < 1 ||
@@ -24,7 +23,6 @@ app.post("/progresso", async (req, res) => {
   }
 
   try {
-    // Verifica se já existe progresso desse usuário para essa fase
     const progressoExistente = await prisma.progresso.findFirst({
       where: {
         usuario: usuario.trim(),
@@ -112,33 +110,29 @@ app.get("/progresso/todos", async (req, res) => {
   }
 });
 
-// Rota para gerar o relatório de progresso por fase
+// Rota para gerar o relatório com pontuação das 3 fases e total
 app.get("/relatorio", async (req, res) => {
   try {
-    const result = await prisma.progresso.groupBy({
-      by: ["usuario"],
-      _max: {
-        fase: true,
-      },
-      _sum: {
-        pontuacao: true,
-      },
-    });
+    const result = await prisma.$queryRaw`
+      SELECT
+        usuario,
+        SUM(CASE WHEN fase = 1 THEN pontuacao ELSE 0 END) AS fase1,
+        SUM(CASE WHEN fase = 2 THEN pontuacao ELSE 0 END) AS fase2,
+        SUM(CASE WHEN fase = 3 THEN pontuacao ELSE 0 END) AS fase3,
+        SUM(pontuacao) AS total_pontuacao
+      FROM
+        progresso
+      GROUP BY
+        usuario;
+    `;
 
-    // Organiza os dados para o formato desejado
-    const relatorio = result.map((row) => ({
-      usuario: row.usuario,
-      fase1: row._sum.pontuacao[0] || 0,
-      fase2: row._sum.pontuacao[1] || 0,
-      fase3: row._sum.pontuacao[2] || 0,
-    }));
-
-    res.json(relatorio);
+    res.json(result);
   } catch (err) {
     console.error("Erro ao gerar relatório:", err);
     res.status(500).json({ mensagem: "Erro ao gerar relatório" });
   }
 });
 
+// Inicia o servidor
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Servidor rodando na porta ${PORT}`));
