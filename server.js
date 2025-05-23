@@ -112,6 +112,33 @@ app.get("/progresso/todos", async (req, res) => {
   }
 });
 
+// Rota para gerar o relatório de progresso por fase
+app.get("/relatorio", async (req, res) => {
+  try {
+    const result = await prisma.progresso.groupBy({
+      by: ["usuario"],
+      _max: {
+        fase: true,
+      },
+      _sum: {
+        pontuacao: true,
+      },
+    });
+
+    // Organiza os dados para o formato desejado
+    const relatorio = result.map((row) => ({
+      usuario: row.usuario,
+      fase1: row._sum.pontuacao[0] || 0,
+      fase2: row._sum.pontuacao[1] || 0,
+      fase3: row._sum.pontuacao[2] || 0,
+    }));
+
+    res.json(relatorio);
+  } catch (err) {
+    console.error("Erro ao gerar relatório:", err);
+    res.status(500).json({ mensagem: "Erro ao gerar relatório" });
+  }
+});
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Servidor rodando na porta ${PORT}`));
-
