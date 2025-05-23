@@ -1,13 +1,13 @@
-
-
-    
-// Exemplo de perguntas divididas em fases
-const allQuestions = [
-      // Fase 1: 10 perguntas
+ const allQuestions = [
       {
         question: "(1) A quem Paulo chamou de 'meu companheiro de lutas' (Filemon 1:2)?",
-        answers:[{text: "Apolo", correct: false },{text: "Afia", correct: false },{text: "Arquipo", correct: true},{text: "Adonias", correct: false}]
-    },
+        answers: [
+          { text: "Apolo", correct: false },
+          { text: "Afia", correct: false },
+          { text: "Arquipo", correct: true },
+          { text: "Adonias", correct: false }
+        ]
+      },
     {
         question: "(2) Quais discípulos perguntaram a Jesus se podiam fazer descer fogo do céu? (Lucas 9:54)",
         answers: [{text: "João e Tiago", correct: true},{text: "Pedro e João", correct: false},{text: "Tiago e Pedro", correct:false },{text: "Tiago e Mateus", correct: false }]
@@ -495,135 +495,155 @@ const allQuestions = [
                    { text: "d) Sinagoga", correct: false }
                ]
            },
-];
+    ];
 
-let currentPhase = 1;  // Inicia na fase 1
-let currentIndex = 0;  // Índice da pergunta atual
-let score = 0;  // Pontuação
+    const phaseLimits = [10, 30, 60];
+    let currentPhase = 1;
+    let currentIndex = 0;
+    let score = 0;
+    let currentQuestions = [];
 
-// Limites para as fases (por exemplo, 10 perguntas na fase 1, 20 na fase 2 e 30 na fase 3)
-const phaseLimits = [10, 30, 60];  
-let currentQuestions = [];  // Armazena as perguntas da fase atual
+    const questionEl = document.getElementById("question");
+    const answersEl = document.getElementById("answers");
+    const nextBtn = document.getElementById("next-btn");
+    const resultEl = document.getElementById("result");
+    const phaseInfo = document.getElementById("phase-info");
+    const nextPhaseBtn = document.getElementById("next-phase-btn");
 
-const questionEl = document.getElementById("question");
-const answersEl = document.getElementById("answers");
-const nextBtn = document.getElementById("next-btn");
-const resultEl = document.getElementById("result");
-const phaseInfo = document.getElementById("phase-info");
-const nextPhaseBtn = document.getElementById("next-phase-btn");
-
-function shuffleArray(arr) {
-  for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [arr[i], arr[j]] = [arr[j], arr[i]]; // Troca os elementos
-  }
-}
-
-// Função para iniciar a fase
-function startPhase(phase) {
-  phaseInfo.textContent = `Fase ${phase}`;
-  currentPhase = phase;
-  const start = phase === 1 ? 0 : phaseLimits[phase - 2];
-  const end = phaseLimits[phase - 1];
-  currentQuestions = allQuestions.slice(start, end);
-  shuffleArray(currentQuestions);
-  currentIndex = 0;
-  score = 0;
-  resultEl.classList.add("hidden");
-  nextBtn.classList.add("hidden");
-  nextPhaseBtn.classList.add("hidden");
-  showQuestion();
-}
-
-// Função para exibir a pergunta
-function showQuestion() {
-  const question = currentQuestions[currentIndex];
-  questionEl.textContent = question.question;
-  answersEl.innerHTML = "";
-  question.answers.forEach((ans, i) => {
-    const btn = document.createElement("button");
-    btn.textContent = ans.text;
-    btn.onclick = () => handleAnswer(ans.correct);
-    answersEl.appendChild(btn);
-  });
-}
-
-// Função para lidar com a resposta
-function handleAnswer(correct) {
-  if (correct) score++;
-  nextBtn.classList.remove("hidden");
-  Array.from(answersEl.children).forEach(btn => btn.disabled = true);
-}
-
-// Função para ir para a próxima pergunta
-nextBtn.onclick = () => {
-  if (currentIndex < currentQuestions.length - 1) {
-    currentIndex++;
-    showQuestion();
-  } else {
-    nextPhaseBtn.classList.remove("hidden");
-  }
-};
-
-// Função para ir para a próxima fase
-nextPhaseBtn.onclick = () => startPhase(currentPhase + 1);
-
-// Iniciar a primeira fase
-startPhase(1);
-
-async function salvarProgresso() {
-  const usuario = document.getElementById("usuario").value.trim();
-  const fase = currentPhase;  // substitua por sua variável de fase atual
-  const pontuacao = score;    // substitua por sua variável de pontuação
-
-  if (!usuario) {
-    alert("Por favor, digite seu nome para salvar o progresso.");
-    return;
-  }
-
-  try {
-    const resposta = await fetch("http://localhost:3000/progresso", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ usuario, fase, pontuacao }),
+    document.getElementById("start-btn").addEventListener("click", () => {
+      const nome = document.getElementById("usuario").value.trim();
+      if (!nome) {
+        alert("Digite seu nome para começar o quiz.");
+        return;
+      }
+      localStorage.setItem("usuario", nome);
+      document.getElementById("start-screen").classList.add("hidden");
+      document.getElementById("quiz-container").classList.remove("hidden");
+      startPhase(1);
     });
 
-    const dados = await resposta.json();
-
-    if (resposta.ok) {
-      alert(dados.mensagem); // ✅ Progresso salvo com sucesso!
-    } else {
-      alert(`Erro: ${dados.mensagem}`);
+    function shuffleArray(arr) {
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
     }
-  } catch (error) {
-    alert("Erro ao conectar com o servidor.");
-    console.error("Erro:", error);
-  }
-}
 
-async function consultarProgresso() {
-  const usuario = document.getElementById("usuario").value.trim();
-
-  if (!usuario) {
-    alert("Digite o nome do usuário para consultar o progresso.");
-    return;
-  }
-
-  try {
-    const resposta = await fetch(`http://localhost:3000/progresso?usuario=${encodeURIComponent(usuario)}`);
-    const dados = await resposta.json();
-
-    if (resposta.ok) {
-      const ultimo = dados[0];
-      alert(`📌 Último progresso:\n👤 Usuário: ${ultimo.usuario}\n🚩 Fase: ${ultimo.fase}\n⭐ Pontuação: ${ultimo.pontuacao}`);
-    } else {
-      alert(`Erro: ${dados.mensagem}`);
+    function startPhase(phase) {
+      currentPhase = phase;
+      phaseInfo.textContent = `Fase ${phase}`;
+      const start = phase === 1 ? 0 : phaseLimits[phase - 2];
+      const end = phaseLimits[phase - 1];
+      currentQuestions = allQuestions.slice(start, end);
+      shuffleArray(currentQuestions);
+      currentIndex = 0;
+      score = 0;
+      resultEl.classList.add("hidden");
+      nextBtn.classList.add("hidden");
+      nextPhaseBtn.classList.add("hidden");
+      showQuestion();
     }
-  } catch (error) {
-    alert("Erro ao consultar o progresso.");
-    console.error("Erro:", error);
-  }
-}
 
+    function showQuestion() {
+      const question = currentQuestions[currentIndex];
+      questionEl.textContent = question.question;
+      answersEl.innerHTML = "";
+      question.answers.forEach((ans) => {
+        const btn = document.createElement("button");
+        btn.textContent = ans.text;
+        btn.onclick = () => handleAnswer(ans.correct);
+        answersEl.appendChild(btn);
+      });
+    }
+
+    function handleAnswer(correct) {
+      if (correct) score++;
+      nextBtn.classList.remove("hidden");
+      Array.from(answersEl.children).forEach((btn) => (btn.disabled = true));
+    }
+
+    nextBtn.onclick = () => {
+      if (currentIndex < currentQuestions.length - 1) {
+        currentIndex++;
+        nextBtn.classList.add("hidden");
+        showQuestion();
+      } else {
+        resultEl.classList.remove("hidden");
+        resultEl.textContent = `Fim da fase ${currentPhase}! Pontuação: ${score}/${currentQuestions.length}`;
+        if (currentPhase < 3) {
+          nextPhaseBtn.classList.remove("hidden");
+        } else {
+          alert("🎉 Você concluiu todas as fases!");
+        }
+        nextBtn.classList.add("hidden");
+
+        if (score > 0) salvarProgresso();
+      }
+    };
+
+    nextPhaseBtn.onclick = () => {
+      if (currentPhase < 3) {
+        startPhase(currentPhase + 1);
+      } else {
+        alert("🎉 Fim do quiz! Parabéns!");
+      }
+    };
+
+    async function salvarProgresso() {
+      const usuario = localStorage.getItem("usuario") || document.getElementById("usuario").value.trim();
+      if (!usuario) {
+        alert("Digite seu nome para salvar o progresso.");
+        return;
+      }
+
+      try {
+        const resposta = await fetch("https://quizbiblico-production.up.railway.app/progresso", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ usuario, fase: currentPhase, pontuacao: score }),
+        });
+
+        const dados = await resposta.json();
+        if (resposta.ok) {
+          alert(dados.mensagem);
+        } else {
+          alert(`Erro: ${dados.mensagem}`);
+        }
+      } catch (error) {
+        alert("Erro ao conectar com o servidor.");
+        console.error("Erro:", error);
+      }
+    }
+
+    async function consultarProgresso() {
+      const usuario = document.getElementById("usuario").value.trim();
+      if (!usuario) {
+        alert("Digite o nome do usuário para consultar o progresso.");
+        return;
+      }
+
+      try {
+        const resposta = await fetch(`https://quizbiblico-production.up.railway.app/progresso?usuario=${encodeURIComponent(usuario)}`);
+        const dados = await resposta.json();
+
+        if (resposta.ok) {
+          const ultimo = dados;
+          document.getElementById("progresso-info").innerHTML = `
+            <strong>📌 Último progresso:</strong><br>
+            👤 Usuário: ${ultimo.usuario}<br>
+            🚩 Fase: ${ultimo.fase}<br>
+            ⭐ Pontuação: ${ultimo.pontuacao}
+          `;
+        } else {
+          alert(`Erro: ${dados.mensagem}`);
+        }
+      } catch (error) {
+        alert("Erro ao consultar o progresso.");
+        console.error("Erro:", error);
+      }
+    }
+
+    // Tornar funções acessíveis globalmente
+    window.salvarProgresso = salvarProgresso;
+    window.consultarProgresso = consultarProgresso;
+  
