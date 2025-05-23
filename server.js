@@ -12,6 +12,9 @@ app.use(express.json());
 app.post("/progresso", async (req, res) => {
   const { usuario, fase, pontuacao } = req.body;
 
+  // Adicionando logs para verificar os dados recebidos
+  console.log("Dados recebidos para salvar o progresso:", { usuario, fase, pontuacao });
+
   if (!usuario || fase == null || pontuacao == null) {
     return res.status(400).json({ mensagem: "Dados incompletos" });
   }
@@ -20,9 +23,10 @@ app.post("/progresso", async (req, res) => {
     const novoProgresso = await prisma.progresso.create({
       data: { usuario, fase, pontuacao },
     });
-    res
-      .status(201)
-      .json({ mensagem: "Progresso salvo com sucesso", progresso: novoProgresso });
+    res.status(201).json({
+      mensagem: "Progresso salvo com sucesso",
+      progresso: novoProgresso,
+    });
   } catch (error) {
     console.error("Erro ao salvar progresso:", error);
     res.status(500).json({ mensagem: "Erro ao salvar progresso" });
@@ -33,6 +37,9 @@ app.post("/progresso", async (req, res) => {
 app.get("/progresso", async (req, res) => {
   const { usuario } = req.query;
 
+  // Adicionando log para verificar os dados recebidos na consulta
+  console.log("Consultando progresso para o usuário:", usuario);
+
   if (!usuario) {
     return res.status(400).json({ mensagem: "Usuário não informado" });
   }
@@ -40,7 +47,7 @@ app.get("/progresso", async (req, res) => {
   try {
     const progresso = await prisma.progresso.findFirst({
       where: { usuario },
-      orderBy: { criadoEm: "desc" },
+      orderBy: { id: "desc" }, // Corrigido: ordenando por id (ou outro campo que existe)
     });
 
     if (!progresso) {
