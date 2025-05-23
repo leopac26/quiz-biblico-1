@@ -12,7 +12,7 @@ app.use(express.json());
 app.post("/progresso", async (req, res) => {
   const { usuario, fase, pontuacao } = req.body;
 
-  console.log("Dados recebidos para salvar o progresso:", { usuario, fase, pontuacao });
+  console.log("req.body recebido:", req.body);
 
   // Validação dos dados
   if (
@@ -26,7 +26,10 @@ app.post("/progresso", async (req, res) => {
   try {
     // Verifica se já existe progresso desse usuário para essa fase
     const progressoExistente = await prisma.progresso.findFirst({
-      where: { usuario, fase },
+      where: {
+        usuario: usuario.trim(),
+        fase,
+      },
     });
 
     let resultado;
@@ -52,8 +55,11 @@ app.post("/progresso", async (req, res) => {
       progresso: resultado,
     });
   } catch (error) {
-    console.error("Erro ao salvar progresso:", error);
-    res.status(500).json({ mensagem: "Erro interno ao salvar progresso", detalhe: error.message });
+    console.error("Erro ao salvar progresso:", JSON.stringify(error, null, 2));
+    res.status(500).json({
+      mensagem: "Erro interno ao salvar progresso",
+      detalhe: error.message || "Erro desconhecido",
+    });
   }
 });
 
@@ -69,7 +75,7 @@ app.get("/progresso", async (req, res) => {
 
   try {
     const progresso = await prisma.progresso.findFirst({
-      where: { usuario },
+      where: { usuario: usuario.trim() },
       orderBy: { id: "desc" },
     });
 
@@ -96,7 +102,7 @@ app.get("/progresso/todos", async (req, res) => {
 
   try {
     const lista = await prisma.progresso.findMany({
-      where: { usuario },
+      where: { usuario: usuario.trim() },
       orderBy: { fase: "asc" },
     });
     res.json(lista);
@@ -108,3 +114,4 @@ app.get("/progresso/todos", async (req, res) => {
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Servidor rodando na porta ${PORT}`));
+
