@@ -3,16 +3,18 @@ generator client {
 }
 
 datasource db {
-  provider = "mongodb"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
+
 model Progresso {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  id        Int      @id @default(autoincrement())
   usuario   String
   fase      Int
   pontuacao Int
   criadoEm  DateTime @default(now())
 }
+
 
 

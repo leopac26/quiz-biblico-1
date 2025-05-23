@@ -672,7 +672,7 @@
         }
 
         try {
-          const resposta = await fetch("http://localhost:3000/progresso", {
+          const resposta = await fetch("https://quizbiblico-production.up.railway.app/progresso", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ usuario, fase: currentPhase, pontuacao: score }),
@@ -698,7 +698,7 @@
         }
 
         try {
-          const resposta = await fetch(`http://localhost:3000/progresso?usuario=${encodeURIComponent(usuario)}`);
+          const resposta = await fetch(`https://quizbiblico-production.up.railway.app/progresso?usuario=${encodeURIComponent(usuario)}`);
           const dados = await resposta.json();
 
           if (resposta.ok) {
