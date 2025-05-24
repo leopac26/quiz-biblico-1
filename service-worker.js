@@ -1,4 +1,4 @@
-const CACHE_NAME = 'quiz-biblico-cache-v6'; // Altere sempre que atualizar
+const CACHE_NAME = 'quiz-biblico-cache-v7'; // Altere sempre que atualizar
 const urlsToCache = [
   './index.html',
   './quiz.js',
