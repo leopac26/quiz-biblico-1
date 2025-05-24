@@ -1,11 +1,11 @@
 const CACHE_NAME = "quiz-biblico-cache-v5";
 const urlsToCache = [
-  "index.html",
-  "quiz.js",
-  "quiz.css",
-  "manifest.json",
-  "icon-192.png",
-  "icon-512.png"
+  './index.html',
+  './quiz.js',
+  './quiz.css',
+  './manifest.json',
+  './icon-192.png',
+  './icon-512.png'
 ];
 
 self.addEventListener('install', event => {
@@ -31,6 +31,8 @@ self.addEventListener('fetch', event => {
   event.respondWith(
     caches.match(event.request).then(response => {
       return response || fetch(event.request);
+    }).catch(() => {
+      return caches.match('./index.html');
     })
   );
 });
