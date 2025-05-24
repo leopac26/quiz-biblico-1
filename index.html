@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <link rel="manifest" href="manifest.json" />
   <link rel="stylesheet" href="./quiz.css">
+  <link rel="icon" href="icon-192.png" />
 
   <title>Quiz Bíblico</title>
   <style>
@@ -80,6 +81,10 @@
     <button class="action" onclick="consultarProgresso()">📊 Ver Progresso</button>
   </div>
   <div id="progresso-info" style="margin-top: 20px; font-size: 18px;"></div>
+
+  <div id="update-notice" style="display: none; background: #ffd700; padding: 10px;">
+    Nova versão disponível. <button onclick="location.reload()">Atualizar</button>
+  </div>
 
 
   <script>
@@ -735,19 +740,29 @@
   <script src="./quiz.js"></script>
 
  <script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('service-worker.js')
-        .then((registration) => {
-          console.log('Service Worker registrado com sucesso: ', registration);
-        })
-        .catch((error) => {
-          console.log('Erro ao registrar o Service Worker: ', error);
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('service-worker.js').then(registration => {
+          console.log('Service Worker registrado:', registration);
+
+          // Verifica se há atualizações no SW
+          registration.addEventListener('updatefound', () => {
+            const newSW = registration.installing;
+            newSW.addEventListener('statechange', () => {
+              if (newSW.state === 'installed' && navigator.serviceWorker.controller) {
+                // Mostra aviso de nova versão
+                document.getElementById('update-notice').style.display = 'block';
+              }
+            });
+          });
+
+          // Força verificação de nova versão
+          registration.update();
+        }).catch(error => {
+          console.log('Erro ao registrar Service Worker:', error);
         });
-    });
-  }
-</script>
-
-
+      });
+    }
+  </script>
 </body>
 </html>
