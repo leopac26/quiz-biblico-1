@@ -52,7 +52,7 @@
   body {
     font-size: 20px;
     padding: 20px;
-    background-color: #ff04b4;
+    background-color: #1504ff;
     color: white;
   }
 
@@ -89,4 +89,31 @@
  h1{
   color: rgb(211, 192, 21);
  }
+
+ #usuario{
+  font-size: 20px;
+  color: rgb(156, 30, 30);
+  margin: 20px;
+  background: #b1891b;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+  #usuario{
+    font-size: 20px;
+    color: black;
+    margin: 20px;
+    background: #f1f0ed;
+ }
+
+ #usuario::placeholder{
+  color: rgba(0, 0, 0, 0.301);
+  font-size: 25px;
+ }
+
     }
