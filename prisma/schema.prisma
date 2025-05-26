@@ -9,13 +9,16 @@ datasource db {
 
 
 model Progresso {
-  id        Int    @id @default(autoincrement())
-  usuario   String @unique
-  fase1     Int?   @default(0)
-  fase2     Int?   @default(0)
-  fase3     Int?   @default(0)
-  total     Int?   @default(0)
+  id        Int      @id @default(autoincrement())
+  usuario   String   @unique
+  criadoEm  DateTime @default(now())
+  fase1     Int      @default(0)
+  fase2     Int      @default(0)
+  fase3     Int      @default(0)
+  total     Int      @default(0)
 }
+
+
 
 
 
