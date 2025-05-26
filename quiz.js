@@ -601,13 +601,31 @@ async function salvarProgresso() {
     return;
   }
 
-  const progresso = {
-    usuario,
-    [`fase${currentPhase}`]: score
-  };
+  // Buscar progresso atual do usuário
+  let progressoAtual = { fase1: 0, fase2: 0, fase3: 0 };
+  try {
+    const resposta = await fetch(`https://quizbiblico-production.up.railway.app/progresso?usuario=${encodeURIComponent(usuario)}`);
+    if (resposta.ok) {
+      const dados = await resposta.json();
+      progressoAtual.fase1 = dados.fase1 ?? 0;
+      progressoAtual.fase2 = dados.fase2 ?? 0;
+      progressoAtual.fase3 = dados.fase3 ?? 0;
+    }
+  } catch (err) {
+    console.warn("🔍 Nenhum progresso anterior encontrado (novo usuário?).");
+  }
 
-  // Apenas para debug
-  console.log("Enviando progresso:", progresso);
+  // Atualiza a fase atual com o novo score
+  progressoAtual[`fase${currentPhase}`] = score;
+  const total = progressoAtual.fase1 + progressoAtual.fase2 + progressoAtual.fase3;
+
+  const progresso = {
+  usuario,
+  [`fase${currentPhase}`]: score
+};
+
+
+  console.log("📤 Enviando progresso:", progresso);
 
   try {
     const resposta = await fetch("https://quizbiblico-production.up.railway.app/progresso", {
@@ -621,13 +639,14 @@ async function salvarProgresso() {
       alert(dados.mensagem);
     } else {
       alert(`Erro ao salvar: ${dados.mensagem}`);
-      console.error("Resposta do servidor:", dados);
+      console.error("❌ Resposta do servidor:", dados);
     }
   } catch (error) {
     alert("Erro ao conectar com o servidor.");
     console.error("Erro:", error);
   }
 }
+
 
 async function consultarProgresso() {
   const usuario = document.getElementById("usuario").value.trim();

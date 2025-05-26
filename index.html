@@ -82,6 +82,58 @@
     }
   </script>
 
+  <script type="module">
+  import { getMessaging, getToken } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-messaging.js";
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBYbGBfVw3Bni1O0JAzT1iClSF_9MZfISs",
+  authDomain: "quiz-biblico-a64f5.firebaseapp.com",
+  projectId: "quiz-biblico-a64f5",
+  storageBucket: "quiz-biblico-a64f5.appspot.com", // corrigido
+  messagingSenderId: "633779368186",
+  appId: "1:633779368186:web:10f8cb84de792ad82c1943",
+  measurementId: "SEU_MEASUREMENT_ID"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const messaging = getMessaging(app);
+
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('firebase-messaging-sw.js')
+        .then(registration => {
+          console.log('✅ Service Worker registrado:', registration);
+
+          // Esperar o Service Worker estar pronto
+          return navigator.serviceWorker.ready;
+        })
+        .then((registration) => {
+          console.log('✅ Service Worker pronto para uso!');
+
+          // Agora é seguro obter o token do FCM
+          return getToken(messaging, {
+            vapidKey: "BPOzzcywntpWNHyCN2gpYNQeUt2tNkhn_VlaecJ0T6Krb5yBlqkbxwL7dtxe5Ne937c8nNYWNoWLrytXpvsUMg4"
+,
+            serviceWorkerRegistration: registration
+          });
+        })
+        .then((token) => {
+          if (token) {
+            console.log('📨 Token FCM:', token);
+            // Aqui você pode salvar o token no servidor
+          } else {
+            console.warn('⚠️ Token não disponível. Permissão de notificações não concedida.');
+          }
+        })
+        .catch(error => {
+          console.error('❌ Erro ao obter token:', error);
+        });
+    });
+  }
+</script>
+
+
 </body>
 </html>
 
