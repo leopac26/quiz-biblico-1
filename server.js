@@ -63,25 +63,22 @@ app.post("/progresso", async (req, res) => {
 app.get("/progresso", async (req, res) => {
   const { usuario } = req.query;
 
-  if (!usuario?.trim()) {
-    return res.status(400).json({ mensagem: "Usuário não informado" });
-  }
-
   try {
     const progresso = await prisma.progresso.findUnique({
-      where: { usuario: usuario.trim() },
+      where: { usuario },
     });
 
     if (!progresso) {
-      return res.status(404).json({ mensagem: "Progresso não encontrado" });
+      return res.status(404).json({ error: "Progresso não encontrado" });
     }
 
     res.json(progresso);
   } catch (error) {
-    console.error("❌ Erro ao consultar progresso:", error.message || error);
-    res.status(500).json({ mensagem: "Erro ao consultar progresso" });
+    console.error("❌ Erro ao buscar progresso:", error);
+    res.status(500).json({ error: "Erro ao buscar progresso" });
   }
 });
+
 
 // Rota para gerar o ranking geral
 app.get("/relatorio", async (req, res) => {
