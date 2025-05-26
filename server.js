@@ -18,9 +18,9 @@ app.post("/progresso", async (req, res) => {
     return res.status(400).json({ mensagem: "Nome de usuário inválido." });
   }
 
-  usuario = usuario.trim();
+  usuario = usuario.trim().toLowerCase(); // padroniza nome de usuário
 
-  // Converte valores para número, ou undefined
+  // Converte valores para número
   fase1 = fase1 !== undefined ? Number(fase1) : undefined;
   fase2 = fase2 !== undefined ? Number(fase2) : undefined;
   fase3 = fase3 !== undefined ? Number(fase3) : undefined;
@@ -69,7 +69,7 @@ app.get("/progresso", async (req, res) => {
 
   try {
     const progresso = await prisma.progresso.findUnique({
-      where: { usuario },
+      where: { usuario: usuario.toLowerCase() },
     });
 
     if (!progresso) {
