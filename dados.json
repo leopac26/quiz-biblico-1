@@ -1,8 +1,10 @@
 [
   {
     "usuario": "a",
-    "fase": 1,
-    "pontuacao": 9,
-    "recebidoEm": "2025-05-19T02:47:10.697Z"
+    "fase1": 9,
+    "fase2": 0,
+    "fase3": 0,
+    "total": 9,
+    "criadoEm": "2025-05-19T02:47:10.697Z"
   }
 ]
