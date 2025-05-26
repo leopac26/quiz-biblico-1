@@ -497,7 +497,7 @@
            },
     ];
 
-    const phaseLimits = [10, 30, 60];
+ const phaseLimits = [10, 30, 60];
 let currentPhase = 1;
 let currentIndex = 0;
 let score = 0;
@@ -596,12 +596,11 @@ async function salvarProgresso() {
     return;
   }
 
-  // Envia no formato que o backend espera: { usuario, fase, pontuacao }
+  // Gera dinamicamente o campo da fase atual
   const progresso = {
-    usuario,
-    fase: currentPhase,
-    pontuacao: score
+    usuario
   };
+  progresso[`fase${currentPhase}`] = score;
 
   try {
     const resposta = await fetch("https://quizbiblico-production.up.railway.app/progresso", {
@@ -621,7 +620,6 @@ async function salvarProgresso() {
     console.error("Erro:", error);
   }
 }
-
 
 async function consultarProgresso() {
   const usuario = document.getElementById("usuario").value.trim();

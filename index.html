@@ -13,38 +13,38 @@
 
   <!-- Estilo -->
   <link rel="stylesheet" href="./quiz.css">
-
 </head>
 <body>
 
   <h1>Quiz Bíblico</h1>
 
   <!-- TELA INICIAL -->
-  <div id="start-screen">
+  <section id="start-screen">
     <h2>Bem-vindo ao Quiz!</h2>
-    <input type="text" id="usuario" placeholder="Digite seu nome" />
-    <br>
+    <label for="usuario">Nome:</label><br>
+    <input type="text" id="usuario" placeholder="Digite seu nome" aria-label="Nome do usuário" />
+    <br><br>
     <button id="start-btn">Iniciar</button>
-  </div>
+  </section>
 
   <!-- CONTAINER DO QUIZ -->
-  <div id="quiz-container" class="hidden">
+  <section id="quiz-container" class="hidden">
     <div id="phase-info"></div>
-    <div id="question"></div>
+    <div id="question" role="heading" aria-level="3"></div>
     <div id="answers"></div>
     <button id="next-btn" class="hidden">Próxima Pergunta</button>
     <button id="next-phase-btn" class="hidden">Avançar para a Próxima Fase</button>
-    <div id="result" class="hidden"></div>
-  </div>
+    <div id="result" class="hidden" role="alert"></div>
+  </section>
 
   <!-- AÇÕES DE PROGRESSO -->
-  <div class="progresso" style="margin-top: 20px;">
+  <section class="progresso" style="margin-top: 20px;">
     <button class="action" onclick="salvarProgresso()">💾 Salvar Progresso</button>
     <button class="action" onclick="consultarProgresso()">📊 Ver Progresso</button>
-  </div>
+  </section>
 
   <!-- MOSTRANDO RESULTADO DA CONSULTA -->
-  <div id="progresso-info" style="margin-top: 20px; font-size: 18px;"></div>
+  <section id="progresso-info" style="margin-top: 20px; font-size: 18px;"></section>
 
   <!-- AVISO DE ATUALIZAÇÃO -->
   <div id="update-notice" style="display: none; background: #ffd700; padding: 10px;">
@@ -54,7 +54,7 @@
   <!-- SCRIPTS -->
   <script type="module" src="./firebase.js"></script>
   <script type="module" src="./main.js"></script>
-  <script src="./quiz.js"></script> <!-- Carregue quiz.js por último para garantir que tudo esteja definido -->
+  <script src="./quiz.js"></script> <!-- Carregado por último -->
 
   <!-- REGISTRO DO SERVICE WORKER -->
   <script>
@@ -64,7 +64,6 @@
           .then(registration => {
             console.log('✅ Service Worker registrado:', registration);
 
-            // Verifica se há nova versão
             registration.addEventListener('updatefound', () => {
               const newSW = registration.installing;
               newSW.addEventListener('statechange', () => {
