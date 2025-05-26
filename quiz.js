@@ -546,6 +546,11 @@ function startPhase(phase) {
 
 function showQuestion() {
   const question = currentQuestions[currentIndex];
+  if (!question || !question.question || !question.answers) {
+    questionEl.textContent = "❌ Pergunta inválida.";
+    return;
+  }
+
   questionEl.textContent = question.question;
   answersEl.innerHTML = "";
   question.answers.forEach((ans) => {
@@ -596,11 +601,13 @@ async function salvarProgresso() {
     return;
   }
 
-  // Gera dinamicamente o campo da fase atual
   const progresso = {
-    usuario
+    usuario,
+    [`fase${currentPhase}`]: score
   };
-  progresso[`fase${currentPhase}`] = score;
+
+  // Apenas para debug
+  console.log("Enviando progresso:", progresso);
 
   try {
     const resposta = await fetch("https://quizbiblico-production.up.railway.app/progresso", {
@@ -614,6 +621,7 @@ async function salvarProgresso() {
       alert(dados.mensagem);
     } else {
       alert(`Erro ao salvar: ${dados.mensagem}`);
+      console.error("Resposta do servidor:", dados);
     }
   } catch (error) {
     alert("Erro ao conectar com o servidor.");
@@ -655,15 +663,14 @@ async function consultarProgresso() {
   }
 }
 
-// Tornar funções acessíveis globalmente
 window.salvarProgresso = salvarProgresso;
 window.consultarProgresso = consultarProgresso;
 
-// Service Worker
+// Service Worker — verifique se o arquivo "service-worker.js" existe no diretório
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker
-      .register('service-worker.js')
+      .register('/service-worker.js') // <- certifique-se de que o caminho está correto
       .then(reg => console.log("✅ Service Worker registrado!", reg))
       .catch(err => console.error("❌ Erro no Service Worker:", err));
   });
