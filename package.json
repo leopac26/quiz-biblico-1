@@ -1,7 +1,6 @@
 {
   "name": "criando-banco-de-dados",
   "version": "1.0.0",
-  "description": "",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -14,9 +13,11 @@
     "@prisma/client": "^6.8.2",
     "cors": "^2.8.5",
     "express": "^5.1.0",
-    "firebase": "^11.8.1"
+    "firebase": "^11.8.1",
+    "firebase-admin": "^13.4.0"
   },
   "devDependencies": {
     "prisma": "^6.8.2"
-  }
+  },
+  "description": ""
 }
