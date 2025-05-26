@@ -62,31 +62,46 @@ app.post("/progresso", async (req, res) => {
 });
 
 // Rota para buscar o último progresso do usuário
-app.get("/progresso", async (req, res) => {
-  const { usuario } = req.query;
+app.post("/progresso", async (req, res) => {
+  const { usuario, fase1, fase2, fase3 } = req.body;
 
-  console.log("Consultando progresso para o usuário:", usuario);
-
-  if (!usuario?.trim()) {
-    return res.status(400).json({ mensagem: "Usuário não informado" });
+  if (!usuario || typeof usuario !== "string") {
+    return res.status(400).json({ mensagem: "Nome de usuário inválido." });
   }
 
   try {
-    const progresso = await prisma.progresso.findFirst({
-      where: { usuario: usuario.trim() },
-      orderBy: { id: "desc" },
+    const dadosExistentes = await prisma.progresso.findUnique({
+      where: { usuario },
     });
 
-    if (!progresso) {
-      return res.status(404).json({ mensagem: "Progresso não encontrado" });
-    }
+    const novosDados = {
+      fase1: fase1 ?? dadosExistentes?.fase1 ?? 0,
+      fase2: fase2 ?? dadosExistentes?.fase2 ?? 0,
+      fase3: fase3 ?? dadosExistentes?.fase3 ?? 0,
+    };
 
-    res.json(progresso);
+    const total = (novosDados.fase1 || 0) + (novosDados.fase2 || 0) + (novosDados.fase3 || 0);
+
+    const progressoAtualizado = await prisma.progresso.upsert({
+      where: { usuario },
+      update: {
+        ...novosDados,
+        total,
+      },
+      create: {
+        usuario,
+        ...novosDados,
+        total,
+      },
+    });
+
+    res.status(201).json({ mensagem: "Progresso salvo com sucesso", progresso: progressoAtualizado });
   } catch (error) {
-    console.error("Erro ao consultar progresso:", error);
-    res.status(500).json({ mensagem: "Erro ao consultar progresso" });
+    console.error("Erro ao salvar progresso:", error);
+    res.status(500).json({ mensagem: "Erro ao salvar progresso" });
   }
 });
+
 
 // Rota para buscar todo o histórico de progresso de um usuário
 app.get("/progresso/todos", async (req, res) => {
