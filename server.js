@@ -10,21 +10,26 @@ app.use(express.json());
 
 // Rota para salvar ou atualizar progresso com campos separados por fase
 app.post("/progresso", async (req, res) => {
-  console.log("📥 Dados recebidos:", req.body); // Log de entrada
+  console.log("📥 Dados recebidos:", req.body);
 
   let { usuario, fase1, fase2, fase3 } = req.body;
 
-  if (!usuario || typeof usuario !== "string") {
+  if (!usuario || typeof usuario !== "string" || !usuario.trim()) {
     return res.status(400).json({ mensagem: "Nome de usuário inválido." });
   }
 
-  // Converte valores para número (ou undefined se estiver ausente)
+  usuario = usuario.trim();
+
+  // Converte valores para número, ou undefined
   fase1 = fase1 !== undefined ? Number(fase1) : undefined;
   fase2 = fase2 !== undefined ? Number(fase2) : undefined;
   fase3 = fase3 !== undefined ? Number(fase3) : undefined;
 
-  // Verifica se ao menos uma fase foi enviada e é válida
-  if ([fase1, fase2, fase3].every(val => val === undefined || isNaN(val))) {
+  const algumaFaseValida = [fase1, fase2, fase3].some(
+    val => typeof val === "number" && !isNaN(val)
+  );
+
+  if (!algumaFaseValida) {
     return res.status(400).json({ mensagem: "Nenhuma fase válida foi enviada." });
   }
 
@@ -49,7 +54,7 @@ app.post("/progresso", async (req, res) => {
 
     res.status(201).json({ mensagem: "Progresso salvo com sucesso", progresso });
   } catch (error) {
-    console.error("❌ Erro ao salvar progresso:", error);
+    console.error("❌ Erro ao salvar progresso:", error.message || error);
     res.status(500).json({ mensagem: "Erro interno ao salvar progresso" });
   }
 });
@@ -73,7 +78,7 @@ app.get("/progresso", async (req, res) => {
 
     res.json(progresso);
   } catch (error) {
-    console.error("❌ Erro ao consultar progresso:", error);
+    console.error("❌ Erro ao consultar progresso:", error.message || error);
     res.status(500).json({ mensagem: "Erro ao consultar progresso" });
   }
 });
@@ -94,7 +99,7 @@ app.get("/relatorio", async (req, res) => {
 
     res.json(relatorio);
   } catch (error) {
-    console.error("❌ Erro ao gerar relatório:", error);
+    console.error("❌ Erro ao gerar relatório:", error.message || error);
     res.status(500).json({ mensagem: "Erro ao gerar relatório" });
   }
 });
