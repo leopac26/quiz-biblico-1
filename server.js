@@ -54,7 +54,7 @@ app.post("/progresso", async (req, res) => {
 
     res.status(201).json({ mensagem: "Progresso salvo com sucesso", progresso });
   } catch (error) {
-    console.error("❌ Erro ao salvar progresso:", error.message || error);
+    console.error("❌ Erro ao salvar progresso:", error);
     res.status(500).json({ mensagem: "Erro interno ao salvar progresso" });
   }
 });
@@ -62,6 +62,10 @@ app.post("/progresso", async (req, res) => {
 // Rota para buscar progresso de um usuário
 app.get("/progresso", async (req, res) => {
   const { usuario } = req.query;
+
+  if (!usuario) {
+    return res.status(400).json({ error: "Usuário não especificado" });
+  }
 
   try {
     const progresso = await prisma.progresso.findUnique({
@@ -79,7 +83,6 @@ app.get("/progresso", async (req, res) => {
   }
 });
 
-
 // Rota para gerar o ranking geral
 app.get("/relatorio", async (req, res) => {
   try {
@@ -96,7 +99,7 @@ app.get("/relatorio", async (req, res) => {
 
     res.json(relatorio);
   } catch (error) {
-    console.error("❌ Erro ao gerar relatório:", error.message || error);
+    console.error("❌ Erro ao gerar relatório:", error);
     res.status(500).json({ mensagem: "Erro ao gerar relatório" });
   }
 });

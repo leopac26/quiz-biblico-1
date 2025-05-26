@@ -8,7 +8,8 @@
 
   <!-- Ícones e Manifest -->
   <link rel="manifest" href="manifest.json" />
-  <link rel="icon" href="icon-192.png" type="image/png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+
   <meta name="theme-color" content="#ffffff"/>
 
   <!-- Estilo -->
@@ -21,10 +22,10 @@
   <!-- TELA INICIAL -->
   <section id="start-screen">
     <h2>Bem-vindo ao Quiz!</h2>
-    <label for="usuario">Nome:</label><br>
+    <label for="usuario"><strong>Nome:</strong></label>
     <input type="text" id="usuario" placeholder="Digite seu nome" aria-label="Nome do usuário" />
     <br><br>
-    <button id="start-btn">Iniciar</button>
+    <button id="start-btn" type="button">Iniciar</button>
   </section>
 
   <!-- CONTAINER DO QUIZ -->
@@ -32,15 +33,15 @@
     <div id="phase-info"></div>
     <div id="question" role="heading" aria-level="3"></div>
     <div id="answers"></div>
-    <button id="next-btn" class="hidden">Próxima Pergunta</button>
-    <button id="next-phase-btn" class="hidden">Avançar para a Próxima Fase</button>
+    <button id="next-btn" type="button" class="hidden">Próxima Pergunta</button>
+    <button id="next-phase-btn" type="button" class="hidden">Avançar para a Próxima Fase</button>
     <div id="result" class="hidden" role="alert"></div>
   </section>
 
   <!-- AÇÕES DE PROGRESSO -->
   <section class="progresso" style="margin-top: 20px;">
-    <button class="action" onclick="salvarProgresso()">💾 Salvar Progresso</button>
-    <button class="action" onclick="consultarProgresso()">📊 Ver Progresso</button>
+    <button class="action" type="button" onclick="salvarProgresso()">💾 Salvar Progresso</button>
+    <button class="action" type="button" onclick="consultarProgresso()">📊 Ver Progresso</button>
   </section>
 
   <!-- MOSTRANDO RESULTADO DA CONSULTA -->
@@ -83,59 +84,54 @@
   </script>
 
   <script type="module">
-  import { getMessaging, getToken } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-messaging.js";
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getMessaging, getToken } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-messaging.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyBYbGBfVw3Bni1O0JAzT1iClSF_9MZfISs",
-  authDomain: "quiz-biblico-a64f5.firebaseapp.com",
-  projectId: "quiz-biblico-a64f5",
-  storageBucket: "quiz-biblico-a64f5.appspot.com", // corrigido
-  messagingSenderId: "633779368186",
-  appId: "1:633779368186:web:10f8cb84de792ad82c1943",
-  measurementId: "SEU_MEASUREMENT_ID"
-  };
+    const firebaseConfig = {
+      apiKey: "AIzaSyBYbGBfVw3Bni1O0JAzT1iClSF_9MZfISs",
+      authDomain: "quiz-biblico-a64f5.firebaseapp.com",
+      projectId: "quiz-biblico-a64f5",
+      storageBucket: "quiz-biblico-a64f5.appspot.com",
+      messagingSenderId: "633779368186",
+      appId: "1:633779368186:web:10f8cb84de792ad82c1943",
+      measurementId: "SEU_MEASUREMENT_ID"
+    };
 
-  const app = initializeApp(firebaseConfig);
-  const messaging = getMessaging(app);
+    const app = initializeApp(firebaseConfig);
+    const messaging = getMessaging(app);
 
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('firebase-messaging-sw.js')
-        .then(registration => {
-          console.log('✅ Service Worker registrado:', registration);
-
-          // Esperar o Service Worker estar pronto
-          return navigator.serviceWorker.ready;
-        })
-        .then((registration) => {
-          console.log('✅ Service Worker pronto para uso!');
-
-          // Agora é seguro obter o token do FCM
-          return getToken(messaging, {
-            vapidKey: "BPOzzcywntpWNHyCN2gpYNQeUt2tNkhn_VlaecJ0T6Krb5yBlqkbxwL7dtxe5Ne937c8nNYWNoWLrytXpvsUMg4"
-,
-            serviceWorkerRegistration: registration
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('firebase-messaging-sw.js')
+          .then(registration => {
+            console.log('✅ Service Worker registrado:', registration);
+            return navigator.serviceWorker.ready;
+          })
+          .then((registration) => {
+            console.log('✅ Service Worker pronto para uso!');
+            return getToken(messaging, {
+              vapidKey: "BPOzzcywntpWNHyCN2gpYNQeUt2tNkhn_VlaecJ0T6Krb5yBlqkbxwL7dtxe5Ne937c8nNYWNoWLrytXpvsUMg4",
+              serviceWorkerRegistration: registration
+            });
+          })
+          .then((token) => {
+            if (token) {
+              console.log('📨 Token FCM:', token);
+              // Aqui você pode salvar o token no servidor
+            } else {
+              console.warn('⚠️ Token não disponível. Permissão de notificações não concedida.');
+            }
+          })
+          .catch(error => {
+            console.error('❌ Erro ao obter token:', error);
           });
-        })
-        .then((token) => {
-          if (token) {
-            console.log('📨 Token FCM:', token);
-            // Aqui você pode salvar o token no servidor
-          } else {
-            console.warn('⚠️ Token não disponível. Permissão de notificações não concedida.');
-          }
-        })
-        .catch(error => {
-          console.error('❌ Erro ao obter token:', error);
-        });
-    });
-  }
-</script>
-
+      });
+    }
+  </script>
 
 </body>
 </html>
+
 
 
     

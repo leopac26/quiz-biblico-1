@@ -616,13 +616,19 @@ async function salvarProgresso() {
   }
 
   // Atualiza a fase atual com o novo score
-  progressoAtual[`fase${currentPhase}`] = score;
-  const total = progressoAtual.fase1 + progressoAtual.fase2 + progressoAtual.fase3;
+  // Atualiza a fase atual com o novo score
+progressoAtual[`fase${currentPhase}`] = score;
 
-  const progresso = {
+const progresso = {
   usuario,
-  [`fase${currentPhase}`]: score
+  fase1: progressoAtual.fase1,
+  fase2: progressoAtual.fase2,
+  fase3: progressoAtual.fase3,
 };
+
+console.log("📤 Enviando progresso:", progresso);
+
+
 
 
   console.log("📤 Enviando progresso:", progresso);

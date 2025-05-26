@@ -9,12 +9,13 @@ datasource db {
 
 
 model Progresso {
-  usuario String @id @map("user")
+  usuario String @id @map("user") // ← ESSENCIAL
   fase1   Int
   fase2   Int
   fase3   Int
   total   Int
 }
+
 
 
 
