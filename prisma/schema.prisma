@@ -8,6 +8,7 @@ datasource db {
 }
 
 
+
 model Progresso {
   usuario String @id @map("user") // ← ESSENCIAL
   fase1   Int
