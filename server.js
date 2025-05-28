@@ -51,8 +51,9 @@ app.get("/progresso", async (req, res) => {
 
   try {
     const progresso = await prisma.progresso.findUnique({
-      where: { usuario }
-    });
+  where: { usuario: req.query.usuario }
+});
+
 
     if (!progresso) {
       return res.status(404).json({ mensagem: "Progresso não encontrado." });
