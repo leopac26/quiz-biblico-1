@@ -11,7 +11,7 @@ async function initFCM() {
 
   try {
     // ✅ Registra o Service Worker
-    const registration = await navigator.serviceWorker.register('/firebase-messaging-sw.js');
+    const registration = await navigator.serviceWorker.register('./firebase-messaging-sw.js');
     console.log('✅ Service Worker registrado:', registration);
 
     // ✅ Aguarda o Service Worker estar controlando a página

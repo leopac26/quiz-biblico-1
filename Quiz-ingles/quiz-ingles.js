@@ -1,4 +1,4 @@
-const allQuestions = [
+/*const allQuestions = [
       // Fase 1: 10 perguntas
        {
     question: "1. How do you say 'cachorro' in English? (Como se diz 'cachorro' em inglês?)",
@@ -646,4 +646,4 @@ function updateTimerBar() {
 
 
     // Início do jogo
-    startPhase(1);
+    startPhase(1);*/
