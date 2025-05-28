@@ -7,31 +7,17 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
-
 model Progresso {
-  usuario String @id @map("user") // ← ESSENCIAL
+  id     Int    @id @default(autoincrement())
+  usuario String @unique
   fase1   Int
   fase2   Int
   fase3   Int
   total   Int
 }
 
+
 model Token {
   id    Int    @id @default(autoincrement())
   token String @unique
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,12 +1,12 @@
 // === CACHE STATIC FILES ===
 const CACHE_NAME = 'quiz-biblico-cache-v7';
 const urlsToCache = [
-  './index.html',
-  './quiz.js',
-  './quiz.css',
-  './manifest.json',
-  './icon-192.png',
-  './icon-512.png'
+  '/QUIZ-BIBLICO/index.html',
+  '/QUIZ-BIBLICO/quiz.js',
+  '/QUIZ-BIBLICO/quiz.css',
+  '/QUIZ-BIBLICO/manifest.json',
+  '/QUIZ-BIBLICO/icon-192.png',
+  '/QUIZ-BIBLICO/icon-512.png'
 ];
 
 self.addEventListener('install', event => {
@@ -29,7 +29,7 @@ self.addEventListener('fetch', event => {
   event.respondWith(
     caches.match(event.request).then(response =>
       response || fetch(event.request)
-    ).catch(() => caches.match('./index.html'))
+    ).catch(() => caches.match('/QUIZ-BIBLICO/index.html'))
   );
 });
 
@@ -57,9 +57,8 @@ messaging.onBackgroundMessage(payload => {
 
   const notificationOptions = {
     body: body || 'Você recebeu uma nova mensagem.',
-    icon: icon || './icon-192.png',
-    badge: './badge.png',
-    data: { url: '/' }
+    icon: icon || '/QUIZ-BIBLICO/icon-192.png',
+    data: { url: '/QUIZ-BIBLICO/' }
   };
 
   self.registration.showNotification(title || 'Nova Notificação', notificationOptions);
@@ -67,7 +66,7 @@ messaging.onBackgroundMessage(payload => {
 
 self.addEventListener('notificationclick', function(event) {
   event.notification.close();
-  const urlToOpen = new URL('/', self.location.origin).href;
+  const urlToOpen = new URL('/QUIZ-BIBLICO/', self.location.origin).href;
 
   event.waitUntil(
     clients.matchAll({ type: 'window', includeUncontrolled: true }).then(windowClients => {

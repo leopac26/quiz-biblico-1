@@ -10,15 +10,15 @@ async function initFCM() {
   }
 
   try {
-    // ✅ Registra o Service Worker
-    const registration = await navigator.serviceWorker.register('./firebase-messaging-sw.js');
+    // ✅ Registra o Service Worker (APENAS AQUI)
+    const registration = await navigator.serviceWorker.register('firebase-messaging-sw.js');
     console.log('✅ Service Worker registrado:', registration);
 
-    // ✅ Aguarda o Service Worker estar controlando a página
+    // ✅ Aguarda o Service Worker estar ativo
     await navigator.serviceWorker.ready;
     console.log("✅ Service Worker pronto");
 
-    // ✅ Solicita permissão de notificação
+    // ✅ Solicita permissão para notificações
     const permission = await Notification.requestPermission();
     if (permission !== "granted") {
       console.warn("🚫 Permissão de notificação negada.");
@@ -27,7 +27,7 @@ async function initFCM() {
 
     console.log("🔔 Permissão concedida");
 
-    // ✅ Obtém o token do FCM
+    // ✅ Obtém o token FCM
     const currentToken = await getToken(messaging, {
       vapidKey: VAPID_KEY,
       serviceWorkerRegistration: registration
@@ -40,7 +40,7 @@ async function initFCM() {
 
     console.log("📲 Token de notificação:", currentToken);
 
-    // ✅ Envia o token ao backend
+    // ✅ Envia token para o backend
     const response = await fetch(API_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -55,7 +55,7 @@ async function initFCM() {
     const data = await response.json();
     console.log("✅ Token salvo no backend:", data);
 
-    // ✅ Lida com notificações recebidas em primeiro plano
+    // ✅ Escuta notificações em primeiro plano
     onMessage(messaging, (payload) => {
       console.log("📩 Notificação recebida em primeiro plano:", payload);
       alert(`🔔 ${payload.notification.title}\n${payload.notification.body}`);
@@ -66,6 +66,7 @@ async function initFCM() {
   }
 }
 
+// ✅ Executa ao carregar a página
 window.addEventListener('load', () => {
-  initFCM(); // Garante que só roda quando a página estiver carregada
+  initFCM();
 });

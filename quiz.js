@@ -497,7 +497,7 @@
            },
     ];
 
-const phaseLimits = [10, 30, 60]; // Fase 1: 0-9, Fase 2: 10-29, Fase 3: 30-59
+const phaseLimits = [10, 30, 60]; // Fase 1: 0–9, Fase 2: 10–29, Fase 3: 30–59
 let currentPhase = 1;
 let currentIndex = 0;
 let score = 0;
@@ -510,6 +510,7 @@ const resultEl = document.getElementById("result");
 const phaseInfo = document.getElementById("phase-info");
 const nextPhaseBtn = document.getElementById("next-phase-btn");
 
+// Início do Quiz
 document.getElementById("start-btn").addEventListener("click", () => {
   const nome = document.getElementById("usuario").value.trim();
   if (!nome) {
@@ -558,6 +559,7 @@ function showQuestion() {
 
   questionEl.textContent = question.question;
   answersEl.innerHTML = "";
+
   question.answers.forEach((ans) => {
     const btn = document.createElement("button");
     btn.textContent = ans.text;
@@ -571,13 +573,10 @@ function handleAnswer(correct, clickedBtn) {
   if (correct) score++;
   nextBtn.classList.remove("hidden");
 
-  // Desativa todos os botões após resposta
   Array.from(answersEl.children).forEach((btn) => {
     btn.disabled = true;
-    if (btn === clickedBtn && correct) {
-      btn.classList.add("correct");
-    } else if (btn === clickedBtn && !correct) {
-      btn.classList.add("incorrect");
+    if (btn === clickedBtn) {
+      btn.classList.add(correct ? "correct" : "incorrect");
     }
   });
 }
@@ -618,12 +617,14 @@ async function salvarProgresso() {
 
   let progressoAtual = { fase1: 0, fase2: 0, fase3: 0 };
   try {
-    const resposta = await fetch(`https://quizbiblico-production.up.railway.app/progresso?usuario=${encodeURIComponent(usuario)}`);
-    if (resposta.ok) {
-      const dados = await resposta.json();
-      progressoAtual.fase1 = dados.fase1 ?? 0;
-      progressoAtual.fase2 = dados.fase2 ?? 0;
-      progressoAtual.fase3 = dados.fase3 ?? 0;
+    const res = await fetch(`https://quizbiblico-production.up.railway.app/progresso?usuario=${encodeURIComponent(usuario)}`);
+    if (res.ok) {
+      const dados = await res.json();
+      progressoAtual = {
+        fase1: dados.fase1 ?? 0,
+        fase2: dados.fase2 ?? 0,
+        fase3: dados.fase3 ?? 0
+      };
     }
   } catch (err) {
     console.warn("🔍 Nenhum progresso anterior encontrado.");
@@ -633,21 +634,19 @@ async function salvarProgresso() {
 
   const progresso = {
     usuario,
-    fase1: progressoAtual.fase1,
-    fase2: progressoAtual.fase2,
-    fase3: progressoAtual.fase3,
+    ...progressoAtual,
     total: progressoAtual.fase1 + progressoAtual.fase2 + progressoAtual.fase3,
   };
 
   try {
-    const resposta = await fetch("https://quizbiblico-production.up.railway.app/progresso", {
+    const res = await fetch("https://quizbiblico-production.up.railway.app/progresso", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(progresso),
     });
 
-    const dados = await resposta.json();
-    if (resposta.ok) {
+    const dados = await res.json();
+    if (res.ok) {
       alert(dados.mensagem);
     } else {
       alert(`Erro ao salvar: ${dados.mensagem}`);
@@ -667,10 +666,10 @@ async function consultarProgresso() {
   }
 
   try {
-    const resposta = await fetch(`https://quizbiblico-production.up.railway.app/progresso?usuario=${encodeURIComponent(usuario)}`);
-    const dados = await resposta.json();
+    const res = await fetch(`https://quizbiblico-production.up.railway.app/progresso?usuario=${encodeURIComponent(usuario)}`);
+    const dados = await res.json();
 
-    if (resposta.ok) {
+    if (res.ok) {
       const fase1 = dados.fase1 ?? 0;
       const fase2 = dados.fase2 ?? 0;
       const fase3 = dados.fase3 ?? 0;
@@ -693,13 +692,4 @@ async function consultarProgresso() {
   }
 }
 
-// Service Worker
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker
-      .register('/service-worker.js')
-      .then(reg => console.log("✅ Service Worker registrado!", reg))
-      .catch(err => console.error("❌ Erro no Service Worker:", err));
-  });
-}
 

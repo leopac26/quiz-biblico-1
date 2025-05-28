@@ -59,28 +59,14 @@
 
   <!-- REGISTRO DO SERVICE WORKER -->
   <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./firebase-messaging-sw.js')
-          .then(registration => {
-            console.log('✅ Service Worker registrado:', registration);
+    navigator.serviceWorker.register('firebase-messaging-sw.js')
+  .then(registration => {
+    console.log('✅ Service Worker registrado:', registration);
+  })
+  .catch(error => {
+    console.error('❌ Erro ao registrar SW:', error);
+  });
 
-            registration.addEventListener('updatefound', () => {
-              const newSW = registration.installing;
-              newSW.addEventListener('statechange', () => {
-                if (newSW.state === 'installed' && navigator.serviceWorker.controller) {
-                  document.getElementById('update-notice').style.display = 'block';
-                }
-              });
-            });
-
-            registration.update();
-          })
-          .catch(error => {
-            console.error('❌ Erro ao registrar Service Worker:', error);
-          });
-      });
-    }
   </script>
 
   <script type="module">
