@@ -8,13 +8,14 @@ datasource db {
 }
 
 model Progresso {
-  id     Int    @id @default(autoincrement())
-  usuario String @unique
-  fase1   Int
-  fase2   Int
-  fase3   Int
-  total   Int
+  id      Int     @id @default(autoincrement())
+  usuario String  @unique
+  fase1   Int?
+  fase2   Int?
+  fase3   Int?
+  total   Int?
 }
+
 
 
 model Token {

@@ -51,9 +51,8 @@ app.get("/progresso", async (req, res) => {
 
   try {
     const progresso = await prisma.progresso.findUnique({
-  where: { usuario: req.query.usuario }
-});
-
+      where: { usuario }
+    });
 
     if (!progresso) {
       return res.status(404).json({ mensagem: "Progresso não encontrado." });
@@ -65,6 +64,7 @@ app.get("/progresso", async (req, res) => {
     res.status(500).json({ erro: "Erro ao consultar progresso." });
   }
 });
+
 
 // ✅ ROTA: Retorna todos os registros de progresso ordenados por total
 app.get("/relatorio", async (req, res) => {
