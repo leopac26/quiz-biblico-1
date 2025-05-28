@@ -10,11 +10,15 @@ async function initFCM() {
   }
 
   try {
-    // ✅ Registra o service worker
+    // ✅ Registra o Service Worker
     const registration = await navigator.serviceWorker.register('/firebase-messaging-sw.js');
-    console.log('✅ Service Worker registrado com sucesso');
+    console.log('✅ Service Worker registrado:', registration);
 
-    // ✅ Solicita permissão
+    // ✅ Aguarda o Service Worker estar controlando a página
+    await navigator.serviceWorker.ready;
+    console.log("✅ Service Worker pronto");
+
+    // ✅ Solicita permissão de notificação
     const permission = await Notification.requestPermission();
     if (permission !== "granted") {
       console.warn("🚫 Permissão de notificação negada.");
@@ -51,15 +55,17 @@ async function initFCM() {
     const data = await response.json();
     console.log("✅ Token salvo no backend:", data);
 
+    // ✅ Lida com notificações recebidas em primeiro plano
+    onMessage(messaging, (payload) => {
+      console.log("📩 Notificação recebida em primeiro plano:", payload);
+      alert(`🔔 ${payload.notification.title}\n${payload.notification.body}`);
+    });
+
   } catch (err) {
     console.error("❌ Erro ao configurar notificações:", err);
   }
-
-  // ✅ Recebe notificações em primeiro plano
-  onMessage(messaging, (payload) => {
-    console.log("📩 Notificação recebida em primeiro plano:", payload);
-    alert(`🔔 ${payload.notification.title}\n${payload.notification.body}`);
-  });
 }
 
-initFCM();
+window.addEventListener('load', () => {
+  initFCM(); // Garante que só roda quando a página estiver carregada
+});
