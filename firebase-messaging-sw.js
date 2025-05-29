@@ -1,12 +1,12 @@
 // === CACHE STATIC FILES ===
 const CACHE_NAME = 'quiz-biblico-cache-v7';
 const urlsToCache = [
-  '/QUIZ-BIBLICO/index.html',
-  '/QUIZ-BIBLICO/quiz.js',
-  '/QUIZ-BIBLICO/quiz.css',
-  '/QUIZ-BIBLICO/manifest.json',
-  '/QUIZ-BIBLICO/icon-192.png',
-  '/QUIZ-BIBLICO/icon-512.png'
+  'index.html',
+  'quiz.js',
+  'quiz.css',
+  'manifest.json',
+  'icon-192.png',
+  'icon-512.png'
 ];
 
 self.addEventListener('install', event => {
