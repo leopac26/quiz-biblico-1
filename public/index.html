@@ -53,15 +53,15 @@
   </div>
 
   <!-- SCRIPTS -->
-  <script type="module" src="./firebase.js"></script>
-  <script type="module" src="./main.js"></script>
-  <script src="./quiz.js"></script> <!-- Carregado por último -->
+  <script type="module" src="firebase.js"></script>
+  <script type="module" src="main.js"></script>
+  <script src="quiz.js"></script> <!-- Carregado por último -->
 
   <!-- REGISTRO DO SERVICE WORKER -->
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/firebase-messaging-sw.js')
+        navigator.serviceWorker.register('./firebase-messaging-sw.js')
           .then(registration => {
             console.log('✅ Service Worker registrado:', registration);
 
@@ -93,8 +93,7 @@
       projectId: "quiz-biblico-a64f5",
       storageBucket: "quiz-biblico-a64f5.appspot.com",
       messagingSenderId: "633779368186",
-      appId: "1:633779368186:web:10f8cb84de792ad82c1943",
-      measurementId: "SEU_MEASUREMENT_ID"
+      appId: "1:633779368186:web:10f8cb84de792ad82c1943"
     };
 
     const app = initializeApp(firebaseConfig);
@@ -102,7 +101,7 @@
 
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('firebase-messaging-sw.js')
+        navigator.serviceWorker.register('./firebase-messaging-sw.js')
           .then(registration => {
             console.log('✅ Service Worker registrado:', registration);
             return navigator.serviceWorker.ready;
@@ -131,10 +130,3 @@
 
 </body>
 </html>
-
-
-
-    
-
-
- 

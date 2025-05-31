@@ -10,7 +10,9 @@ datasource db {
 
 
 model Progresso {
-  usuario String @id @map("user") // ← ESSENCIAL
+  id      Int    @id @default(autoincrement())
+  usuario String  @unique
+  criadoEm DateTime @default(now()) 
   fase1   Int
   fase2   Int
   fase3   Int

@@ -495,9 +495,282 @@
                    { text: "d) Sinagoga", correct: false }
                ]
            },
+
+           {
+    question: "(1) Quem foi o pai do sacerdote Zadoque?",
+    answers: [
+      { text: "Abiatar", correct: false },
+      { text: "Aarão", correct: false },
+      { text: "Aitube", correct: true },
+      { text: "Nadabe", correct: false }
+    ]
+  },
+  {
+    question: "(2) Qual o nome do profeta que escreveu apenas um capítulo na Bíblia?",
+    answers: [
+      { text: "Obadias", correct: true },
+      { text: "Naum", correct: false },
+      { text: "Ageu", correct: false },
+      { text: "Habacuque", correct: false }
+    ]
+  },
+  {
+    question: "(3) Quantos dias os espiões passaram em Canaã?",
+    answers: [
+      { text: "12", correct: false },
+      { text: "21", correct: false },
+      { text: "30", correct: false },
+      { text: "40", correct: true }
+    ]
+  },
+  {
+    question: "(4) Quem foi o homem que morreu ao tocar na Arca da Aliança?",
+    answers: [
+      { text: "Uzá", correct: true },
+      { text: "Nadabe", correct: false },
+      { text: "Abiú", correct: false },
+      { text: "Corá", correct: false }
+    ]
+  },
+  {
+    question: "(5) Qual o nome do escravo fugitivo que Paulo menciona na carta a Filemon?",
+    answers: [
+      { text: "Epafrodito", correct: false },
+      { text: "Onésimo", correct: true },
+      { text: "Tíquico", correct: false },
+      { text: "Demas", correct: false }
+    ]
+  },
+  {
+    question: "(6) Qual livro bíblico termina com uma pergunta?",
+    answers: [
+      { text: "Eclesiastes", correct: false },
+      { text: "Jonas", correct: true },
+      { text: "Jó", correct: false },
+      { text: "Habacuque", correct: false }
+    ]
+  },
+  {
+    question: "(7) Quantas vezes Pedro negou Jesus?",
+    answers: [
+      { text: "2", correct: false },
+      { text: "4", correct: false },
+      { text: "3", correct: true },
+      { text: "1", correct: false }
+    ]
+  },
+  {
+    question: "(8) Quem foi o avô de Saul?",
+    answers: [
+      { text: "Quis", correct: false },
+      { text: "Ner", correct: true },
+      { text: "Abner", correct: false },
+      { text: "Gideão", correct: false }
+    ]
+  },
+  {
+    question: "(9) Quantos capítulos tem o livro de Isaías?",
+    answers: [
+      { text: "66", correct: true },
+      { text: "60", correct: false },
+      { text: "72", correct: false },
+      { text: "63", correct: false }
+    ]
+  },
+  {
+    question: "(10) Quem teve um sonho com uma escada que tocava os céus?",
+    answers: [
+      { text: "Jacó", correct: true },
+      { text: "José", correct: false },
+      { text: "Daniel", correct: false },
+      { text: "Elias", correct: false }
+    ]
+  },
+  {
+    question: "(11) Onde Moisés morreu?",
+    answers: [
+      { text: "Monte Sinai", correct: false },
+      { text: "Monte Tabor", correct: false },
+      { text: "Monte Nebo", correct: true },
+      { text: "Monte Horebe", correct: false }
+    ]
+  },
+  {
+    question: "(12) Qual discípulo era cobrador de impostos?",
+    answers: [
+      { text: "Judas", correct: false },
+      { text: "Pedro", correct: false },
+      { text: "Mateus", correct: true },
+      { text: "André", correct: false }
+    ]
+  },
+  {
+    question: "(13) Quem escreveu o livro de Atos dos Apóstolos?",
+    answers: [
+      { text: "Pedro", correct: false },
+      { text: "Lucas", correct: true },
+      { text: "Paulo", correct: false },
+      { text: "João", correct: false }
+    ]
+  },
+  {
+    question: "(14) Qual apóstolo teve uma visão de um lençol descendo do céu?",
+    answers: [
+      { text: "Tiago", correct: false },
+      { text: "Pedro", correct: true },
+      { text: "João", correct: false },
+      { text: "Paulo", correct: false }
+    ]
+  },
+  {
+    question: "(15) Quem cortou o cabelo de Sansão?",
+    answers: [
+      { text: "Dalila", correct: false },
+      { text: "Um filisteu", correct: true },
+      { text: "Sansão", correct: false },
+      { text: "Um servo", correct: false }
+    ]
+  },
+  {
+    question: "(16) Em que cidade Jesus fez seu primeiro milagre?",
+    answers: [
+      { text: "Belém", correct: false },
+      { text: "Jerusalém", correct: false },
+      { text: "Caná", correct: true },
+      { text: "Betânia", correct: false }
+    ]
+  },
+  {
+    question: "(17) Qual era o nome original de Abraão?",
+    answers: [
+      { text: "Abrão", correct: true },
+      { text: "Abias", correct: false },
+      { text: "Adão", correct: false },
+      { text: "Abimeleque", correct: false }
+    ]
+  },
+  {
+    question: "(18) Qual mulher julgou Israel?",
+    answers: [
+      { text: "Ana", correct: false },
+      { text: "Débora", correct: true },
+      { text: "Rute", correct: false },
+      { text: "Abigail", correct: false }
+    ]
+  },
+  {
+    question: "(19) Quem ressuscitou Tabita (Dorcas)?",
+    answers: [
+      { text: "Paulo", correct: false },
+      { text: "Jesus", correct: false },
+      { text: "Pedro", correct: true },
+      { text: "Elias", correct: false }
+    ]
+  },
+  {
+    question: "(20) O que significa o nome 'Emanuel'?",
+    answers: [
+      { text: "O Senhor é bom", correct: false },
+      { text: "Deus conosco", correct: true },
+      { text: "Salvador do povo", correct: false },
+      { text: "Ungido do Senhor", correct: false }
+    ]
+  },
+  {
+    question: "(21) Quem foi lançado numa cova de leões?",
+    answers: [
+      { text: "Jeremias", correct: false },
+      { text: "Daniel", correct: true },
+      { text: "Ezequiel", correct: false },
+      { text: "Nabucodonosor", correct: false }
+    ]
+  },
+  {
+    question: "(22) Qual discípulo duvidou da ressurreição de Jesus?",
+    answers: [
+      { text: "Pedro", correct: false },
+      { text: "Tiago", correct: false },
+      { text: "Tomé", correct: true },
+      { text: "João", correct: false }
+    ]
+  },
+  {
+    question: "(23) Qual era a profissão de Lucas?",
+    answers: [
+      { text: "Pastor", correct: false },
+      { text: "Carpinteiro", correct: false },
+      { text: "Médico", correct: true },
+      { text: "Pescador", correct: false }
+    ]
+  },
+  {
+    question: "(24) Quem substituiu Judas Iscariotes entre os apóstolos?",
+    answers: [
+      { text: "Bartolomeu", correct: false },
+      { text: "Matias", correct: true },
+      { text: "Barnabé", correct: false },
+      { text: "Silas", correct: false }
+    ]
+  },
+  {
+    question: "(25) Qual rei escreveu muitos salmos?",
+    answers: [
+      { text: "Saul", correct: false },
+      { text: "Salomão", correct: false },
+      { text: "Davi", correct: true },
+      { text: "Ezequias", correct: false }
+    ]
+  },
+  {
+    question: "(26) Onde Jesus nasceu?",
+    answers: [
+      { text: "Jerusalém", correct: false },
+      { text: "Belém", correct: true },
+      { text: "Nazaré", correct: false },
+      { text: "Hebrom", correct: false }
+    ]
+  },
+  {
+    question: "(27) Quem foi apedrejado e viu os céus abertos?",
+    answers: [
+      { text: "Estevão", correct: true },
+      { text: "Tiago", correct: false },
+      { text: "Paulo", correct: false },
+      { text: "Pedro", correct: false }
+    ]
+  },
+  {
+    question: "(28) Quantos dias Jesus jejuou no deserto?",
+    answers: [
+      { text: "30", correct: false },
+      { text: "50", correct: false },
+      { text: "7", correct: false },
+      { text: "40", correct: true }
+    ]
+  },
+  {
+    question: "(29) Quem era o irmão de Moisés?",
+    answers: [
+      { text: "Abraão", correct: false },
+      { text: "Eli", correct: false },
+      { text: "Arão", correct: true },
+      { text: "Josué", correct: false }
+    ]
+  },
+  {
+    question: "(30) Qual o último livro do Antigo Testamento?",
+    answers: [
+      { text: "Zacarias", correct: false },
+      { text: "Malaquias", correct: true },
+      { text: "Ageu", correct: false },
+      { text: "Esdras", correct: false }
+    ]
+  }
     ];
 
-const phaseLimits = [10, 30, 60]; // Fase 1: 0-9, Fase 2: 10-29, Fase 3: 30-59
+// ✅ allQuestions deve estar acima deste código
+
+const phaseLimits = [10, 30, 60];
 let currentPhase = 1;
 let currentIndex = 0;
 let score = 0;
@@ -510,6 +783,7 @@ const resultEl = document.getElementById("result");
 const phaseInfo = document.getElementById("phase-info");
 const nextPhaseBtn = document.getElementById("next-phase-btn");
 
+// Início do quiz
 document.getElementById("start-btn").addEventListener("click", () => {
   const nome = document.getElementById("usuario").value.trim();
   if (!nome) {
@@ -522,6 +796,7 @@ document.getElementById("start-btn").addEventListener("click", () => {
   startPhase(1);
 });
 
+// Embaralhamento
 function shuffleArray(arr) {
   for (let i = arr.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -529,6 +804,7 @@ function shuffleArray(arr) {
   }
 }
 
+// Início de uma fase
 function startPhase(phase) {
   if (!Array.isArray(allQuestions) || allQuestions.length < phaseLimits[phaseLimits.length - 1]) {
     alert("❌ Banco de perguntas insuficiente ou não carregado.");
@@ -549,6 +825,7 @@ function startPhase(phase) {
   showQuestion();
 }
 
+// Mostra uma pergunta
 function showQuestion() {
   const question = currentQuestions[currentIndex];
   if (!question || !question.question || !Array.isArray(question.answers)) {
@@ -567,11 +844,11 @@ function showQuestion() {
   });
 }
 
+// Resposta do usuário
 function handleAnswer(correct, clickedBtn) {
   if (correct) score++;
   nextBtn.classList.remove("hidden");
 
-  // Desativa todos os botões após resposta
   Array.from(answersEl.children).forEach((btn) => {
     btn.disabled = true;
     if (btn === clickedBtn && correct) {
@@ -582,6 +859,7 @@ function handleAnswer(correct, clickedBtn) {
   });
 }
 
+// Avançar pergunta
 nextBtn.onclick = () => {
   if (currentIndex < currentQuestions.length - 1) {
     currentIndex++;
@@ -601,6 +879,7 @@ nextBtn.onclick = () => {
   }
 };
 
+// Avançar fase
 nextPhaseBtn.onclick = () => {
   if (currentPhase < 3) {
     startPhase(currentPhase + 1);
@@ -609,6 +888,7 @@ nextPhaseBtn.onclick = () => {
   }
 };
 
+// Salvar progresso no servidor
 async function salvarProgresso() {
   const usuario = localStorage.getItem("usuario") || document.getElementById("usuario").value.trim().toLowerCase();
   if (!usuario) {
@@ -648,10 +928,9 @@ async function salvarProgresso() {
 
     const dados = await resposta.json();
     if (resposta.ok) {
-      alert(dados.mensagem);
+      alert(dados.mensagem || "Progresso salvo com sucesso!");
     } else {
-      alert(`Erro ao salvar: ${dados.mensagem}`);
-      console.error("❌ Resposta do servidor:", dados);
+      alert(`Erro ao salvar: ${dados.mensagem || "Erro desconhecido"}`);
     }
   } catch (error) {
     alert("Erro ao conectar com o servidor.");
@@ -659,6 +938,7 @@ async function salvarProgresso() {
   }
 }
 
+// Consultar progresso
 async function consultarProgresso() {
   const usuario = document.getElementById("usuario").value.trim().toLowerCase();
   if (!usuario) {
@@ -697,7 +977,7 @@ async function consultarProgresso() {
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker
-      .register('/service-worker.js')
+      .register('/firebase-messaging-sw.js')
       .then(reg => console.log("✅ Service Worker registrado!", reg))
       .catch(err => console.error("❌ Erro no Service Worker:", err));
   });

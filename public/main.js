@@ -43,11 +43,12 @@ async function initFCM() {
       body: JSON.stringify({ token: currentToken })
     });
 
+    // Verificação de sucesso da requisição
     if (!response.ok) {
-      const texto = await response.text();
-      throw new Error(`Erro ${response.status}: ${texto}`);
+      throw new Error(`Erro ${response.status}: ${response.statusText}`);
     }
 
+    // Obtém a resposta do servidor
     const data = await response.json();
     console.log("✅ Token salvo no backend:", data);
 
