@@ -1,0 +1,109 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #f0f4f8;
+  padding: 20px;
+  text-align: center;
+}
+
+h1 {
+  color: #333;
+}
+
+#question {
+  font-size: 20px;
+  margin-bottom: 15px;
+}
+
+#answers button {
+  display: block;
+  margin: 5px auto;
+  padding: 10px 20px;
+  background: #4285f4;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+#answers button:disabled {
+  cursor: not-allowed;
+}
+
+.hidden {
+  display: none;
+}
+
+#result, #phase-info, #progresso-info {
+  margin-top: 20px;
+  font-weight: bold;
+}
+
+input[type="text"] {
+  padding: 8px;
+  margin: 10px;
+  width: 200px;
+}
+
+button.action {
+  background: #34a853;
+  margin: 5px;
+  color: white;
+}
+
+#start-btn {
+  background: #fbbc05;
+  padding: 10px 20px;
+  font-size: 16px;
+  margin-bottom: 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* MOBILE */
+@media (max-width: 600px) {
+  body {
+    font-size: 20px;
+    background-color: #1504ff;
+    color: white;
+  }
+
+  .action {
+    font-size: 20px;
+  }
+
+  .progresso {
+    margin: 20px;
+  }
+
+  #next-btn, #start-btn {
+    font-size: 20px;
+    background: #fbbc05;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    margin: 20px;
+  }
+
+  h1 {
+    color: rgb(211, 192, 21);
+  }
+
+  #usuario {
+    font-size: 20px;
+    background: #f1f0ed;
+    color: black;
+    margin: 20px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+  }
+
+  #usuario::placeholder {
+    color: rgba(0, 0, 0, 0.3);
+    font-size: 25px;
+  }
+}

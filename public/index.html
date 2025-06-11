@@ -3,17 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
   <title>Quiz Bíblico</title>
 
-  <!-- Ícones e Manifest -->
+  <!-- Manifesto e ícone -->
   <link rel="manifest" href="manifest.json" />
-  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
-
+  <link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png">
   <meta name="theme-color" content="#ffffff"/>
 
   <!-- Estilo -->
-  <link rel="stylesheet" href="./quiz.css">
+  <link rel="stylesheet" href="./src/quiz.css">
 </head>
 <body>
 
@@ -53,36 +51,11 @@
   </div>
 
   <!-- SCRIPTS -->
-  <script type="module" src="firebase.js"></script>
-  <script type="module" src="main.js"></script>
-  <script src="quiz.js"></script> <!-- Carregado por último -->
+  <script type="module" src="./src/firebase.js"></script>
+  <script type="module" src="./src/main.js"></script>
+  <script src="./src/quiz.js"></script>
 
-  <!-- REGISTRO DO SERVICE WORKER -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./firebase-messaging-sw.js')
-          .then(registration => {
-            console.log('✅ Service Worker registrado:', registration);
-
-            registration.addEventListener('updatefound', () => {
-              const newSW = registration.installing;
-              newSW.addEventListener('statechange', () => {
-                if (newSW.state === 'installed' && navigator.serviceWorker.controller) {
-                  document.getElementById('update-notice').style.display = 'block';
-                }
-              });
-            });
-
-            registration.update();
-          })
-          .catch(error => {
-            console.error('❌ Erro ao registrar Service Worker:', error);
-          });
-      });
-    }
-  </script>
-
+  <!-- SERVICE WORKER + Firebase Messaging -->
   <script type="module">
     import { getMessaging, getToken } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-messaging.js";
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
@@ -101,29 +74,27 @@
 
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./firebase-messaging-sw.js')
+        navigator.serviceWorker.register('firebase-messaging-sw.js')
           .then(registration => {
             console.log('✅ Service Worker registrado:', registration);
             return navigator.serviceWorker.ready;
           })
           .then((registration) => {
-            console.log('✅ Service Worker pronto para uso!');
+            console.log('✅ Service Worker pronto!');
             return getToken(messaging, {
               vapidKey: "BPOzzcywntpWNHyCN2gpYNQeUt2tNkhn_VlaecJ0T6Krb5yBlqkbxwL7dtxe5Ne937c8nNYWNoWLrytXpvsUMg4",
               serviceWorkerRegistration: registration
             });
           })
-          .then((token) => {
+          .then(token => {
             if (token) {
               console.log('📨 Token FCM:', token);
-              // Aqui você pode salvar o token no servidor
+              // Salvar no servidor se necessário
             } else {
-              console.warn('⚠️ Token não disponível. Permissão de notificações não concedida.');
+              console.warn('⚠️ Token não disponível.');
             }
           })
-          .catch(error => {
-            console.error('❌ Erro ao obter token:', error);
-          });
+          .catch(error => console.error('❌ Erro ao obter token:', error));
       });
     }
   </script>

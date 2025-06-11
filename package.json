@@ -4,11 +4,10 @@
   "description": "Servidor Express com Prisma para o quiz",
   "main": "server.js",
   "scripts": {
-  "start": "node server.js",
-  "dev": "nodemon server.js",
-  "build": "echo \"No build needed\""
-},
-
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "build": "echo \"No build needed\""
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",

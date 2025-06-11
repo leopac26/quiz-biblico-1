@@ -1,3 +1,5 @@
+// prisma/schema.prisma
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -7,15 +9,20 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
-
 model Progresso {
   id      Int    @id @default(autoincrement())
+<<<<<<< HEAD
   usuario String  @unique
   criadoEm DateTime @default(now()) 
   fase1   Int
   fase2   Int
   fase3   Int
+=======
+  usuario String @unique
+  fase1   Int    @default(0)
+  fase2   Int    @default(0)
+  fase3   Int    @default(0)
+>>>>>>> 6a3b78a7596eed401cdcf87c0b67b8e76b18c6ed
   total   Int
 }
 
@@ -23,17 +30,3 @@ model Token {
   id    Int    @id @default(autoincrement())
   token String @unique
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,8 +1,42 @@
-// ======== FIREBASE MESSAGING SW ========
-importScripts('https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js');
-importScripts('https://www.gstatic.com/firebasejs/10.11.0/firebase-messaging-compat.js');
+// === CACHE STATIC FILES ===
+const CACHE_NAME = 'quiz-biblico-cache-v7';
+const urlsToCache = [
+  'index.html',
+  'quiz.js',
+  'quiz.css',
+  'manifest.json',
+  'icon-192.png',
+  'icon-512.png'
+];
 
-// Inicialização do Firebase no service worker
+self.addEventListener('install', event => {
+  event.waitUntil(
+    caches.open(CACHE_NAME).then(cache => cache.addAll(urlsToCache))
+  );
+  self.skipWaiting();
+});
+
+self.addEventListener('activate', event => {
+  event.waitUntil(
+    caches.keys().then(keys =>
+      Promise.all(keys.filter(name => name !== CACHE_NAME).map(name => caches.delete(name)))
+    )
+  );
+  self.clients.claim();
+});
+
+self.addEventListener('fetch', event => {
+  event.respondWith(
+    caches.match(event.request).then(response =>
+      response || fetch(event.request)
+    ).catch(() => caches.match('/QUIZ-BIBLICO/index.html'))
+  );
+});
+
+// === FIREBASE MESSAGING (FCM) ===
+importScripts('https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js');
+importScripts('https://www.gstatic.com/firebasejs/10.12.0/firebase-messaging-compat.js');
+
 firebase.initializeApp({
   apiKey: "AIzaSyBYbGBfVw3Bni1O0JAzT1iClSF_9MZfISs",
   authDomain: "quiz-biblico-a64f5.firebaseapp.com",
@@ -14,31 +48,25 @@ firebase.initializeApp({
 
 const messaging = firebase.messaging();
 
-// ✅ Tratamento de mensagens em segundo plano
 messaging.onBackgroundMessage(payload => {
-  console.log("[firebase-messaging-sw.js] 📩 Mensagem recebida em segundo plano:", payload);
+  console.log('[firebase-messaging-sw.js] 📩 Mensagem recebida em segundo plano:', payload);
 
-  // Verifica se há dados de notificação
   if (!payload?.notification) return;
 
   const { title, body, icon } = payload.notification;
 
   const notificationOptions = {
     body: body || 'Você recebeu uma nova mensagem.',
-    icon: icon || './icon-192.png',
-    badge: './badge.png', // opcional, se tiver
-    data: {
-      url: '/' // pode usar payload.data.url para abrir algo específico
-    }
+    icon: icon || '/QUIZ-BIBLICO/icon-192.png',
+    data: { url: '/QUIZ-BIBLICO/' }
   };
 
   self.registration.showNotification(title || 'Nova Notificação', notificationOptions);
 });
 
-// ✅ Clique na notificação (abre a aba correta)
 self.addEventListener('notificationclick', function(event) {
   event.notification.close();
-  const urlToOpen = new URL('/', self.location.origin).href;
+  const urlToOpen = new URL('/QUIZ-BIBLICO/', self.location.origin).href;
 
   event.waitUntil(
     clients.matchAll({ type: 'window', includeUncontrolled: true }).then(windowClients => {
